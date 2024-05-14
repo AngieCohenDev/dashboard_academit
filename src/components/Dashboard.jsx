@@ -1,13 +1,9 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import DashboardStatsGrid from "./DashboardStatsGrid";
 
 export default function Dashboard() {
   return (
-    <div>
-      <p>This is the Dashboard</p>
-      <Link to="/product">Go to products</Link>
-      </div>
-  )
+    <div className="flex gap-4">
+      <DashboardStatsGrid />
+    </div>
+  );
 }
-
-
