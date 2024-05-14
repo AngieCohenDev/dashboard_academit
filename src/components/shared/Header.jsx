@@ -5,6 +5,8 @@ import {
   Transition,
   Menu,
   MenuButton,
+  MenuItem,
+  MenuItems,
 } from "@headlessui/react";
 import classNames from "classnames";
 import React, { Fragment } from "react";
@@ -13,8 +15,10 @@ import {
   HiOutlineChatAlt,
   HiOutlineSearch,
 } from "react-icons/hi";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
+  const navigate = useNavigate();
   return (
     <div className="bg-white h-16 px-4 flex justify-between items-center border-b border-gray-200">
       <div className="relative">
@@ -112,6 +116,57 @@ export default function Header() {
               </div>
             </MenuButton>
           </div>
+          <Transition
+            as={Fragment}
+            enter="transition ease-out duration-75"
+            enterFrom="opacity-0 scale-95"
+            enterTo="opacity-100 scale-100"
+            leave="transition ease-in duration-100"
+            leaveFrom="opacity-100 scale-100"
+            leaveTo="opacity-0 scale-95"
+          >
+            <MenuItems className="origin-top-right z-10 absolute right-0 mt-2 w-48 rounded-sm shadow-md p-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <MenuItem>
+                {({ open }) => (
+                  <div
+                    className={classNames(
+                      open && "bg-gray-100",
+                      "text-gray-700 focus:bg-gray-200 cursor-pointer rounded-sm px-4 py-2"
+                    )}
+                    onClick={() => navigate("/profile")}
+                  >
+                    Your Profile
+                  </div>
+                )}
+              </MenuItem>
+              <MenuItem>
+                {({ open }) => (
+                  <div
+                    className={classNames(
+                      open && "bg-gray-100",
+                      "text-gray-700 focus:bg-gray-200 cursor-pointer rounded-sm px-4 py-2"
+                    )}
+                    onClick={() => navigate("/setting")}
+                  >
+                    Setting
+                  </div>
+                )}
+              </MenuItem>
+              <MenuItem>
+                {({ open }) => (
+                  <div
+                    className={classNames(
+                      open && "bg-gray-100",
+                      "text-gray-700 focus:bg-gray-200 cursor-pointer rounded-sm px-4 py-2"
+                    )}
+                    onClick={() => navigate("/logout")}
+                  >
+                    Logout
+                  </div>
+                )}
+              </MenuItem>
+            </MenuItems>
+          </Transition>
         </Menu>
       </div>
     </div>
