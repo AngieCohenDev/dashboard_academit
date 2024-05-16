@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { getOrderStatus } from "../lib/consts/utils";
+import { getOrderStatus } from "../lib/utils";
 
 const recentOrderData = [
   {
