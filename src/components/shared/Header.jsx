@@ -18,7 +18,9 @@ import {
 import { useNavigate } from "react-router-dom";
 
 export default function Header() {
+
   const navigate = useNavigate();
+
   return (
     <div className="bg-white h-16 px-4 flex justify-between items-center border-b border-gray-200">
       <div className="relative">
@@ -29,7 +31,7 @@ export default function Header() {
         <input
           type="text"
           placeholder="Search..."
-          className="text-sm focus:outline-none active:outline-none h-10 w-{24rem} border border-gray-300 rounded-sm pl-11 pr-4"
+          className="text-sm focus:outline-none active:outline-none h-10 w-[24rem] border border-gray-300 rounded-sm pl-11 pr-4"
         />
       </div>
       <div className="flex items-center gap-2 mr-2">
@@ -53,7 +55,7 @@ export default function Header() {
                 leaveFrom="opacity-100 translate-y-0"
                 leaveTo="opacity-0 translate-y-1"
               >
-                <PopoverPanel className="absolute right-0 z-10 mt-2.5 w-80">
+                <PopoverPanel className="absolute right-0 z-10 mt-2.5 transform w-80">
                   <div className="bg-white rounded-sm shadow-md ring-1 ring-black ring-opacity-5 px-2 py-2.5">
                     <strong className="text-gray-700 font-medium">
                       Mensajes

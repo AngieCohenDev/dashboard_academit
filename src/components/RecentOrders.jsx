@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { format } from 'date-fns'
 import { getOrderStatus } from "../lib/utils";
 
 const recentOrderData = [
@@ -68,10 +69,10 @@ function RecentOrders() {
   return (
     <div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 flex-1">
       <strong className="text-gray-700 font-medium">Ordenes recientes</strong>
-      <div className="mt-3">
-        <table className="w-full text-gray-700 border-x border-gray-200 rounded-sm">
+      <div className="border-x border-gray-200 rounded-sm mt-3">
+        <table className="w-full text-gray-700">
           <thead>
-            <tr className="font-semibold">
+            <tr>
               <td>ID</td>
               <td>Product ID</td>
               <td>Customer Name</td>
@@ -85,7 +86,7 @@ function RecentOrders() {
             {recentOrderData.map((order) => (
               <tr key={order.id}>
                 <td>
-                  <Link to={`/product/${order.id}`}>#{order.id}</Link>
+                  <Link to={`/order/${order.id}`}>#{order.id}</Link>
                 </td>
                 <td>
                   <Link to={`/product/${order.product_id}`}>
@@ -97,7 +98,7 @@ function RecentOrders() {
                     {order.customer_name}
                   </Link>
                 </td>
-                <td>{new Date(order.order_date).toLocaleDateString()}</td>
+                <td>{format(new Date(order.order_date), 'dd MMM yyyy')}</td>
                 <td>{order.order_total}</td>
                 <td>{order.shipment_address}</td>
                 <td>{getOrderStatus(order.current_order_status)}</td>

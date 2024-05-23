@@ -71,7 +71,7 @@ export default DashboardStatsGrid;
 
 function BoxWrapper({ children }) {
   return (
-    <div className="bg-white rounded-sm p-4 flex-1 border border-gray-200 flex items-cente">
+    <div className="bg-white rounded-sm p-4 flex-1 border border-gray-200 flex items-center">
       {children}
     </div>
   );
