@@ -1,49 +1,50 @@
 import {
-	HiOutlineViewGrid,
+	HiOutlineTemplate,
 	HiOutlineCube,
-	HiOutlineShoppingCart,
+	HiOutlineDocumentReport,
 	HiOutlineUsers,
 	HiOutlineDocumentText,
 	HiOutlineAnnotation,
 	HiOutlineQuestionMarkCircle,
 	HiOutlineCog
 } from 'react-icons/hi'
+import { LuRocket } from "react-icons/lu";
 
 export const DASHBOARD_SIDEBAR_LINKS = [
 	{
 		key: 'dashboard',
 		label: 'Dashboard',
 		path: '/',
-		icon: <HiOutlineViewGrid />
+		icon: <HiOutlineTemplate />
 	},
 	{
-		key: 'products',
-		label: 'Products',
-		path: '/product',
-		icon: <HiOutlineCube />
+		key: 'header',
+		label: 'Header',
+		path: '/header',
+		icon: <LuRocket />
 	},
 	{
-		key: 'orders',
-		label: 'Orders',
-		path: '/orders',
-		icon: <HiOutlineShoppingCart />
+		key: 'mainarticle',
+		label: 'Main article',
+		path: '/article',
+		icon: <HiOutlineDocumentReport />
 	},
 	{
-		key: 'customers',
-		label: 'Customers',
-		path: '/customers',
-		icon: <HiOutlineUsers />
-	},
-	{
-		key: 'transactions',
-		label: 'Transactions',
-		path: '/transactions',
+		key: 'new_article',
+		label: 'New article',
+		path: '/newarticle',
 		icon: <HiOutlineDocumentText />
 	},
 	{
-		key: 'messages',
-		label: 'Messages',
-		path: '/messages',
+		key: 'article',
+		label: 'Articles',
+		path: '/articles',
+		icon: <HiOutlineUsers />
+	},
+	{
+		key: 'footer',
+		label: 'Footer',
+		path: '/footer',
 		icon: <HiOutlineAnnotation />
 	}
 ]
