@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { useForm } from "react-hook-form";
+import { postMainArticle } from "../helpers/fetchMainArticle";
 
 const styleLabel = "text-red-500 py-1";
 const styleInput =
@@ -10,7 +11,7 @@ export default function MainArticleForm() {
 
   const onSubmit = handleSubmit((data) => {
     console.log(data);
-    alert("¡Los cambios se hicieron exitosamente!");
+    postMainArticle(data)
     reset();
   });
 
@@ -35,7 +36,7 @@ export default function MainArticleForm() {
         className={classNames(styleInput)}
         type="text"
         placeholder="Por favor ingrese la Descripción"
-        {...register("descripcion")}
+        {...register("description")}
       />
 
       {/* Texto del boton */}
@@ -46,7 +47,7 @@ export default function MainArticleForm() {
         className={classNames(styleInput)}
         type="text"
         placeholder="Por favor ingrese el nuevo texto del botón"
-        {...register("text-btn")}
+        {...register("textButton")}
       />
 
       {/* Fondo */}
