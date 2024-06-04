@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { useForm } from "react-hook-form";
+import { postNewArticle } from "../helpers/fetchNewArticle";
 
 const styleLabel = "text-red-500 py-1";
 const styleInput =
@@ -10,7 +11,7 @@ export default function NewArticleForm() {
 
   const onSubmit = handleSubmit((data) => {
     console.log(data);
-    alert("¡Los cambios se hicieron exitosamente!");
+    postNewArticle(data);
     reset();
   });
 
@@ -24,7 +25,7 @@ export default function NewArticleForm() {
         className={classNames(styleInput)}
         type="text"
         placeholder="Por favor ingrese el nuevo título de la sección"
-        {...register("title_seccion")}
+        {...register("sectiontitle")}
       />
 
        {/* Título del artículo */}
@@ -35,7 +36,7 @@ export default function NewArticleForm() {
         className={classNames(styleInput)}
         type="text"
         placeholder="Por favor ingrese el nuevo título del artículo"
-        {...register("title_article")}
+        {...register("articletitle")}
       />
 
       {/* Descripcion */}
@@ -46,7 +47,7 @@ export default function NewArticleForm() {
         className={classNames(styleInput)}
         type="text"
         placeholder="Por favor ingrese la descripción del artículo"
-        {...register("descripcion")}
+        {...register("description")}
       />
 
       <button type="submit">Enviar</button>
