@@ -9,9 +9,23 @@ const styleInput =
 export default function MainArticleForm() {
   const { register, handleSubmit, reset, watch } = useForm();
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = handleSubmit(async (data) => {
     console.log(data);
-    postMainArticle(data)
+    
+    const formData = new FormData();
+    formData.append("title", data.title);
+    formData.append("description", data.description);
+    formData.append("textButton", data.textButton);
+    formData.append("image", data.image[0]); // Assuming the field name for file is "image"
+
+    try {
+      const response = await postMainArticle(formData);
+      // Assuming postMainArticle returns the URL of the uploaded image
+      console.log(response); // Log the response from the server
+      reset();
+    } catch (error) {
+      console.error("Error:", error);
+    }
     reset();
   });
 
@@ -54,7 +68,7 @@ export default function MainArticleForm() {
       <label htmlFor="img" className={classNames(styleLabel)}>
         Seleccione la nueva fondo a utilizar
       </label>
-      <input type="file" className={classNames(styleInput)} />
+      <input type="file" className={classNames(styleInput)} {...register("image")} />
 
       <button type="submit">Enviar</button>
 
