@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { useForm } from "react-hook-form";
+import { postHeaders } from "../helpers/fetchHeaders";
 
 const styleLabel = "text-red-500 py-1";
 const styleInput =
@@ -10,7 +11,7 @@ function HeaderGrid() {
 
   const onSubmit = handleSubmit((data) => {
     console.log(data);
-    alert("¡Los cambios se hicieron exitosamente!");
+    postHeaders(data)
     reset();
   });
 
@@ -24,7 +25,7 @@ function HeaderGrid() {
         className={classNames(styleInput)}
         type="text"
         placeholder="Por favor ingrese el nuevo valor del items"
-        {...register("items01")}
+        {...register("item1")}
       />
 
       {/* Segundo Item */}
@@ -35,7 +36,7 @@ function HeaderGrid() {
         className={classNames(styleInput)}
         type="text"
         placeholder="Por favor ingrese el nuevo valor del items"
-        {...register("items02")}
+        {...register("item2")}
       />
 
       {/* Tercer Item */}
@@ -46,7 +47,7 @@ function HeaderGrid() {
         className={classNames(styleInput)}
         type="text"
         placeholder="Por favor ingrese el nuevo valor del items"
-        {...register("items03")}
+        {...register("item3")}
       />
 
       {/* Cuarto Item */}
@@ -57,7 +58,7 @@ function HeaderGrid() {
         className={classNames(styleInput)}
         type="text"
         placeholder="Por favor ingrese el nuevo valor del items"
-        {...register("items04")}
+        {...register("item4")}
       />
 
       {/* Logo */}

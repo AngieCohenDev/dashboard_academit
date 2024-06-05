@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { useForm } from "react-hook-form";
+import { postArticle } from "../helpers/fetchArticle";
 
 const styleLabel = "text-red-500 py-1";
 const styleInput =
@@ -10,7 +11,7 @@ export default function ArticleForm() {
 
   const onSubmit = handleSubmit((data) => {
     console.log(data);
-    alert("¡Los cambios se hicieron exitosamente!");
+    postArticle(data)
     reset();
   });
 
@@ -35,7 +36,7 @@ export default function ArticleForm() {
         className={classNames(styleInput)}
         type="text"
         placeholder="Por favor ingrese la descripción"
-        {...register("descripcion")}
+        {...register("description")}
       />
 
       {/* Fondo */}
