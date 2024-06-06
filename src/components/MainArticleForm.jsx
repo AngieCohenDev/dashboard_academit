@@ -10,8 +10,6 @@ export default function MainArticleForm() {
   const { register, handleSubmit, reset, watch } = useForm();
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log(data);
-    
     const formData = new FormData();
     formData.append("title", data.title);
     formData.append("description", data.description);
@@ -19,9 +17,8 @@ export default function MainArticleForm() {
     formData.append("image", data.image[0]); // Assuming the field name for file is "image"
 
     try {
-      const response = await postMainArticle(formData);
+      await postMainArticle(formData);
       // Assuming postMainArticle returns the URL of the uploaded image
-      console.log(response); // Log the response from the server
       reset();
     } catch (error) {
       console.error("Error:", error);

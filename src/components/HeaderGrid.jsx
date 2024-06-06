@@ -10,7 +10,6 @@ function HeaderGrid() {
   const { register, handleSubmit, reset, watch } = useForm();
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
     postHeaders(data)
     reset();
   });

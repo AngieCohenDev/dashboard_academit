@@ -9,9 +9,18 @@ const styleInput =
 export default function ArticleForm() {
   const { register, handleSubmit, reset, watch } = useForm();
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
-    postArticle(data)
+  const onSubmit = handleSubmit(async (data) => {
+    const formData = new FormData();
+    formData.append("title", data.title);
+    formData.append("description", data.description);
+    formData.append("image", data.image[0]);
+    try {
+      await postArticle(formData);
+      // Assuming postMainArticle returns the URL of the uploaded image
+      reset();
+    } catch (error) {
+      console.error("Error:", error);
+    }
     reset();
   });
 
@@ -43,7 +52,8 @@ export default function ArticleForm() {
       <label htmlFor="img" className={classNames(styleLabel)}>
         Seleccione la nueva imagen a utilizar
       </label>
-      <input type="file" className={classNames(styleInput)} />
+        
+        <input type="file" className={classNames(styleInput)} {...register("image")}/>
 
       <button type="submit">Enviar</button>
 
