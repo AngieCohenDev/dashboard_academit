@@ -1,18 +1,26 @@
 import classNames from "classnames";
 import { useForm } from "react-hook-form";
+import { useState } from 'react';
+import ImageUpload from "../helpers/ImageUpload";
 
 const styleLabel = "text-red-500 py-1";
 const styleInput =
   "rounded-md w-[500px] h-[40px] px-5 text-slate-400 text-sm italic my-1";
 
 export default function MainArticleForm() {
-  const { register, handleSubmit, reset, watch } = useForm();
+  const { register, handleSubmit, reset, } = useForm();
 
   const onSubmit = handleSubmit((data) => {
     console.log(data);
     alert("¡Los cambios se hicieron exitosamente!");
     reset();
   });
+
+  const [imageFile, setImageFile] = useState(null);
+
+  const handleFileChange = (file) => {
+      setImageFile(file);
+  };
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col font-sans">
@@ -51,13 +59,12 @@ export default function MainArticleForm() {
 
       {/* Fondo */}
       <label htmlFor="img" className={classNames(styleLabel)}>
-        Seleccione la nueva fondo a utilizar
+        Seleccione el nuevo fondo a utilizar
       </label>
-      <input type="file" className={classNames(styleInput)} />
+      <ImageUpload onFileChange={handleFileChange} />
 
       <button type="submit">Enviar</button>
 
-      <pre>{JSON.stringify(watch(), null, 2)}</pre>
     </form>
   );
 }

@@ -1,5 +1,7 @@
 import classNames from "classnames";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
+import ImageUpload from "../helpers/ImageUpload";
 
 const styleLabel = "text-red-500 py-1";
 const styleInput =
@@ -13,6 +15,12 @@ function HeaderGrid() {
     alert("¡Los cambios se hicieron exitosamente!");
     reset();
   });
+
+  const [imageFile, setImageFile] = useState(null);
+
+  const handleFileChange = (file) => {
+    setImageFile(file);
+  };
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col font-sans">
@@ -62,15 +70,12 @@ function HeaderGrid() {
 
       {/* Logo */}
       <label htmlFor="file" className={classNames(styleLabel)}>
-        Logo
+        Inserte el logo
       </label>
-      <input type="file" className={classNames(styleInput)} />
+      <ImageUpload onFileChange={handleFileChange} />
 
       <button type="submit">Enviar</button>
-
-      <pre>
-        {JSON.stringify(watch(), null, 2)}
-      </pre>
+      
     </form>
   );
 }

@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { useForm } from "react-hook-form";
+import { useState } from 'react';
 
 const styleLabel = "text-red-500 py-1";
 const styleInput =
@@ -9,10 +10,29 @@ export default function VideoForm() {
 
     const { register, handleSubmit, reset, watch } = useForm();
 
-     const onSubmit = handleSubmit((data) => {
+    const onSubmit = handleSubmit((data) => {
     console.log(data);
     reset();
-     })
+    })
+
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [error, setError] = useState('');
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        const fileType = file.type;
+    
+        // Verificar el tipo de archivo
+        if (fileType === 'video/mp4') {
+          setSelectedFile(file);
+          setError('');
+        } else {
+          setSelectedFile(null);
+          setError('Por favor, suba un archivo de tipo .mp4');
+        }
+      };
+
+     
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col font-sans">
@@ -38,11 +58,13 @@ export default function VideoForm() {
         {...register("description")}
       />
 
-      {/* Fondo */}
+      {/* Video */}
       <label htmlFor="file" className={classNames(styleLabel)}>
         Seleccione el video a subir
       </label>
-      <input type="file" className={classNames(styleInput)} />
+      <input type="file" className={classNames(styleInput)} onChange={handleFileChange}/>
+
+      {error && <p style={{ color: 'red' }}>{error}</p>}
 
       <button type="submit">Enviar</button>
 

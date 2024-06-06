@@ -6,7 +6,7 @@ const styleInput =
   "rounded-md w-[500px] h-[40px] px-5 text-slate-400 text-sm italic my-1";
 
 export default function NewArticleForm() {
-  const { register, handleSubmit, reset, watch } = useForm();
+  const { register, handleSubmit, reset, } = useForm();
 
   const onSubmit = handleSubmit((data) => {
     console.log(data);
@@ -27,8 +27,8 @@ export default function NewArticleForm() {
         {...register("title_seccion")}
       />
 
-       {/* Título del artículo */}
-       <label htmlFor="title_article" className={classNames(styleLabel)}>
+      {/* Título del artículo */}
+      <label htmlFor="title_article" className={classNames(styleLabel)}>
         Ingrese el título del artículo
       </label>
       <input
@@ -51,7 +51,7 @@ export default function NewArticleForm() {
 
       <button type="submit">Enviar</button>
 
-      <pre>{JSON.stringify(watch(), null, 2)}</pre>
+
     </form>
   );
 }
