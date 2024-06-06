@@ -16,7 +16,7 @@ export default function MainArticleForm() {
     formData.append("title", data.title);
     formData.append("description", data.description);
     formData.append("textButton", data.textButton);
-    formData.append("image", data.image[0]); // Assuming the field name for file is "image"
+    formData.append("image", imageFile); // Assuming the field name for file is "image"
 
     try {
       await postMainArticle(formData);
@@ -73,7 +73,7 @@ export default function MainArticleForm() {
       <label htmlFor="img" className={classNames(styleLabel)}>
         Seleccione el nuevo fondo a utilizar
       </label>
-      <input type="file" className={classNames(styleInput)} {...register("image")} />
+
       <ImageUpload onFileChange={handleFileChange} />
 
       <button type="submit">Enviar</button>

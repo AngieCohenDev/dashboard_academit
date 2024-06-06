@@ -11,8 +11,21 @@ const styleInput =
 function HeaderGrid() {
   const { register, handleSubmit, reset, watch } = useForm();
 
-  const onSubmit = handleSubmit((data) => {
-    postHeaders(data)
+  const onSubmit = handleSubmit(async (data) => {
+    const formData = new FormData();
+    formData.append("item1", data.item1);
+    formData.append("item2", data.item2);
+    formData.append("item3", data.item3);
+    formData.append("item4", data.item4);
+    formData.append("logo", imageFile); // Assuming the field name for file is "image"
+
+    try {
+      await postHeaders(formData);
+      // Assuming postMainArticle returns the URL of the uploaded image
+      reset();
+    } catch (error) {
+      console.error("Error:", error);
+    }
     reset();
   });
 
@@ -72,6 +85,7 @@ function HeaderGrid() {
       <label htmlFor="file" className={classNames(styleLabel)}>
         Inserte el logo
       </label>
+
       <ImageUpload onFileChange={handleFileChange} />
 
       <button type="submit">Enviar</button>

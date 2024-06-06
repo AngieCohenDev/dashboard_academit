@@ -15,7 +15,8 @@ export default function ArticleForm() {
     const formData = new FormData();
     formData.append("title", data.title);
     formData.append("description", data.description);
-    formData.append("image", data.image[0]);
+    formData.append("image", imageFile);
+    
     try {
       await postArticle(formData);
       // Assuming postMainArticle returns the URL of the uploaded image
@@ -60,10 +61,8 @@ export default function ArticleForm() {
       <label htmlFor="img" className={classNames(styleLabel)}>
         Seleccione la nueva imagen a utilizar
       </label>
+
       <ImageUpload onFileChange={handleFileChange} />
-      
-        
-        <input type="file" className={classNames(styleInput)} {...register("image")}/>
 
       <button type="submit">Enviar</button>
 
