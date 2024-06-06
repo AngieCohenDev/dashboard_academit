@@ -1,38 +1,25 @@
 import classNames from "classnames";
 import { useForm } from "react-hook-form";
-import { useState } from 'react';
+import { useState } from "react";
+import VideoUpload from "../helpers/VideoUpload";
 
 const styleLabel = "text-red-500 py-1";
 const styleInput =
   "rounded-md w-[500px] h-[40px] px-5 text-slate-400 text-sm italic my-1";
 
 export default function VideoForm() {
+  const { register, handleSubmit, reset, watch } = useForm();
 
-    const { register, handleSubmit, reset, watch } = useForm();
-
-    const onSubmit = handleSubmit((data) => {
+  const onSubmit = handleSubmit((data) => {
     console.log(data);
     reset();
-    })
+  });
 
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [error, setError] = useState('');
+  const [videoFile, setVideoFile] = useState(null);
 
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        const fileType = file.type;
-    
-        // Verificar el tipo de archivo
-        if (fileType === 'video/mp4') {
-          setSelectedFile(file);
-          setError('');
-        } else {
-          setSelectedFile(null);
-          setError('Por favor, suba un archivo de tipo .mp4');
-        }
-      };
-
-     
+  const handleFileChange = (file) => {
+    setVideoFile(file);
+  };
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col font-sans">
@@ -62,14 +49,11 @@ export default function VideoForm() {
       <label htmlFor="file" className={classNames(styleLabel)}>
         Seleccione el video a subir
       </label>
-      <input type="file" className={classNames(styleInput)} onChange={handleFileChange}/>
-
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      <VideoUpload onFileChange={handleFileChange} />
 
       <button type="submit">Enviar</button>
 
       <pre>{JSON.stringify(watch(), null, 2)}</pre>
     </form>
   );
-  
 }
