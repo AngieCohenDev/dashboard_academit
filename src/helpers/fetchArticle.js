@@ -1,21 +1,14 @@
 // postRequest.js
 
 // Función para realizar una solicitud POST a un endpoint usando fetch
-export const postArticle = async ({ title, description }) => {
+export const postArticle = async (formData) => {
     // Cuerpo de la solicitud POST
-    const requestBody = {
-        title,
-        description
-    };
     try {
 
         // Realiza la solicitud POST al endpoint especificado
         const response = await fetch('http://localhost:8080/articles/', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(requestBody)
+            body: formData
         });
 
         // Verifica si la respuesta fue exitosa

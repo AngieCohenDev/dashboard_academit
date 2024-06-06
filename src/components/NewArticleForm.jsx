@@ -10,7 +10,6 @@ export default function NewArticleForm() {
   const { register, handleSubmit, reset, watch } = useForm();
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
     postNewArticle(data);
     reset();
   });
