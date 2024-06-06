@@ -76,7 +76,7 @@ export default function MainArticleForm() {
       <label htmlFor="img" className={classNames(styleLabel)}>
         Seleccione el nuevo fondo a utilizar
       </label>
-      <input type="file" className={classNames(styleInput)} {...register("image")} />
+
       <ImageUpload onFileChange={handleFileChange} />
 
       <button type="submit">Enviar</button>
