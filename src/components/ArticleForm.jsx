@@ -1,13 +1,15 @@
 import classNames from "classnames";
 import { useForm } from "react-hook-form";
 import { postArticle } from "../helpers/fetchArticle";
+import { useState } from 'react';
+import ImageUpload from "../helpers/ImageUpload";
 
 const styleLabel = "text-red-500 py-1";
 const styleInput =
   "rounded-md w-[500px] h-[40px] px-5 text-slate-400 text-sm italic my-1";
 
 export default function ArticleForm() {
-  const { register, handleSubmit, reset, watch } = useForm();
+  const { register, handleSubmit, reset, } = useForm();
 
   const onSubmit = handleSubmit(async (data) => {
     const formData = new FormData();
@@ -23,6 +25,12 @@ export default function ArticleForm() {
     }
     reset();
   });
+
+  const [imageFile, setImageFile] = useState(null);
+
+  const handleFileChange = (file) => {
+      setImageFile(file);
+  };
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col font-sans">
@@ -48,16 +56,17 @@ export default function ArticleForm() {
         {...register("description")}
       />
 
-      {/* Fondo */}
+      {/* Imagen */}
       <label htmlFor="img" className={classNames(styleLabel)}>
         Seleccione la nueva imagen a utilizar
       </label>
+      <ImageUpload onFileChange={handleFileChange} />
+      
         
         <input type="file" className={classNames(styleInput)} {...register("image")}/>
 
       <button type="submit">Enviar</button>
 
-      <pre>{JSON.stringify(watch(), null, 2)}</pre>
     </form>
   );
 }

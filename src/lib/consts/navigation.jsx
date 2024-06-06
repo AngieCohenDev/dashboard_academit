@@ -1,10 +1,10 @@
 import {
 	HiOutlineTemplate,
-	HiOutlineCube,
 	HiOutlineDocumentReport,
 	HiOutlineUsers,
 	HiOutlineDocumentText,
 	HiOutlineAnnotation,
+	HiAcademicCap,
 	HiOutlineQuestionMarkCircle,
 	HiOutlineCog
 } from 'react-icons/hi'
@@ -40,6 +40,12 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 		label: 'Articles',
 		path: '/articles',
 		icon: <HiOutlineUsers />
+	},
+	{
+		key: 'cursos',
+		label: 'Cursos',
+		path: '/cursos',
+		icon: <HiAcademicCap />
 	},
 	{
 		key: 'footer',
