@@ -2,9 +2,8 @@ import classNames from "classnames";
 import { useForm } from "react-hook-form";
 import { postNewArticle } from "../helpers/fetchNewArticle";
 
-const styleLabel = "text-red-500 py-1";
-const styleInput =
-  "rounded-md w-[500px] h-[40px] px-5 text-slate-400 text-sm italic my-1";
+const styleLabel = "font-medium text-sm py-1 ";
+const styleInput = "w-full h-[40px] px-2 text-slate-400 text-xs my-1 rounded-lg border bg-gray-100";
 
 export default function NewArticleForm() {
   const { register, handleSubmit, reset, } = useForm();
@@ -15,43 +14,60 @@ export default function NewArticleForm() {
   });
 
   return (
-    <form onSubmit={onSubmit} className="flex flex-col font-sans">
-      {/* Título de la sección */}
-      <label htmlFor="title_seccion" className={classNames(styleLabel)}>
-        Ingrese el título de la sección
-      </label>
-      <input
-        className={classNames(styleInput)}
-        type="text"
-        placeholder="Por favor ingrese el nuevo título de la sección"
-        {...register("sectiontitle")}
-      />
+    <div className="flex justify-center min-h-screen bg-gray-100">
+      <div className="bg-white shadow-md rounded-lg p-8 w-2/5 h-3/5 mx-4">
+        <div className="mb-6">
+          <h1 className="text-2xl flex items-center justify-center font-bold">Formulario new article</h1>
+        </div>
+        <form onSubmit={onSubmit} className="flex flex-col font-sans">
 
-      {/* Título del artículo */}
-      <label htmlFor="title_article" className={classNames(styleLabel)}>
-        Ingrese el título del artículo
-      </label>
-      <input
-        className={classNames(styleInput)}
-        type="text"
-        placeholder="Por favor ingrese el nuevo título del artículo"
-        {...register("articletitle")}
-      />
+          {/* Título de la sección */}
+          <div className="my-2">
+          <label htmlFor="title_seccion" className={classNames(styleLabel)}>
+            Ingrese el título de la sección
+          </label>
+          <input
+            className={classNames(styleInput)}
+            type="text"
+            placeholder="Por favor ingrese el título de la sección"
+            {...register("sectiontitle")}
+          />
+          </div>
 
-      {/* Descripcion */}
-      <label htmlFor="descripcion" className={classNames(styleLabel)}>
-        Ingrese la descripción
-      </label>
-      <input
-        className={classNames(styleInput)}
-        type="text"
-        placeholder="Por favor ingrese la descripción del artículo"
-        {...register("description")}
-      />
+          {/* Título del artículo */}
+          <div className="my-2">
+          <label htmlFor="title_article" className={classNames(styleLabel)}>
+            Ingrese el título del artículo
+          </label>
+          <input
+            className={classNames(styleInput)}
+            type="text"
+            placeholder="Por favor ingrese el título del artículo"
+            {...register("articletitle")}
+          />
+          </div>
 
-      <button type="submit">Enviar</button>
+          {/* Descripcion */}
+          <div className="my-2">
+          <label htmlFor="descripcion" className={classNames(styleLabel)}>
+            Ingrese la descripción
+          </label>
+          <input
+            className={classNames(styleInput)}
+            type="text"
+            placeholder="Por favor ingrese la descripción"
+            {...register("description")}
+          />
+          </div>
 
-
-    </form>
+          <button
+            type="submit"
+            className="self-center mt-6 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg focus:outline-none focus:shadow-outline"
+          >
+            Enviar
+          </button>
+        </form>
+      </div>
+    </div>
   );
 }

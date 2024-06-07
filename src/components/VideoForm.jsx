@@ -1,75 +1,74 @@
 import classNames from "classnames";
 import { useForm } from "react-hook-form";
-import { useState } from 'react';
+import { useState } from "react";
+import VideoUpload from "../helpers/VideoUpload";
 
-const styleLabel = "text-red-500 py-1";
-const styleInput =
-  "rounded-md w-[500px] h-[40px] px-5 text-slate-400 text-sm italic my-1";
+const styleLabel = "font-medium text-sm py-1 ";
+const styleInput = "w-full h-[40px] px-2 text-slate-400 text-xs my-1 rounded-lg border bg-gray-100";
 
 export default function VideoForm() {
+  const { register, handleSubmit, reset, watch } = useForm();
 
-    const { register, handleSubmit, reset, watch } = useForm();
-
-    const onSubmit = handleSubmit((data) => {
+  const onSubmit = handleSubmit((data) => {
     console.log(data);
     reset();
-    })
+  });
 
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [error, setError] = useState('');
+  const [videoFile, setVideoFile] = useState(null);
 
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        const fileType = file.type;
-    
-        // Verificar el tipo de archivo
-        if (fileType === 'video/mp4') {
-          setSelectedFile(file);
-          setError('');
-        } else {
-          setSelectedFile(null);
-          setError('Por favor, suba un archivo de tipo .mp4');
-        }
-      };
-
-     
+  const handleFileChange = (file) => {
+    setVideoFile(file);
+  };
 
   return (
-    <form onSubmit={onSubmit} className="flex flex-col font-sans">
-      {/* Título */}
-      <label htmlFor="title" className={classNames(styleLabel)}>
-        Ingrese el título de la clase
-      </label>
-      <input
-        className={classNames(styleInput)}
-        type="text"
-        placeholder="Por favor ingrese el nuevo título"
-        {...register("title")}
-      />
+    <div className="flex justify-center min-h-screen bg-gray-100">
+      <div className="bg-white shadow-md rounded-lg p-8 w-2/5 h-3/5 mx-4">
+        <div className="mb-6">
+          <h1 className="text-2xl flex items-center justify-center font-bold">Formulario curso</h1>
+        </div>
+        <form onSubmit={onSubmit} className="flex flex-col font-sans">
+          {/* Título */}
+          <div className="my-2">
+            <label htmlFor="title" className={classNames(styleLabel)}>
+              Ingrese el título de la clase
+            </label>
+            <input
+              className={classNames(styleInput)}
+              type="text"
+              placeholder="Por favor ingrese el título"
+              {...register("title")}
+            />
+          </div>
 
-      {/* Descripcion */}
-      <label htmlFor="descripcion" className={classNames(styleLabel)}>
-        Ingrese la descripción
-      </label>
-      <input
-        className={classNames(styleInput)}
-        type="text"
-        placeholder="Por favor ingrese la descripción de la clase"
-        {...register("description")}
-      />
+          {/* Descripcion */}
+          <div className="my-2">
+            <label htmlFor="descripcion" className={classNames(styleLabel)}>
+              Ingrese la descripción
+            </label>
+            <input
+              className={classNames(styleInput)}
+              type="text"
+              placeholder="Por favor ingrese la descripción"
+              {...register("description")}
+            />
+          </div>
 
-      {/* Video */}
-      <label htmlFor="file" className={classNames(styleLabel)}>
-        Seleccione el video a subir
-      </label>
-      <input type="file" className={classNames(styleInput)} onChange={handleFileChange}/>
+          {/* Video */}
+          <div className="my-2">
+            <label htmlFor="file" className={classNames(styleLabel)}>
+              Seleccione el video
+            </label>
+            <VideoUpload onFileChange={handleFileChange} />
+          </div>
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-
-      <button type="submit">Enviar</button>
-
-      <pre>{JSON.stringify(watch(), null, 2)}</pre>
-    </form>
+          <button
+            type="submit"
+            className="self-center mt-6 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg focus:outline-none focus:shadow-outline"
+          >
+            Enviar
+          </button>
+        </form>
+      </div>
+    </div>
   );
-  
 }
