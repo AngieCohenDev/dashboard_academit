@@ -12,8 +12,8 @@ export default function ArticleForm() {
 
   const onSubmit = handleSubmit(async (data) => {
     const formData = new FormData();
-    formData.append("title", data.item1);
-    formData.append("description", data.item2);
+    formData.append("title", data.title);
+    formData.append("description", data.description);
     formData.append("image", imageFile); // Assuming the field name for file is "image"
 
     try {
