@@ -4,16 +4,15 @@ import { postMainArticle } from "../helpers/fetchMainArticle";
 import { useState } from 'react';
 import ImageUpload from "../helpers/ImageUpload";
 
-const styleLabel = "text-red-500 py-1";
-const styleInput =
-  "rounded-md w-[500px] h-[40px] px-5 text-slate-400 text-sm italic my-1";
+const styleLabel = "font-medium text-sm py-1 ";
+const styleInput = "w-full h-[40px] px-2 text-slate-400 text-xs my-1 rounded-lg border bg-gray-100";
 
 export default function MainArticleForm() {
   const { register, handleSubmit, reset, } = useForm();
 
   const onSubmit = handleSubmit(async (data) => {
     console.log(data);
-    
+
     const formData = new FormData();
     formData.append("title", data.title);
     formData.append("description", data.description);
@@ -34,53 +33,73 @@ export default function MainArticleForm() {
   const [imageFile, setImageFile] = useState(null);
 
   const handleFileChange = (file) => {
-      setImageFile(file);
+    setImageFile(file);
   };
 
   return (
-    <form onSubmit={onSubmit} className="flex flex-col font-sans">
-      {/* Titulo */}
-      <label htmlFor="title" className={classNames(styleLabel)}>
-        Ingrese el titulo
-      </label>
-      <input
-        className={classNames(styleInput)}
-        type="text"
-        placeholder="Por favor ingrese el nuevo titulo"
-        {...register("title")}
-      />
+    <div className="flex justify-center min-h-screen bg-gray-100">
+      <div className="bg-white shadow-md rounded-lg p-8 w-2/5 h-3/5 mx-4">
+        <div className="mb-6">
+          <h1 className="text-2xl flex items-center justify-center font-bold">Formulario main article</h1>
+        </div>
+        <form onSubmit={onSubmit} className="flex flex-col font-sans">
 
-      {/* Descripcion */}
-      <label htmlFor="descripcion" className={classNames(styleLabel)}>
-        Ingrese la descripción
-      </label>
-      <input
-        className={classNames(styleInput)}
-        type="text"
-        placeholder="Por favor ingrese la Descripción"
-        {...register("description")}
-      />
+          <div className="my-2">
+            {/* Titulo */}
+            <label htmlFor="title" className={classNames(styleLabel)}>
+              Ingrese el titulo
+            </label>
+            <input
+              className={classNames(styleInput)}
+              type="text"
+              placeholder="Por favor ingrese el titulo"
+              {...register("title")}
+            />
+          </div>
 
-      {/* Texto del boton */}
-      <label htmlFor="text-btn" className={classNames(styleLabel)}>
-        Ingrese el texto para el botón
-      </label>
-      <input
-        className={classNames(styleInput)}
-        type="text"
-        placeholder="Por favor ingrese el nuevo texto del botón"
-        {...register("textButton")}
-      />
+          <div className="my-2">
+            {/* Descripcion */}
+            <label htmlFor="descripcion" className={classNames(styleLabel)}>
+              Ingrese la descripción
+            </label>
+            <input
+              className={classNames(styleInput)}
+              type="text"
+              placeholder="Por favor ingrese la descripción"
+              {...register("description")}
+            />
+          </div>
 
-      {/* Fondo */}
-      <label htmlFor="img" className={classNames(styleLabel)}>
-        Seleccione el nuevo fondo a utilizar
-      </label>
+          <div className="my-2">
+            {/* Texto del boton */}
+            <label htmlFor="text-btn" className={classNames(styleLabel)}>
+              Ingrese el texto para el botón
+            </label>
+            <input
+              className={classNames(styleInput)}
+              type="text"
+              placeholder="Por favor ingrese el texto del botón"
+              {...register("textButton")}
+            />
+          </div>
 
-      <ImageUpload onFileChange={handleFileChange} />
+          <div className="my-2">
+            {/* Fondo */}
+            <label htmlFor="img" className={classNames(styleLabel)}>
+              Seleccione el fondo
+            </label>
 
-      <button type="submit">Enviar</button>
+            <ImageUpload onFileChange={handleFileChange} />
+          </div>
+          <button
+            type="submit"
+            className="self-center mt-6 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg focus:outline-none focus:shadow-outline"
+          >
+            Enviar
+          </button>
 
-    </form>
+        </form>
+      </div>
+    </div>
   );
 }
