@@ -10,9 +10,19 @@ const styleInput = "w-full h-[40px] px-2 text-slate-400 text-xs my-1 rounded-lg 
 export default function ArticleForm() {
   const { register, handleSubmit, reset } = useForm();
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
-    postArticle(data);
+  const onSubmit = handleSubmit(async (data) => {
+    const formData = new FormData();
+    formData.append("title", data.item1);
+    formData.append("description", data.item2);
+    formData.append("image", imageFile); // Assuming the field name for file is "image"
+
+    try {
+      await postArticle(formData);
+      // Assuming postMainArticle returns the URL of the uploaded image
+      reset();
+    } catch (error) {
+      console.error("Error:", error);
+    }
     reset();
   });
 

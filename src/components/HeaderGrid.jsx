@@ -12,10 +12,10 @@ function HeaderGrid() {
 
   const onSubmit = handleSubmit(async (data) => {
     const formData = new FormData();
-    formData.append("item1", data.item1);
-    formData.append("item2", data.item2);
-    formData.append("item3", data.item3);
-    formData.append("item4", data.item4);
+    formData.append("item1", data.item01);
+    formData.append("item2", data.item02);
+    formData.append("item3", data.item03);
+    formData.append("item4", data.item04);
     formData.append("logo", imageFile); // Assuming the field name for file is "image"
 
     try {
@@ -97,23 +97,6 @@ function HeaderGrid() {
             Ingrese el logo
           </label>
           <ImageUpload onFileChange={handleFileChange} />
-      {/* Cuarto Item */}
-      <label htmlFor="items04" className={classNames(styleLabel)}>
-        Items #4
-      </label>
-      <input
-        className={classNames(styleInput)}
-        type="text"
-        placeholder="Por favor ingrese el nuevo valor del items"
-        {...register("item4")}
-      />
-
-      {/* Logo */}
-      <label htmlFor="file" className={classNames(styleLabel)}>
-        Inserte el logo
-      </label>
-
-      <ImageUpload onFileChange={handleFileChange} />
 
           <button
             type="submit"
