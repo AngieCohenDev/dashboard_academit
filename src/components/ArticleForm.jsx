@@ -7,6 +7,7 @@ const styleInput = "w-full h-[40px] px-2 text-slate-400 text-xs my-1 rounded-lg 
 
 export default function ArticleForm() {
 
+  //Hook personalizado para manejar las solicitudes fetch
   const { handleFileChange, onSubmit, register } = useOnSubmitArticle()
 
   return (

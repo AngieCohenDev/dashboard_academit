@@ -3,38 +3,14 @@ import { useForm } from "react-hook-form";
 import { postMainArticle } from "../helpers/fetchMainArticle";
 import { useState } from 'react';
 import ImageUpload from "../helpers/ImageUpload";
+import { useOnSubmitMainArticle } from "./hooks/useOnSubmitMainArticle";
 
 const styleLabel = "font-medium text-sm py-1 ";
 const styleInput = "w-full h-[40px] px-2 text-slate-400 text-xs my-1 rounded-lg border bg-gray-100";
 
 export default function MainArticleForm() {
-  const { register, handleSubmit, reset, } = useForm();
-
-  const onSubmit = handleSubmit(async (data) => {
-    console.log(data);
-
-    const formData = new FormData();
-    formData.append("title", data.title);
-    formData.append("description", data.description);
-    formData.append("textButton", data.textButton);
-    formData.append("image", imageFile); // Assuming the field name for file is "image"
-
-    try {
-      await postMainArticle(formData);
-      // Assuming postMainArticle returns the URL of the uploaded image
-      reset();
-    } catch (error) {
-      console.error("Error:", error);
-    }
-    reset();
-  });
-
-  const [imageFile, setImageFile] = useState(null);
-
-  const handleFileChange = (file) => {
-    setImageFile(file);
-  };
-
+  
+  const { handleFileChange, onSubmit, register} = useOnSubmitMainArticle()
   return (
     <div className="flex justify-center min-h-screen bg-gray-100">
       <div className="bg-white shadow-md rounded-lg p-8 w-2/5 h-3/5 mx-4">
