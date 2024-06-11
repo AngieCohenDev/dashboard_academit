@@ -1,6 +1,4 @@
 import classNames from "classnames";
-import { useForm } from "react-hook-form";
-import { postNewArticle } from "../helpers/fetchNewArticle";
 import { useOnSubmitNewArticle } from "./hooks/useOnSubmitNewArticle";
 
 const styleLabel = "font-medium text-sm py-1 ";

@@ -1,8 +1,5 @@
 import classNames from "classnames";
-import { useForm } from "react-hook-form";
-import { useState } from "react";
 import VideoUpload from "../helpers/VideoUpload";
-import { postVideo } from "../helpers/fetchVideo";
 import { useOnSubmitCursos } from "./hooks/useOnSubmitCursos";
 
 const styleLabel = "font-medium text-sm py-1 ";

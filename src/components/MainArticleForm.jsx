@@ -1,7 +1,4 @@
 import classNames from "classnames";
-import { useForm } from "react-hook-form";
-import { postMainArticle } from "../helpers/fetchMainArticle";
-import { useState } from 'react';
 import ImageUpload from "../helpers/ImageUpload";
 import { useOnSubmitMainArticle } from "./hooks/useOnSubmitMainArticle";
 
@@ -11,7 +8,7 @@ const styleInput = "w-full h-[40px] px-2 text-slate-400 text-xs my-1 rounded-lg 
 export default function MainArticleForm() {
   
   const { handleFileChange, onSubmit, register} = useOnSubmitMainArticle()
-  
+
   return (
     <div className="flex justify-center min-h-screen bg-gray-100">
       <div className="bg-white shadow-md rounded-lg p-8 w-2/5 h-3/5 mx-4">
