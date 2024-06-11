@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { solicitudPost, solicitudPatch, solicitudGet } from "../../helpers/solicitudesFetch";
+import { solicitudFetch } from "../../helpers/solicitudesFetch";
 import { useState } from "react";
 
 export const useOnSubmitHeader = () => {
@@ -41,7 +41,7 @@ export const useOnSubmitHeader = () => {
 
         if (itemCount === 5) {
             try {
-                await solicitudPost(formData, 'headers');
+                await solicitudFetch(formData, 'POST', 'headers');
                 reset();
                 return;
             } catch (error) {
@@ -50,8 +50,8 @@ export const useOnSubmitHeader = () => {
             reset();
         } else {
             try {
-                const { id } = await solicitudGet('headers');
-                await solicitudPatch(formData, 'headers', id);
+                const { id } = await solicitudFetch(undefined, 'GET', 'headers');
+                await solicitudFetch(formData, 'PATCH', 'headers', id);
                 reset();
                 return;
             } catch (error) {
