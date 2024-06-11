@@ -3,35 +3,14 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import VideoUpload from "../helpers/VideoUpload";
 import { postVideo } from "../helpers/fetchVideo";
+import { useOnSubmitCursos } from "./hooks/useOnSubmitCursos";
 
 const styleLabel = "font-medium text-sm py-1 ";
 const styleInput = "w-full h-[40px] px-2 text-slate-400 text-xs my-1 rounded-lg border bg-gray-100";
 
 export default function VideoForm() {
-  const { register, handleSubmit, reset, watch } = useForm();
 
-  const onSubmit = handleSubmit(async (data) => {
-    const formData = new FormData();
-    formData.append("title", data.title);
-    formData.append("description", data.description);
-    formData.append("video", videoFile); // Assuming the field name for file is "image"
-
-    try {
-      console.log(data);
-      await postVideo(formData);
-      // Assuming postMainArticle returns the URL of the uploaded image
-      reset();
-    } catch (error) {
-      console.error("Error:", error);
-    }
-    reset();
-  });
-
-  const [videoFile, setVideoFile] = useState(null);
-
-  const handleFileChange = (file) => {
-    setVideoFile(file);
-  };
+  const { onSubmit, handleFileChange, register} = useOnSubmitCursos()
 
   return (
     <div className="flex justify-center min-h-screen bg-gray-100">

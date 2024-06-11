@@ -10,13 +10,6 @@ export default function NewArticleForm() {
 
   const { onSubmit, register } = useOnSubmitNewArticle()
 
-  // const { register, handleSubmit, reset, } = useForm();
-
-  // const onSubmit = handleSubmit((data) => {
-  //   postNewArticle(data);
-  //   reset();
-  // });
-
   return (
     <div className="flex justify-center min-h-screen bg-gray-100">
       <div className="bg-white shadow-md rounded-lg p-8 w-2/5 h-3/5 mx-4">

@@ -2,18 +2,18 @@ import { useForm } from "react-hook-form";
 import { solicitudFetch } from "../../helpers/solicitudesFetch";
 import { useState } from "react";
 
-export const useOnSubmitMainArticle = () => {
-
+export const useOnSubmitCursos = () => {
     const { register, handleSubmit, reset, } = useForm();
-    const [imageFile, setImageFile] = useState(null);
-    const handleFileChange = (file) => {
-        setImageFile(file);
-    };
+    const [videoFile, setVideoFile] = useState(null);
+
+  const handleFileChange = (file) => {
+    setVideoFile(file);
+  };
 
     const onSubmit = handleSubmit(async (data) => {
         const formData = new FormData();
         //creamos una variabe "fields" en donde pondremos el nombre de cada uno de los inputs
-        const fields = ['title', 'description', 'textButton'];
+        const fields = ['title', 'description'];
         //creamos un contador que empieza en cero, esto para determinar si se llamara a POST o PATCH
         let itemCount = 0;
 
@@ -26,15 +26,15 @@ export const useOnSubmitMainArticle = () => {
             }
         });
 
-        if (imageFile !== null) {
-            formData.append("image", imageFile);
+        if (videoFile !== null) {
+            formData.append("video", videoFile);
             itemCount++;
-            setImageFile(null)
+            setVideoFile(null)
         }
 
-        if (itemCount === 4) {
+        if (itemCount === 3) {
             try {
-                await solicitudFetch(formData, 'POST', 'main-article');
+                await solicitudFetch(formData, 'POST', 'cursos');
                 reset();
                 return;
             } catch (error) {
@@ -43,8 +43,8 @@ export const useOnSubmitMainArticle = () => {
             reset();
         } else {
             try {
-                const { id } = await solicitudFetch(undefined, 'GET','main-article');
-                await solicitudFetch(formData, 'PATCH','main-article', id);
+                const { id } = await solicitudFetch(undefined, 'GET','cursos');
+                await solicitudFetch(formData, 'PATCH','cursos', id);
                 reset();
                 return;
             } catch (error) {
@@ -59,7 +59,5 @@ export const useOnSubmitMainArticle = () => {
         onSubmit,
         register
     }
-
-
 
 }

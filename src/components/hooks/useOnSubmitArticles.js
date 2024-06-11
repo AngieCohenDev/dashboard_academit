@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { solicitudPost, solicitudPatch, solicitudGet } from "../../helpers/solicitudesFetch";
+import { solicitudFetch } from "../../helpers/solicitudesFetch";
 import { useState } from "react";
 
 export const useOnSubmitArticle = () => {
@@ -7,7 +7,7 @@ export const useOnSubmitArticle = () => {
     const { register, handleSubmit, reset, } = useForm();
 
     const [imageFile, setImageFile] = useState(null);
-    
+
     const handleFileChange = (file) => {
         setImageFile(file);
     };
@@ -42,7 +42,7 @@ export const useOnSubmitArticle = () => {
 
         if (itemCount === 3) {
             try {
-                await solicitudPost(formData, 'articulos');
+                await solicitudFetch(formData, 'POST', 'articulos');
                 reset();
                 return;
             } catch (error) {
@@ -51,8 +51,8 @@ export const useOnSubmitArticle = () => {
             reset();
         } else {
             try {
-                const { id } = await solicitudGet('articulos');
-                await solicitudPatch(formData, 'articulos',id);
+                const { id } = await solicitudFetch(undefined, 'GET', 'articulos');
+                await solicitudFetch(formData, 'PATCH', 'articulos', id);
                 reset();
                 return;
             } catch (error) {
