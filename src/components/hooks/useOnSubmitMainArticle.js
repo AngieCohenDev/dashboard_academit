@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { solicitudPost, solicitudPatch, solicitudGet } from "../../helpers/solicitudesFetch";
+import { solicitudPost, solicitudPatch, solicitudGet, solicitudFetch } from "../../helpers/solicitudesFetch";
 import { useState } from "react";
 
 export const useOnSubmitMainArticle = () => {
@@ -32,14 +32,9 @@ export const useOnSubmitMainArticle = () => {
             setImageFile(null)
         }
 
-        //Para ver cada uno de los datos enviados en el form data.
-        // for (let pair of formData.entries()) {
-        //   console.log(`${pair[0]}: ${pair[1]}`);
-        // }
-
         if (itemCount === 4) {
             try {
-                await solicitudPost(formData, 'main-article');
+                await solicitudFetch(formData, 'POST', 'main-article');
                 reset();
                 return;
             } catch (error) {
@@ -48,8 +43,8 @@ export const useOnSubmitMainArticle = () => {
             reset();
         } else {
             try {
-                const { id } = await solicitudGet('main-article');
-                await solicitudPatch(formData, 'main-article', id);
+                const { id } = await solicitudFetch(undefined, 'GET','main-article');
+                await solicitudFetch(formData, 'PATCH','main-article', id);
                 reset();
                 return;
             } catch (error) {
