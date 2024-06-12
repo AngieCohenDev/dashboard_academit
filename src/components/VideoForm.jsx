@@ -1,13 +1,15 @@
+import React from 'react';
 import classNames from "classnames";
 import VideoUpload from "../helpers/VideoUpload";
 import { useOnSubmitCursos } from "./hooks/useOnSubmitCursos";
+import Alert from "./shared/Alerts"; // Asegúrate de que la ruta sea correcta
 
 const styleLabel = "font-medium text-sm py-1 ";
 const styleInput = "w-full h-[40px] px-2 text-slate-400 text-xs my-1 rounded-lg border bg-gray-100";
 
 export default function VideoForm() {
 
-  const { onSubmit, handleFileChange, register} = useOnSubmitCursos()
+  const { onSubmit, handleFileChange, register, alert, setAlert } = useOnSubmitCursos();
 
   return (
     <div className="flex justify-center min-h-screen bg-gray-100">
@@ -25,11 +27,12 @@ export default function VideoForm() {
               className={classNames(styleInput)}
               type="text"
               placeholder="Por favor ingrese el título"
+              required
               {...register("title")}
             />
           </div>
 
-          {/* Descripcion */}
+          {/* Descripción */}
           <div className="my-2">
             <label htmlFor="descripcion" className={classNames(styleLabel)}>
               Ingrese la descripción
@@ -39,6 +42,7 @@ export default function VideoForm() {
               type="text"
               placeholder="Por favor ingrese la descripción"
               {...register("description")}
+              required
             />
           </div>
 
@@ -47,7 +51,7 @@ export default function VideoForm() {
             <label htmlFor="file" className={classNames(styleLabel)}>
               Seleccione el video
             </label>
-            <VideoUpload onFileChange={handleFileChange} />
+            <VideoUpload onFileChange={handleFileChange} required={true}  />
           </div>
 
           <button
@@ -57,6 +61,7 @@ export default function VideoForm() {
             Enviar
           </button>
         </form>
+        <Alert alert={alert} setAlert={setAlert} />
       </div>
     </div>
   );

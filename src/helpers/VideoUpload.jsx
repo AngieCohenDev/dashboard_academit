@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 
-const VideoUpload = ({ onFileChange }) => {
+const VideoUpload = ({ onFileChange , required}) => {
     const [error, setError] = useState(null);
 
     const handleFileChange = (event) => {
@@ -20,7 +20,7 @@ const VideoUpload = ({ onFileChange }) => {
 
     return (
         <div>
-            <input type="file" accept="video/*" onChange={handleFileChange} />
+            <input type="file" accept="video/*" onChange={handleFileChange} required={required} />
             {error && <p style={{ color: 'red', fontSize:'12px', margin:'5px' }}>{error}</p>}
         </div>
     );
