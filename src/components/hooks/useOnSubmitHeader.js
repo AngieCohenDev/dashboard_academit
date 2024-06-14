@@ -1,6 +1,8 @@
 import { useForm } from "react-hook-form";
 import { solicitudFetch } from "../../helpers/solicitudesFetch";
 import { useState } from "react";
+import { Input } from "../shared/Input";
+
 
 export const useOnSubmitHeader = () => {
 
@@ -8,63 +10,52 @@ export const useOnSubmitHeader = () => {
 
     const [imageFile, setImageFile] = useState(null);
 
+    const [inputList, setInputList] = useState([<Input key={0} number={1} register={register} />]);
+
     const handleFileChange = (file) => {
         setImageFile(file);
     };
 
     const onSubmit = handleSubmit(async (data) => {
-        const formData = new FormData();
-        //creamos una variabe "fields" en donde pondremos el nombre de cada uno de los inputs
-        const fields = ['item01', 'item02', 'item03', 'item04'];
-        //creamos un contador que empieza en cero, esto para determinar si se llamara a POST o PATCH
-        let itemCount = 0;
 
-        //a la variable fields le aplicamos el metodo forEach para ir agregado al formData el nombre de cada 
-        //dato en fields y el value que nos envian desde data
+        const formData = new FormData();
+        const fields = Object.keys(data);
+        //creamos un contador que empieza en cero, esto para determinar si se llamara a POST o PATCH
+
+        // a la variable fields le aplicamos el metodo forEach para ir agregado al formData el nombre de cada 
+        // dato en fields y el value que nos envian desde data
         fields.forEach(field => {
-            if (data[field] !== "") {
-                formData.append(field, data[field]);
-                itemCount++;
-            }
+            formData.append(field, data[field]);
         });
 
         if (imageFile !== null) {
+            console.log(imageFile);
             formData.append("logo", imageFile);
-            itemCount++;
             setImageFile(null)
         }
 
-        //Para ver cada uno de los datos enviados en el form data.
-        // for (let pair of formData.entries()) {
-        //   console.log(`${pair[0]}: ${pair[1]}`);
-        // }
-
-        if (itemCount === 5) {
-            try {
-                await solicitudFetch(formData, 'POST', 'headers');
-                reset();
-                return;
-            } catch (error) {
-                console.error("Error:", error);
-            }
-            reset();
-        } else {
-            try {
-                const { id } = await solicitudFetch(undefined, 'GET', 'headers');
-                await solicitudFetch(formData, 'PATCH', 'headers', id);
-                reset();
-                return;
-            } catch (error) {
-                console.error("Error:", error);
-            }
-            reset();
+        // Para ver cada uno de los datos enviados en el form data.
+        for (let pair of formData.entries()) {
+            console.log(`${pair[0]}: ${pair[1]}`);
         }
+
+        try {
+            await solicitudFetch(formData, 'POST', 'headers');
+            reset();
+            setInputList([<Input key={0} number={1} register={register} />])
+        } catch (error) {
+            console.error("Error:", error);
+        }
+
+
     });
 
     return {
         handleFileChange,
         onSubmit,
-        register
+        register,
+        inputList,
+        setInputList
     }
 
 }
