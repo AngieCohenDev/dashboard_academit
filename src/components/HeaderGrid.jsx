@@ -4,6 +4,7 @@ import { useOnSubmitHeader } from "./hooks/useOnSubmitHeader";
 import { useState } from "react";
 import { Table } from "./shared/Table";
 import axios from "axios";
+import { Input } from "./shared/Input";
 
 const articlesField = {
   keys: ["id", "item01", "item02", "item03", "item04", "logo", "createdAt", "updatedAt"],
@@ -29,8 +30,8 @@ const callApi = async () => {
 
 function HeaderGrid() {
 
-  //Hook personalizado para manejar las solicitudes fetch
-  const { handleFileChange, onSubmit, register } = useOnSubmitHeader()
+  // Hook personalizado para manejar las solicitudes fetch
+  const { handleFileChange, onSubmit, register, inputList, setInputList } = useOnSubmitHeader();
 
   const [showPopup, setShowPopup] = useState(false);
 
@@ -40,6 +41,19 @@ function HeaderGrid() {
 
   const closePopup = () => {
     setShowPopup(false);
+  };
+
+  const addItem = () => {
+    setInputList([
+      ...inputList,
+      <Input key={inputList.length} number={inputList.length + 1} register={register} />,
+    ]);
+  };
+
+  const removeItem = () => {
+    if (inputList.length > 1) {
+      setInputList(inputList.slice(0, -1));
+    }
   };
 
   return (
@@ -73,57 +87,8 @@ function HeaderGrid() {
               </button>
             </div>
             <form onSubmit={onSubmit} className="flex flex-col font-sans">
-              <div className="my-2">
-                {/* Primer Item */}
-                <label htmlFor="items01" className={classNames(styleLabel)}>
-                  Items 1
-                </label>
-                <input
-                  className={classNames(styleInput)}
-                  type="text"
-                  placeholder="Por favor ingrese el nuevo valor del items"
-                  {...register("item01")}
-                />
-              </div>
-
-              <div className="my-2">
-                {/* Segundo Item */}
-                <label htmlFor="items02" className={classNames(styleLabel)}>
-                  Items 2
-                </label>
-                <input
-                  className={classNames(styleInput)}
-                  type="text"
-                  placeholder="Por favor ingrese el nuevo valor del items"
-                  {...register("item02")}
-                />
-              </div>
-
-              <div className="my-2">
-                {/* Tercer Item */}
-                <label htmlFor="items03" className={classNames(styleLabel)}>
-                  Items 3
-                </label>
-                <input
-                  className={classNames(styleInput)}
-                  type="text"
-                  placeholder="Por favor ingrese el nuevo valor del items"
-                  {...register("item03")}
-                />
-              </div>
-
-              <div className="my-2">
-                {/* Cuarto Item */}
-                <label htmlFor="items04" className={classNames(styleLabel)}>
-                  Items 4
-                </label>
-                <input
-                  className={classNames(styleInput)}
-                  type="text"
-                  placeholder="Por favor ingrese el nuevo valor del items"
-                  {...register("item04")}
-                />
-              </div>
+              
+              {inputList}
 
               {/* Logo */}
               <div className="my-2">
@@ -133,13 +98,32 @@ function HeaderGrid() {
                 <ImageUpload onFileChange={handleFileChange} />
               </div>
 
-              <div className="flex justify-end mt-8">
-                <button
-                  type="submit"
-                  className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg focus:outline-none focus:shadow-outline"
-                >
-                  Enviar
-                </button>
+              <div className="mt-8">
+                <div className="flex flex-col items-end space-y-4">
+                  <div className="flex space-x-4">
+                    <button
+                      type="button"
+                      onClick={removeItem}
+                      className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg focus:outline-none focus:shadow-outline"
+                    >
+                      Remover Item
+                    </button>
+                    <button
+                      type="button"
+                      // disabled={inputList.length === 1 ? true : false}
+                      onClick={addItem}
+                      className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg focus:outline-none focus:shadow-outline"
+                    >
+                      Agregar Item
+                    </button>
+                  </div>
+                  <button
+                    type="submit"
+                    className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg focus:outline-none focus:shadow-outline"
+                  >
+                    Enviar
+                  </button>
+                </div>
               </div>
             </form>
           </div>
