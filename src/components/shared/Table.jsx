@@ -20,8 +20,10 @@ export const Table = ({ config, source }) => {
 
   useEffect(() => {
     source().then((response) => {
-      setData(mapeo(config, response)); 
-    });
+      setData(mapeo(config, response));
+    }).catch((error) => {
+      console.error(error)
+    })
   }, []);
 
   return (
