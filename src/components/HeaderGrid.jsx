@@ -14,11 +14,11 @@ const articlesField = {
 const styleLabel = "font-medium text-sm py-1 ";
 const styleInput = "w-full h-[40px] px-2 text-slate-400 text-xs my-1 rounded-lg border bg-gray-100";
 
-const callApi = async () => {
+const callApi = async (page = 1, limit = 5) => {
   const config = {
     method: "get",
     maxBodyLength: Infinity,
-    url: "http://localhost:8080/headers",
+    url: `http://localhost:8080/headers?page=${page}&limit=${limit}`,
     headers: {
       Accept: "application/json",
     },
@@ -34,6 +34,7 @@ function HeaderGrid() {
   const { handleFileChange, onSubmit, register, inputList, setInputList } = useOnSubmitHeader();
 
   const [showPopup, setShowPopup] = useState(false);
+  const [counter, setCounter] = useState(1)
 
   const openPopup = () => {
     setShowPopup(true);
@@ -87,7 +88,7 @@ function HeaderGrid() {
               </button>
             </div>
             <form onSubmit={onSubmit} className="flex flex-col font-sans">
-              
+
               {inputList}
 
               {/* Logo */}
@@ -131,7 +132,21 @@ function HeaderGrid() {
       )}
       {/* Renderizar la tabla */}
       <div className="overflow-x-auto mx-4">
-        <Table config={articlesField} source={callApi} />
+        <Table config={articlesField} source={callApi} page={counter} />
+      </div>
+      <div className="flex justify-end items-center px-4 py-2 bg-white shadow-md mb-4 mt-4">
+        <div className="flex items-center space-x-4">
+          <button
+            disabled={counter === 1 ? true : false}
+            onClick={() => setCounter(counter - 1)}
+            type="button"
+            className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg focus:outline-none focus:shadow-outline">prev</button>
+          <div>{counter}</div>
+          <button
+            onClick={() => setCounter(counter + 1)}
+            type="button"
+            className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg focus:outline-none focus:shadow-outline">next</button>
+        </div>
       </div>
     </div>
   );
