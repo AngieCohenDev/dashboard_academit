@@ -1,9 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 
-export const DynamicForm = ({ fields, onSubmit, extraButtons }) => {
+export const DynamicForm = ({ fields, onSubmit, extraButtons, resetForm }) => {
     const [formData, setFormData] = useState({});
     const [errors, setErrors] = useState({});
+
+    useEffect(() => {
+        if (resetForm) {
+            setFormData({});
+            setErrors({});
+        }
+    }, [resetForm]);
 
     const handleChange = (e, id) => {
         setFormData({ ...formData, [id]: e.target.value });
@@ -30,7 +37,7 @@ export const DynamicForm = ({ fields, onSubmit, extraButtons }) => {
     };
 
     return (
-        <div className="flex flex-col items-center mx-4  my-8 p-6 border border-gray-300 rounded-lg ">
+        <div className="flex flex-col items-center mx-4 my-8 p-6 border border-gray-300 rounded-lg ">
             <div className="flex flex-wrap w-full items-center">
                 <form id="dynamicForm" className="flex flex-wrap gap-4 w-auto flex-grow" onSubmit={handleSubmit}>
                     {fields.map(field => (

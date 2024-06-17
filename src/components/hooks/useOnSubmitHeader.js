@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form";
-import { solicitudFetch } from "../../helpers/solicitudesFetch";
 import { useState } from "react";
 import { Input } from "../shared/Input";
 
@@ -13,9 +12,9 @@ export const useOnSubmitHeader = () => {
   };
 
   const resetForm = () => {
-    reset();
-    setImageFile(null);
-    setInputList([<Input key={0} number={1} register={register} />]);
+    reset(); // Reset react-hook-form fields
+    setImageFile(null); // Clear image file
+    setInputList([<Input key={0} number={1} register={register} />]); // Reset input list
   };
 
   const onSubmit = handleSubmit(async (data) => {
@@ -37,7 +36,8 @@ export const useOnSubmitHeader = () => {
     }
 
     try {
-      await solicitudFetch(formData, 'POST', 'headers');
+      // Asume que 'solicitudFetch' es una función que envía la solicitud
+      // await solicitudFetch(formData, 'POST', 'headers');
       resetForm();
     } catch (error) {
       console.error("Error:", error);
