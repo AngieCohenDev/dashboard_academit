@@ -13,8 +13,8 @@ const articlesField = {
 };
 
 const fields = [
-  { id: 'Id', label: 'Id', type: 'text', required: true },
-  { id: 'Item01', label: 'Item01', type: 'text', required: true },
+  { id: 'id', label: 'Id', type: 'text', required: false },
+  { id: 'item01', label: 'Item01', type: 'text', required: false },
 ];
 
 const Createfields = [
@@ -150,9 +150,15 @@ function HeaderGrid() {
   };
 
   const searchFormSubmit = async (form) => {
+
+    console.log(form)
+ 
     setSearchParams(form);
-    setCurrentPage(1); // Reset to first page for new search
-    resetAllForms();
+
+    const response = await callApi(currentPage, 5, form);
+    setData(response.data);
+
+    //resetAllForms();
   };
 
   const handleEdit = (item) => {
