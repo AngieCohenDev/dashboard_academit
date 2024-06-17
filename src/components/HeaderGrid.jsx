@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Table } from './shared/Table';
-import { Input } from './shared/Input';
 import { DynamicForm } from './shared/DinamicForm/DynamicForm';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import axios from 'axios';
 import ItemFormPopup from '../components/shared/FormCreation/FormCreation';
-import { useOnSubmitHeader } from './hooks/useOnSubmitHeader';
+
 
 const articlesField = {
   keys: ['id', 'item01', 'item02', 'item03', 'item04', 'logo', 'createdAt', 'updatedAt'],
@@ -98,7 +97,6 @@ const createItem = async (formValues) => {
 };
 
 function HeaderGrid() {
-  const { handleFileChange, onSubmit, register, inputList, setInputList } = useOnSubmitHeader();
   const [showPopup, setShowPopup] = useState(false);
   const [data, setData] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
@@ -188,7 +186,6 @@ function HeaderGrid() {
     setSearchParams({});
     setCurrentPage(1);
     setCurrentItem(null);
-    setInputList([<Input key={0} number={1} register={register} />]);
     setResetForm(true); // Trigger form reset
     setTimeout(() => setResetForm(false), 0); // Reset the flag
   };
