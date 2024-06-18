@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import { Table } from './shared/Table';
 import { DynamicForm } from './shared/DinamicForm/DynamicForm';
 import { PlusIcon } from '@heroicons/react/24/solid';
-import axios from 'axios';
+import { FaMinus } from "react-icons/fa6";
 import ItemFormPopup from '../components/shared/FormCreation/FormCreation';
+import { callApiMainArticle,createItemMainArticle, updateItemMainArticle, deleteItemMainArticle} from '../axios/peticionesMainArticle'
 
 const MainarticleField = {
   keys: ['id', 'title', 'description', 'textButton', 'image', 'createdAt', 'updatedAt'],
@@ -22,82 +23,6 @@ const Createfields = [
   { id: 'Imagen', label: 'Imagen', type: 'file', required: true },
 ];
 
-const callApi = async (page = 1, limit = 5, searchParams = {}) => {
-  const paramsSearch = Object.keys(searchParams)?.reduce((acc, key) => {
-    const label = key;
-    const value = searchParams[key];
-    return acc + `&${label}=${value}`;
-  }, '');
-
-  const config = {
-    method: 'get',
-    maxBodyLength: Infinity,
-    url: `http://localhost:8080/main-article?page=${page}&limit=${limit}${paramsSearch}`,
-    headers: {
-      Accept: 'application/json',
-    },
-  };
-  const response = await axios.request(config);
-  return response.data;
-};
-
-const updateItem = async (id, data) => {
-
-  const { Titulo, Descripcion,Boton, Imagen} = data;
-
-  const formdata = new FormData();
-  formdata.append("title", Titulo);
-  formdata.append("description", Descripcion);
-  formdata.append("textButton", Boton);
-  formdata.append("image", Imagen);
-
-  const config = {
-    method: 'patch',
-    url: `http://localhost:8080/main-article/${id}`,
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-    data: formdata,
-  };
-  const response = await axios.request(config);
-  return response.data;
-};
-
-const deleteItem = async (id) => {
-  console.log(id);
-  const config = {
-    method: 'delete',
-    url: `http://localhost:8080/main-article/${id}`,
-  };
-  const response = await axios.request(config);
-  return response.data;
-};
-
-const createItem = async (formValues) => {
-
-  const myMainArticles = new Headers();
-
-  const { Titulo, Descripcion,Boton, Imagen} = formValues;
-
-  console.table(formValues );
-  const formdata = new FormData();
-  formdata.append("title", Titulo);
-  formdata.append("description", Descripcion);
-  formdata.append("textButton", Boton);
-  formdata.append("image", Imagen);
-  
-  const requestOptions = {
-    method: "POST",
-    headers: myMainArticles,
-    body: formdata,
-    redirect: "follow"
-  };
-
-  const datos =await fetch("http://localhost:8080/main-article", requestOptions);
-
-  console.log(datos);
-  return datos
-};
 
 function MainArticleForm() {
   const [showPopup, setShowPopup] = useState(false);
@@ -113,7 +38,7 @@ function MainArticleForm() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await callApi(currentPage, 5, searchParams);
+        const response = await callApiMainArticle(currentPage, 5, searchParams);
         setData(response.data);
         setTotalItems(response.pagination.totalItems);
         setTotalPages(response.pagination.pageCount);
@@ -140,10 +65,10 @@ function MainArticleForm() {
       event.preventDefault();
       const formData = new FormData(event.target);
       const formValues = Object.fromEntries(formData.entries());
-      (formAction ? await createItem({ ...formValues }) : await updateItem(currentItem.Id, { ...formValues }))
+      (formAction ? await createItemMainArticle({ ...formValues }) : await updateItemMainArticle(currentItem.Id, { ...formValues }))
       closePopup()
       setCurrentPage(1);
-      const response = await callApi(currentPage, 5, searchParams);
+      const response = await callApiMainArticle(currentPage, 5, searchParams);
       setData(response.data);
     } catch (error) {
       console.log('Ocurrio un error en el servidor' , error);
@@ -157,7 +82,7 @@ function MainArticleForm() {
  
     setSearchParams(form);
 
-    const response = await callApi(currentPage, 5, form);
+    const response = await callApiMainArticle(currentPage, 5, form);
     setData(response.data);
 
     //resetAllForms();
@@ -178,8 +103,8 @@ function MainArticleForm() {
   const handleDelete = async (item) => {
     console.log('Delete item:', item);
     try {
-      await deleteItem(item.Id);
-      const response = await callApi(currentPage, 5, searchParams);
+      await deleteItemMainArticle(item.Id);
+      const response = await callApiMainArticle(currentPage, 5, searchParams);
       setData(response.data);
       setTotalItems(response.pagination.totalItems);
       setTotalPages(response.pagination.pageCount);
@@ -211,7 +136,7 @@ function MainArticleForm() {
       label: 'Resetear',
       onClick: resetAllForms,
       className: 'bg-red-500 hover:bg-red-700',
-      icon: PlusIcon,
+      icon: FaMinus,
     },
   ];
 

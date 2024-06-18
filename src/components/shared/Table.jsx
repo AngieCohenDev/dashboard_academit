@@ -63,7 +63,7 @@ export const Table = ({ config, data, totalItems, totalPages, currentPage, onPag
             mappedData?.map((item, index) => (
               <tr key={index} className="border-b border-gray-200 hover:bg-gray-100">
                 {config.labels.map((label, key) => (
-                  <td key={key} className="py-3 px-6 text-left">{item[label]}</td>
+                  <td key={key} className="py-1 px-5 text-left">{item[label]}</td>
                 ))}
                 <td className="py-3 px-6 text-left" onMouseLeave={handleMouseLeave}>
                   <div className="relative inline-block text-left" onMouseEnter={() => handleMouseEnter(index)}>

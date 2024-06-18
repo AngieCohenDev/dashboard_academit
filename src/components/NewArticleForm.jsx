@@ -3,6 +3,7 @@ import { Table } from './shared/Table';
 import { Input } from './shared/Input';
 import { DynamicForm } from './shared/DinamicForm/DynamicForm';
 import { PlusIcon } from '@heroicons/react/24/solid';
+import { FaMinus } from "react-icons/fa6";
 import axios from 'axios';
 import ItemFormPopup from '../components/shared/FormCreation/FormCreation';
 import { useOnSubmitHeader } from './hooks/useOnSubmitHeader';
@@ -113,7 +114,7 @@ const createItem = async (formValues) => {
 };
 
 export default function NewArticleForm() {
-  const { handleFileChange, onSubmit, register, inputList, setInputList } = useOnSubmitHeader();
+  const { handleFileChange, onSubmit, register, inputList, setInputList } = useOnSubmitHeader()
   const [showPopup, setShowPopup] = useState(false);
   const [data, setData] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
@@ -226,7 +227,7 @@ export default function NewArticleForm() {
       label: 'Resetear',
       onClick: resetAllForms,
       className: 'bg-red-500 hover:bg-red-700',
-      icon: PlusIcon,
+      icon: FaMinus,
     },
   ];
 

@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
+import { PlusIcon } from '@heroicons/react/24/solid';
+import { FaMinus } from "react-icons/fa6";
+import ItemFormPopup from '../components/shared/FormCreation/FormCreation';
 import { Table } from './shared/Table';
 import { DynamicForm } from './shared/DinamicForm/DynamicForm';
-import { PlusIcon } from '@heroicons/react/24/solid';
-import axios from 'axios';
-import ItemFormPopup from '../components/shared/FormCreation/FormCreation';
+import {callApiHeaders, createItemHeaders, deleteItemHeaders, updateItemHeaders} from '../axios/peticionesHeaders'
 
 
 const articlesField = {
@@ -24,87 +25,6 @@ const Createfields = [
   { id: 'logo', label: 'Logo', type: 'file', required: true },
 ];
 
-const callApi = async (page = 1, limit = 5, searchParams = {}) => {
-  const paramsSearch = Object.keys(searchParams)?.reduce((acc, key) => {
-    const label = key;
-    const value = searchParams[key];
-    return acc + `&${label}=${value}`;
-  }, '');
-
-  const config = {
-    method: 'get',
-    maxBodyLength: Infinity,
-    url: `http://localhost:8080/headers?page=${page}&limit=${limit}${paramsSearch}`,
-    headers: {
-      Accept: 'application/json',
-    },
-  };
-  const response = await axios.request(config);
-  return response.data;
-};
-
-const updateItem = async (id, data) => {
-
-  const { Item01, Item02, Item03, Item04 ,logo} = data;
-
-  const formdata = new FormData();
-  formdata.append("item01", Item01);
-  formdata.append("item02", Item02);
-  formdata.append("item03", Item03);
-  formdata.append("item04", Item04);
-  formdata.append("logo", logo);
-
-  const config = {
-    method: 'patch',
-    url: `http://localhost:8080/headers/${id}`,
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-    data: formdata,
-  };
-  const response = await axios.request(config);
-  return response.data;
-};
-
-const deleteItem = async (id) => {
-  console.log(id);
-  const config = {
-    method: 'delete',
-    url: `http://localhost:8080/headers/${id}`,
-  };
-  const response = await axios.request(config);
-  return response.data;
-};
-
-const createItem = async (formValues) => {
- 
-  const myHeaders = new Headers();
-
-  const { Item01, Item02, Item03, Item04 ,logo} = formValues;
-  
-
-  console.table(formValues );
-  const formdata = new FormData();
-  formdata.append("item01", Item01);
-  formdata.append("item02", Item02);
-  formdata.append("item03", Item03);
-  formdata.append("item04", Item04);
-  formdata.append("logo", logo);
-
-
-  
-  const requestOptions = {
-    method: "POST",
-    headers: myHeaders,
-    body: formdata,
-    redirect: "follow"
-  };
-
-  const datos =await fetch("http://localhost:8080/headers", requestOptions);
-
-  console.log(datos);
-  return datos
-};
 
 function HeaderGrid() {
   const [showPopup, setShowPopup] = useState(false);
@@ -120,7 +40,7 @@ function HeaderGrid() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await callApi(currentPage, 5, searchParams);
+        const response = await callApiHeaders(currentPage, 5, searchParams);
         setData(response.data);
         setTotalItems(response.pagination.totalItems);
         setTotalPages(response.pagination.pageCount);
@@ -147,10 +67,10 @@ function HeaderGrid() {
       event.preventDefault();
       const formData = new FormData(event.target);
       const formValues = Object.fromEntries(formData.entries());
-      (formAction ? await createItem({ ...formValues }) : await updateItem(currentItem.Id, { ...formValues }))
+      (formAction ? await createItemHeaders({ ...formValues }) : await updateItemHeaders(currentItem.Id, { ...formValues }))
       closePopup()
       setCurrentPage(1);
-      const response = await callApi(currentPage, 5, searchParams);
+      const response = await callApiHeaders(currentPage, 5, searchParams);
       setData(response.data);
     } catch (error) {
       console.log('Ocurrio un error en el servidor' , error);
@@ -164,7 +84,7 @@ function HeaderGrid() {
  
     setSearchParams(form);
 
-    const response = await callApi(currentPage, 5, form);
+    const response = await callApiHeaders(currentPage, 5, form);
     setData(response.data);
 
     //resetAllForms();
@@ -185,8 +105,8 @@ function HeaderGrid() {
   const handleDelete = async (item) => {
     console.log('Delete item:', item);
     try {
-      await deleteItem(item.Id);
-      const response = await callApi(currentPage, 5, searchParams);
+      await deleteItemHeaders(item.Id);
+      const response = await callApiHeaders(currentPage, 5, searchParams);
       setData(response.data);
       setTotalItems(response.pagination.totalItems);
       setTotalPages(response.pagination.pageCount);
@@ -218,7 +138,7 @@ function HeaderGrid() {
       label: 'Resetear',
       onClick: resetAllForms,
       className: 'bg-red-500 hover:bg-red-700',
-      icon: PlusIcon,
+      icon: FaMinus,
     },
   ];
 

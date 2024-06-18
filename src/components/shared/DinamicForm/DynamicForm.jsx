@@ -59,7 +59,7 @@ export const DynamicForm = ({ fields, onSubmit, extraButtons, resetForm }) => {
                 </form>
                 <div className="flex items-start p-2 space-x-2">
                     <button form="dynamicForm" type="submit" className="h-10 w-32 bg-blue-600 hover:bg-blue-500 text-white font-bold py-1 px-2 rounded-lg flex items-center justify-center shadow-md">
-                        <MagnifyingGlassIcon className="w-4 h-4 mr-1" />
+                        <MagnifyingGlassIcon className="w-4 h-4 mr-2" />
                         Buscar
                     </button>
                     {extraButtons && extraButtons.map((button, index) => (
@@ -69,7 +69,7 @@ export const DynamicForm = ({ fields, onSubmit, extraButtons, resetForm }) => {
                             onClick={button.onClick}
                             className={`${button.className} h-10 w-48 text-white font-bold py-1 px-2 rounded-lg flex items-center justify-center shadow-md`}
                         >
-                            {button.icon && <button.icon className="w-4 h-4 mr-1" />}
+                            {button.icon && <button.icon className="w-4 h-4 mr-2" />}
                             {button.label}
                         </button>
                     ))}
