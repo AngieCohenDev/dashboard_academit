@@ -1,68 +1,178 @@
-import React from 'react';
-import classNames from "classnames";
-import VideoUpload from "../helpers/VideoUpload";
-import { useOnSubmitCursos } from "./hooks/useOnSubmitCursos";
-import Alert from "./shared/Alerts"; // Asegúrate de que la ruta sea correcta
+import { useEffect, useState } from 'react';
+import { Table } from './shared/Table';
+import { DynamicForm } from './shared/DinamicForm/DynamicForm';
+import { PlusIcon } from '@heroicons/react/24/solid';
+import { FaMinus } from "react-icons/fa6";
+import ItemFormPopup from '../components/shared/FormCreation/FormCreation';
+import {callApiVideos, createItemVideos, updateItemVideos, deleteItemVideos} from '../axios/peticionesVideo'
 
-const styleLabel = "font-medium text-sm py-1 ";
-const styleInput = "w-full h-[40px] px-2 text-slate-400 text-xs my-1 rounded-lg border bg-gray-100";
+const videoField = {
+  keys: ['id', 'title', 'description', 'video', 'createdAt', 'updatedAt'],
+  labels: ['Id', 'Título', 'Descripción', 'URL', 'Creado', 'Actualizado'],
+};
+
+const fields = [
+  { id: 'id', label: 'Id', type: 'text', required: false },
+  { id: 'title', label: 'Título', type: 'text', required: false },
+];
+
+const Createfields = [
+  { id: 'Título', label: 'Título', type: 'text', required: true },
+  { id: 'Descripción', label: 'Descripción', type: 'text', required: true },
+  { id: 'Video', label: 'Video', type: 'file', required: true },
+];
 
 export default function VideoForm() {
 
-  const { onSubmit, handleFileChange, register, alert, setAlert } = useOnSubmitCursos();
-
-  return (
-    <div className="flex justify-center min-h-screen bg-gray-100">
-      <div className="bg-white shadow-md rounded-lg p-8 w-2/5 h-3/5 mx-4">
-        <div className="mb-6">
-          <h1 className="text-2xl flex items-center justify-center font-bold">Formulario curso</h1>
+    const [showPopup, setShowPopup] = useState(false);
+    const [data, setData] = useState([]);
+    const [totalItems, setTotalItems] = useState(0);
+    const [totalPages, setTotalPages] = useState(1);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [currentItem, setCurrentItem] = useState(null);
+    const [searchParams, setSearchParams] = useState({});
+    const [resetForm, setResetForm] = useState(false);
+    const [formAction, setFormAction] = useState(true)
+  
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await callApiVideos(currentPage, 5, searchParams);
+          setData(response.data);
+          setTotalItems(response.pagination.totalItems);
+          setTotalPages(response.pagination.pageCount);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+  
+      fetchData();
+    }, [currentPage, searchParams]);
+  
+    const openPopup = () => {
+      setShowPopup(true);
+    };
+  
+    const closePopup = () => {
+      setShowPopup(false);
+      setCurrentItem(null);
+    };
+  
+    const handleFormSubmit = async (event) => {
+  
+      try {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const formValues = Object.fromEntries(formData.entries());
+        (formAction ? await createItemVideos({ ...formValues }) : await updateItemVideos(currentItem.Id, { ...formValues }))
+        closePopup()
+        setCurrentPage(1);
+        const response = await callApiVideos(currentPage, 5, searchParams);
+        setData(response.data);
+      } catch (error) {
+        console.log('Ocurrio un error en el servidor' , error);
+      }
+  
+    };
+  
+    const searchFormSubmit = async (form) => {
+  
+      console.log(form)
+   
+      setSearchParams(form);
+  
+      const response = await callApiVideos(currentPage, 5, form);
+      setData(response.data);
+  
+      //resetAllForms();
+    };
+  
+    const handleCreate = () => {
+      setFormAction(true)
+      openPopup();
+    };
+  
+    const handleEdit = (item) => {
+      console.log('Edit item:', item);
+      setCurrentItem(item);
+      setFormAction(false)
+      openPopup();
+    };
+  
+    const handleDelete = async (item) => {
+      console.log('Delete item:', item);
+      try {
+        await deleteItemVideos(item.Id);
+        const response = await callApiVideos(currentPage, 5, searchParams);
+        setData(response.data);
+        setTotalItems(response.pagination.totalItems);
+        setTotalPages(response.pagination.pageCount);
+      } catch (error) {
+        console.error('Error deleting item:', error);
+      }
+    };
+  
+    const handlePageChange = (newPage) => {
+      setCurrentPage(newPage);
+    };
+  
+    const resetAllForms = () => {
+      setSearchParams({});
+      setCurrentPage(1);
+      setCurrentItem(null);
+      setResetForm(true); // Trigger form reset
+      setTimeout(() => setResetForm(false), 0); // Reset the flag
+    };
+  
+    const extraButtons = [
+      {
+        label: 'Crear Video',
+        onClick: handleCreate,
+        className: 'bg-indigo-500 hover:bg-indigo-700 crear',
+        icon: PlusIcon,
+      },
+      {
+        label: 'Restablecer',
+        onClick: resetAllForms,
+        className: 'bg-red-500 hover:bg-red-700',
+        icon: FaMinus,
+      },
+    ];
+  
+    const actions = [
+      { label: 'Editar', onClick: handleEdit },
+      { label: 'Eliminar', onClick: handleDelete },
+    ];
+  
+    return (
+      <div className="min-h-screen bg-white flex flex-col">
+        <DynamicForm fields={fields} onSubmit={searchFormSubmit} extraButtons={extraButtons} resetForm={resetForm} />
+  
+        {showPopup && (
+          <ItemFormPopup
+            currentItem={currentItem}
+            closePopup={closePopup}
+            handleFormSubmit={handleFormSubmit}
+            formAction={formAction}
+            fields={Createfields}
+            handleFieldChange={(fieldId, value) => {
+              setCurrentItem({ ...currentItem, [fieldId]: value });
+            }}
+          />
+        )}
+  
+        <div className="overflow-x-auto mx-4">
+          <Table
+            config={videoField}
+            data={data}
+            totalItems={totalItems}
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+            actions={actions}
+          />
         </div>
-        <form onSubmit={onSubmit} className="flex flex-col font-sans">
-          {/* Título */}
-          <div className="my-2">
-            <label htmlFor="title" className={classNames(styleLabel)}>
-              Ingrese el título de la clase
-            </label>
-            <input
-              className={classNames(styleInput)}
-              type="text"
-              placeholder="Por favor ingrese el título"
-              required
-              {...register("title")}
-            />
-          </div>
-
-          {/* Descripción */}
-          <div className="my-2">
-            <label htmlFor="descripcion" className={classNames(styleLabel)}>
-              Ingrese la descripción
-            </label>
-            <input
-              className={classNames(styleInput)}
-              type="text"
-              placeholder="Por favor ingrese la descripción"
-              {...register("description")}
-              required
-            />
-          </div>
-
-          {/* Video */}
-          <div className="my-2">
-            <label htmlFor="file" className={classNames(styleLabel)}>
-              Seleccione el video
-            </label>
-            <VideoUpload onFileChange={handleFileChange} required={true}  />
-          </div>
-
-          <button
-            type="submit"
-            className="self-center mt-6 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg focus:outline-none focus:shadow-outline"
-          >
-            Enviar
-          </button>
-        </form>
-        <Alert alert={alert} setAlert={setAlert} />
       </div>
-    </div>
-  );
-}
+    );
+  }
+

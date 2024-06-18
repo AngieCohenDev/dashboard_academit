@@ -3,103 +3,24 @@ import { Table } from './shared/Table';
 import { DynamicForm } from './shared/DinamicForm/DynamicForm';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import { FaMinus } from "react-icons/fa6";
-import axios from 'axios';
 import ItemFormPopup from '../components/shared/FormCreation/FormCreation';
+import {callApiArticle,createItemArticle ,updateItemArticle, deleteItemArticle} from '../axios/peticionesArticle'
 
-const MainarticleField = {
-  keys: ['id', 'title', 'description', 'textButton', 'image', 'createdAt', 'updatedAt'],
-  labels: ['Id', 'Titulo', 'Descripcion', 'Boton', 'URL', 'Creado', 'Actualizado'],
+const ArticleField = {
+  keys: ['id', 'title', 'description', 'image', 'createdAt', 'updatedAt'],
+  labels: ['Id', 'Título', 'Descripción', 'URL', 'Creado', 'Actualizado'],
 };
 
 const fields = [
   { id: 'id', label: 'Id', type: 'text', required: false },
-  { id: 'title', label: 'Titulo', type: 'text', required: false },
+  { id: 'title', label: 'Título', type: 'text', required: false },
 ];
 
 const Createfields = [
-  { id: 'Titulo', label: 'Titulo', type: 'text', required: true },
-  { id: 'Descripcion', label: 'Descripcion', type: 'text', required: true },
-  { id: 'Boton', label: 'Boton', type: 'text', required: true },
+  { id: 'Título', label: 'Título', type: 'text', required: true },
+  { id: 'Descripción', label: 'Descripción', type: 'text', required: true },
   { id: 'Imagen', label: 'Imagen', type: 'file', required: true },
 ];
-
-const callApi = async (page = 1, limit = 5, searchParams = {}) => {
-  const paramsSearch = Object.keys(searchParams)?.reduce((acc, key) => {
-    const label = key;
-    const value = searchParams[key];
-    return acc + `&${label}=${value}`;
-  }, '');
-
-  const config = {
-    method: 'get',
-    maxBodyLength: Infinity,
-    url: `http://localhost:8080/main-article?page=${page}&limit=${limit}${paramsSearch}`,
-    headers: {
-      Accept: 'application/json',
-    },
-  };
-  const response = await axios.request(config);
-  return response.data;
-};
-
-const updateItem = async (id, data) => {
-
-  const { Titulo, Descripcion,Boton, Imagen} = data;
-
-  const formdata = new FormData();
-  formdata.append("title", Titulo);
-  formdata.append("description", Descripcion);
-  formdata.append("textButton", Boton);
-  formdata.append("image", Imagen);
-
-  const config = {
-    method: 'patch',
-    url: `http://localhost:8080/main-article/${id}`,
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-    data: formdata,
-  };
-  const response = await axios.request(config);
-  return response.data;
-};
-
-const deleteItem = async (id) => {
-  console.log(id);
-  const config = {
-    method: 'delete',
-    url: `http://localhost:8080/main-article/${id}`,
-  };
-  const response = await axios.request(config);
-  return response.data;
-};
-
-const createItem = async (formValues) => {
-
-  const myMainArticles = new Headers();
-
-  const { Titulo, Descripcion,Boton, Imagen} = formValues;
-
-  console.table(formValues );
-  const formdata = new FormData();
-  formdata.append("title", Titulo);
-  formdata.append("description", Descripcion);
-  formdata.append("textButton", Boton);
-  formdata.append("image", Imagen);
-  
-  const requestOptions = {
-    method: "POST",
-    headers: myMainArticles,
-    body: formdata,
-    redirect: "follow"
-  };
-
-  const datos =await fetch("http://localhost:8080/main-article", requestOptions);
-
-  console.log(datos);
-  return datos
-};
-
 
 export default function ArticleForm() {
   const [showPopup, setShowPopup] = useState(false);
@@ -115,7 +36,7 @@ export default function ArticleForm() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await callApi(currentPage, 5, searchParams);
+        const response = await callApiArticle(currentPage, 5, searchParams);
         setData(response.data);
         setTotalItems(response.pagination.totalItems);
         setTotalPages(response.pagination.pageCount);
@@ -142,10 +63,10 @@ export default function ArticleForm() {
       event.preventDefault();
       const formData = new FormData(event.target);
       const formValues = Object.fromEntries(formData.entries());
-      (formAction ? await createItem({ ...formValues }) : await updateItem(currentItem.Id, { ...formValues }))
+      (formAction ? await createItemArticle({ ...formValues }) : await updateItemArticle(currentItem.Id, { ...formValues }))
       closePopup()
       setCurrentPage(1);
-      const response = await callApi(currentPage, 5, searchParams);
+      const response = await callApiArticle(currentPage, 5, searchParams);
       setData(response.data);
     } catch (error) {
       console.log('Ocurrio un error en el servidor' , error);
@@ -159,7 +80,7 @@ export default function ArticleForm() {
  
     setSearchParams(form);
 
-    const response = await callApi(currentPage, 5, form);
+    const response = await callApiArticle(currentPage, 5, form);
     setData(response.data);
 
     //resetAllForms();
@@ -180,8 +101,8 @@ export default function ArticleForm() {
   const handleDelete = async (item) => {
     console.log('Delete item:', item);
     try {
-      await deleteItem(item.Id);
-      const response = await callApi(currentPage, 5, searchParams);
+      await deleteItemArticle(item.Id);
+      const response = await callApiArticle(currentPage, 5, searchParams);
       setData(response.data);
       setTotalItems(response.pagination.totalItems);
       setTotalPages(response.pagination.pageCount);
@@ -210,7 +131,7 @@ export default function ArticleForm() {
       icon: PlusIcon,
     },
     {
-      label: 'Resetear',
+      label: 'Restablecer',
       onClick: resetAllForms,
       className: 'bg-red-500 hover:bg-red-700',
       icon: FaMinus,
@@ -240,7 +161,7 @@ export default function ArticleForm() {
 
       <div className="overflow-x-auto mx-4">
         <Table
-          config={MainarticleField}
+          config={ArticleField}
           data={data}
           totalItems={totalItems}
           totalPages={totalPages}

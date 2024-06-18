@@ -8,18 +8,18 @@ import { callApiMainArticle,createItemMainArticle, updateItemMainArticle, delete
 
 const MainarticleField = {
   keys: ['id', 'title', 'description', 'textButton', 'image', 'createdAt', 'updatedAt'],
-  labels: ['Id', 'Titulo', 'Descripcion', 'Boton', 'URL', 'Creado', 'Actualizado'],
+  labels: ['Id', 'Título', 'Descripción', 'Botón', 'URL', 'Creado', 'Actualizado'],
 };
 
 const fields = [
   { id: 'id', label: 'Id', type: 'text', required: false },
-  { id: 'title', label: 'Titulo', type: 'text', required: false },
+  { id: 'title', label: 'Título', type: 'text', required: false },
 ];
 
 const Createfields = [
-  { id: 'Titulo', label: 'Titulo', type: 'text', required: true },
-  { id: 'Descripcion', label: 'Descripcion', type: 'text', required: true },
-  { id: 'Boton', label: 'Boton', type: 'text', required: true },
+  { id: 'Título', label: 'Título', type: 'text', required: true },
+  { id: 'Descripción', label: 'Descripción', type: 'text', required: true },
+  { id: 'Botón', label: 'Botón', type: 'text', required: true },
   { id: 'Imagen', label: 'Imagen', type: 'file', required: true },
 ];
 
@@ -127,13 +127,13 @@ function MainArticleForm() {
 
   const extraButtons = [
     {
-      label: 'Crear Articulo Principal',
+      label: 'Crear Main',
       onClick: handleCreate,
       className: 'bg-indigo-500 hover:bg-indigo-700 crear',
       icon: PlusIcon,
     },
     {
-      label: 'Resetear',
+      label: 'Restablecer',
       onClick: resetAllForms,
       className: 'bg-red-500 hover:bg-red-700',
       icon: FaMinus,
