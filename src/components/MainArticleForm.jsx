@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Table } from './shared/Table';
-import { Input } from './shared/Input';
 import { DynamicForm } from './shared/DinamicForm/DynamicForm';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import axios from 'axios';
 import ItemFormPopup from '../components/shared/FormCreation/FormCreation';
-import {useOnSubmitMainArticle  } from './hooks/useOnSubmitMainArticle';
 
 const MainarticleField = {
   keys: ['id', 'title', 'description', 'textButton', 'image', 'createdAt', 'updatedAt'],
@@ -44,13 +42,22 @@ const callApi = async (page = 1, limit = 5, searchParams = {}) => {
 };
 
 const updateItem = async (id, data) => {
+
+  const { Titulo, Descripcion,Boton, Imagen} = data;
+
+  const formdata = new FormData();
+  formdata.append("title", Titulo);
+  formdata.append("description", Descripcion);
+  formdata.append("textButton", Boton);
+  formdata.append("image", Imagen);
+
   const config = {
     method: 'patch',
     url: `http://localhost:8080/main-article/${id}`,
     headers: {
       'Content-Type': 'multipart/form-data',
     },
-    data,
+    data: formdata,
   };
   const response = await axios.request(config);
   return response.data;
@@ -93,7 +100,6 @@ const createItem = async (formValues) => {
 };
 
 function MainArticleForm() {
-  const { handleFileChange, onSubmit, register, inputList, setInputList } = useOnSubmitMainArticle();
   const [showPopup, setShowPopup] = useState(false);
   const [data, setData] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
@@ -102,6 +108,7 @@ function MainArticleForm() {
   const [currentItem, setCurrentItem] = useState(null);
   const [searchParams, setSearchParams] = useState({});
   const [resetForm, setResetForm] = useState(false);
+  const [formAction, setFormAction] = useState(true)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -133,7 +140,7 @@ function MainArticleForm() {
       event.preventDefault();
       const formData = new FormData(event.target);
       const formValues = Object.fromEntries(formData.entries());
-      await createItem({ ...formValues });
+      (formAction ? await createItem({ ...formValues }) : await updateItem(currentItem.Id, { ...formValues }))
       closePopup()
       setCurrentPage(1);
       const response = await callApi(currentPage, 5, searchParams);
@@ -156,9 +163,15 @@ function MainArticleForm() {
     //resetAllForms();
   };
 
+  const handleCreate = () => {
+    setFormAction(true)
+    openPopup();
+  };
+
   const handleEdit = (item) => {
     console.log('Edit item:', item);
     setCurrentItem(item);
+    setFormAction(false)
     openPopup();
   };
 
@@ -183,7 +196,6 @@ function MainArticleForm() {
     setSearchParams({});
     setCurrentPage(1);
     setCurrentItem(null);
-    setInputList([<Input key={0} number={1} register={register} />]);
     setResetForm(true); // Trigger form reset
     setTimeout(() => setResetForm(false), 0); // Reset the flag
   };
@@ -191,7 +203,7 @@ function MainArticleForm() {
   const extraButtons = [
     {
       label: 'Crear Articulo Principal',
-      onClick: openPopup,
+      onClick: handleCreate,
       className: 'bg-indigo-500 hover:bg-indigo-700 crear',
       icon: PlusIcon,
     },
@@ -217,6 +229,7 @@ function MainArticleForm() {
           currentItem={currentItem}
           closePopup={closePopup}
           handleFormSubmit={handleFormSubmit}
+          formAction={formAction}
           fields={Createfields}
           handleFieldChange={(fieldId, value) => {
             setCurrentItem({ ...currentItem, [fieldId]: value });
