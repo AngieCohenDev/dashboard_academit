@@ -1,4 +1,3 @@
-import { logDOM } from '@testing-library/react';
 import axios from 'axios';
 
 export const callApiNewArticle = async (page = 1, limit = 5, searchParams = {}) => {

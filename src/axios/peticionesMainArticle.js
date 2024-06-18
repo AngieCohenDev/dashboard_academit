@@ -21,12 +21,12 @@ export const callApiMainArticle = async (page = 1, limit = 5, searchParams = {})
   
  export const updateItemMainArticle = async (id, data) => {
   
-    const { Titulo, Descripcion,Boton, Imagen} = data;
+    const { Título, Descripción,Botón, Imagen} = data;
   
     const formdata = new FormData();
-    formdata.append("title", Titulo);
-    formdata.append("description", Descripcion);
-    formdata.append("textButton", Boton);
+    formdata.append("title", Título);
+    formdata.append("description", Descripción);
+    formdata.append("textButton", Botón);
     formdata.append("image", Imagen);
   
     const config = {
@@ -55,13 +55,13 @@ export const callApiMainArticle = async (page = 1, limit = 5, searchParams = {})
   
     const myMainArticles = new Headers();
   
-    const { Titulo, Descripcion,Boton, Imagen} = formValues;
+    const { Título, Descripción,Botón, Imagen} = formValues;
   
     console.table(formValues );
     const formdata = new FormData();
-    formdata.append("title", Titulo);
-    formdata.append("description", Descripcion);
-    formdata.append("textButton", Boton);
+    formdata.append("title", Título);
+    formdata.append("description", Descripción);
+    formdata.append("textButton", Botón);
     formdata.append("image", Imagen);
     
     const requestOptions = {
