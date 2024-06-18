@@ -21,7 +21,7 @@ export const callApiArticle = async (page = 1, limit = 5, searchParams = {}) => 
   
 export const updateItemArticle = async (id, data) => {
   
-    const { Titulo, Descripcion,Imagen} = data;
+    const { Titulo, Descripcion, Imagen} = data;
   
     const formdata = new FormData();
     formdata.append("title", Titulo);
