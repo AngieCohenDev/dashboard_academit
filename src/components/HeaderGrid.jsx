@@ -44,13 +44,23 @@ const callApi = async (page = 1, limit = 5, searchParams = {}) => {
 };
 
 const updateItem = async (id, data) => {
+
+  const { Item01, Item02, Item03, Item04 ,logo} = data;
+
+  const formdata = new FormData();
+  formdata.append("item01", Item01);
+  formdata.append("item02", Item02);
+  formdata.append("item03", Item03);
+  formdata.append("item04", Item04);
+  formdata.append("logo", logo);
+
   const config = {
     method: 'patch',
     url: `http://localhost:8080/headers/${id}`,
     headers: {
       'Content-Type': 'multipart/form-data',
     },
-    data,
+    data: formdata,
   };
   const response = await axios.request(config);
   return response.data;
@@ -105,6 +115,7 @@ function HeaderGrid() {
   const [currentItem, setCurrentItem] = useState(null);
   const [searchParams, setSearchParams] = useState({});
   const [resetForm, setResetForm] = useState(false);
+  const [formAction, setFormAction ] = useState (true)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -136,7 +147,7 @@ function HeaderGrid() {
       event.preventDefault();
       const formData = new FormData(event.target);
       const formValues = Object.fromEntries(formData.entries());
-      await createItem({ ...formValues });
+      (formAction ? await createItem({ ...formValues }) : await updateItem(currentItem.Id, { ...formValues }))
       closePopup()
       setCurrentPage(1);
       const response = await callApi(currentPage, 5, searchParams);
@@ -159,9 +170,15 @@ function HeaderGrid() {
     //resetAllForms();
   };
 
+  const handleCreate = () => {
+    setFormAction(true)
+    openPopup();
+  };
+
   const handleEdit = (item) => {
     console.log('Edit item:', item);
     setCurrentItem(item);
+    setFormAction(false)
     openPopup();
   };
 
@@ -193,7 +210,7 @@ function HeaderGrid() {
   const extraButtons = [
     {
       label: 'Crear Header',
-      onClick: openPopup,
+      onClick: handleCreate,
       className: 'bg-indigo-500 hover:bg-indigo-700 crear',
       icon: PlusIcon,
     },
@@ -220,6 +237,7 @@ function HeaderGrid() {
           closePopup={closePopup}
           handleFormSubmit={handleFormSubmit}
           fields={Createfields}
+          formAction={formAction}
           handleFieldChange={(fieldId, value) => {
             setCurrentItem({ ...currentItem, [fieldId]: value });
           }}
