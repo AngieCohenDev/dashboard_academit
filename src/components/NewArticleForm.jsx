@@ -9,7 +9,7 @@ import { useOnSubmitHeader } from './hooks/useOnSubmitHeader';
 
 const NewArticleField = {
   keys: ['id', 'sectiontitle', 'articletitle', 'description', 'createdAt', 'updatedAt'],
-  labels: ['Id', 'Titulo', 'Subtitulo','Descripcion','Creado', 'Actualizado'],
+  labels: ['Id', 'Titulo', 'Subtitulo', 'Descripcion', 'Creado', 'Actualizado'],
 };
 
 const fields = [
@@ -44,13 +44,22 @@ const callApi = async (page = 1, limit = 5, searchParams = {}) => {
 };
 
 const updateItem = async (id, data) => {
+
+  const { Titulo, Subtitulo, Descripcion } = data;
+
+  const requestData = {
+    sectiontitle: Titulo,
+    articletitle: Subtitulo,
+    description: Descripcion
+  };
+
   const config = {
     method: 'patch',
     url: `http://localhost:8080/new-article/${id}`,
     headers: {
-      'Content-Type': 'multipart/form-data',
+      "Content-Type": "application/json",
     },
-    data,
+    data: requestData,
   };
   const response = await axios.request(config);
   return response.data;
@@ -67,29 +76,40 @@ const deleteItem = async (id) => {
 };
 
 const createItem = async (formValues) => {
- 
-  const myHeaders = new Headers();
-
-  const { Titulo,Subtitulo, Description} = formValues;
   
+  const { Titulo, Subtitulo, Descripcion } = formValues;
 
-  console.table(formValues );
-  const formdata = new FormData();
-  formdata.append("title", Titulo);
-  formdata.append("articletitle", Subtitulo);
-  formdata.append("description", Description);
- 
+  console.table(formValues);
+
+  const requestData = {
+    sectiontitle: Titulo,
+    articletitle: Subtitulo,
+    description: Descripcion
+  };
+
   const requestOptions = {
     method: "POST",
-    headers: myHeaders,
-    body: formdata,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(requestData),  // Convertir requestData a JSON string
     redirect: "follow"
   };
 
-  const datos =await fetch("http://localhost:8080/new-article", requestOptions);
+  try {
+    const response = await fetch("http://localhost:8080/new-article", requestOptions);
 
-  console.log(datos);
-  return datos
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
 };
 
 export default function NewArticleForm() {
@@ -102,6 +122,7 @@ export default function NewArticleForm() {
   const [currentItem, setCurrentItem] = useState(null);
   const [searchParams, setSearchParams] = useState({});
   const [resetForm, setResetForm] = useState(false);
+  const [formAction, setFormAction] = useState(true)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -133,13 +154,13 @@ export default function NewArticleForm() {
       event.preventDefault();
       const formData = new FormData(event.target);
       const formValues = Object.fromEntries(formData.entries());
-      await createItem({ ...formValues });
+      (formAction ? await createItem({ ...formValues }) : await updateItem(currentItem.Id, { ...formValues }))
       closePopup()
       setCurrentPage(1);
       const response = await callApi(currentPage, 5, searchParams);
       setData(response.data);
     } catch (error) {
-      console.log('Ocurrio un error en el servidor' , error);
+      console.log('Ocurrio un error en el servidor', error);
     }
 
   };
@@ -147,7 +168,7 @@ export default function NewArticleForm() {
   const searchFormSubmit = async (form) => {
 
     console.log(form)
- 
+
     setSearchParams(form);
 
     const response = await callApi(currentPage, 5, form);
@@ -156,9 +177,15 @@ export default function NewArticleForm() {
     //resetAllForms();
   };
 
+  const handleCreate = () => {
+    setFormAction(true)
+    openPopup();
+  };
+
   const handleEdit = (item) => {
     console.log('Edit item:', item);
     setCurrentItem(item);
+    setFormAction(false)
     openPopup();
   };
 
@@ -191,7 +218,7 @@ export default function NewArticleForm() {
   const extraButtons = [
     {
       label: 'Crear New Article',
-      onClick: openPopup,
+      onClick: handleCreate,
       className: 'bg-indigo-500 hover:bg-indigo-700 crear',
       icon: PlusIcon,
     },
@@ -218,6 +245,7 @@ export default function NewArticleForm() {
           closePopup={closePopup}
           handleFormSubmit={handleFormSubmit}
           fields={Createfields}
+          formAction={formAction}
           handleFieldChange={(fieldId, value) => {
             setCurrentItem({ ...currentItem, [fieldId]: value });
           }}
@@ -237,6 +265,6 @@ export default function NewArticleForm() {
       </div>
     </div>
   );
-  
+
 
 }
