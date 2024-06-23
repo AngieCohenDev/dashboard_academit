@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import { FaMinus } from "react-icons/fa6";
-import { callApiNewArticle, updateItemNewArticle, createItemNewArticle, deleteItemNewArticle } from '../../axios/peticionesNewArticle'
+import { callApiNewArticle, updateItemNewArticle, createItemNewArticle, deleteItemNewArticle } from '../../services/peticionesNewArticle'
 
 export const useNewArticleLogic = () => {
     const [showPopup, setShowPopup] = useState(false);
