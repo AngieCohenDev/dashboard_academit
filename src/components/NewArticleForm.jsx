@@ -1,67 +1,71 @@
-import classNames from "classnames";
-import { useOnSubmitNewArticle } from "./hooks/useOnSubmitNewArticle";
+import { Table } from './shared/Table';
+import { DynamicForm } from './shared/DinamicForm/DynamicForm';
+import ItemFormPopup from '../components/shared/FormCreation/FormCreation';
+import { useNewArticleLogic } from './hooks/useNewArticleLogic';
 
-const styleLabel = "font-medium text-sm py-1 ";
-const styleInput = "w-full h-[40px] px-2 text-slate-400 text-xs my-1 rounded-lg border bg-gray-100";
+const NewArticleField = {
+  keys: ['id', 'sectiontitle', 'articletitle', 'description', 'createdAt', 'updatedAt'],
+  labels: ['Id', 'Título', 'Subtitulo', 'Descripción', 'Creado', 'Actualizado'],
+};
+
+const fields = [
+  { id: 'id', label: 'Id', type: 'text', required: false },
+  { id: 'title', label: 'Título', type: 'text', required: false },
+];
+
+const Createfields = [
+  { id: 'Título', label: 'Título', type: 'text', required: true },
+  { id: 'Subtitulo', label: 'Subtitulo', type: 'text', required: true },
+  { id: 'Descripción', label: 'Descripción', type: 'text', required: true },
+];
 
 export default function NewArticleForm() {
 
-  const { onSubmit, register } = useOnSubmitNewArticle()
+  const {
+    extraButtons,
+    actions,
+    handlePageChange,
+    searchFormSubmit,
+    handleFormSubmit,
+    showPopup,
+    data,
+    totalItems,
+    totalPages,
+    resetForm,
+    currentItem,
+    closePopup,
+    formAction,
+    setCurrentItem,
+    currentPage
+  } = useNewArticleLogic()
 
   return (
-    <div className="flex justify-center min-h-screen bg-gray-100">
-      <div className="bg-white shadow-md rounded-lg p-8 w-2/5 h-3/5 mx-4">
-        <div className="mb-6">
-          <h1 className="text-2xl flex items-center justify-center font-bold">Formulario new article</h1>
-        </div>
-        <form onSubmit={onSubmit} className="flex flex-col font-sans">
+    <div className="min-h-screen bg-white flex flex-col">
+      <DynamicForm fields={fields} onSubmit={searchFormSubmit} extraButtons={extraButtons} resetForm={resetForm} />
 
-          {/* Título de la sección */}
-          <div className="my-2">
-            <label htmlFor="title_seccion" className={classNames(styleLabel)}>
-              Ingrese el título de la sección
-            </label>
-            <input
-              className={classNames(styleInput)}
-              type="text"
-              placeholder="Por favor ingrese el título de la sección"
-              {...register("sectiontitle")}
-            />
-          </div>
+      {showPopup && (
+        <ItemFormPopup
+          currentItem={currentItem}
+          closePopup={closePopup}
+          handleFormSubmit={handleFormSubmit}
+          fields={Createfields}
+          formAction={formAction}
+          handleFieldChange={(fieldId, value) => {
+            setCurrentItem({ ...currentItem, [fieldId]: value });
+          }}
+        />
+      )}
 
-          {/* Título del artículo */}
-          <div className="my-2">
-            <label htmlFor="title_article" className={classNames(styleLabel)}>
-              Ingrese el título del artículo
-            </label>
-            <input
-              className={classNames(styleInput)}
-              type="text"
-              placeholder="Por favor ingrese el título del artículo"
-              {...register("articletitle")}
-            />
-          </div>
-
-          {/* Descripcion */}
-          <div className="my-2">
-            <label htmlFor="descripcion" className={classNames(styleLabel)}>
-              Ingrese la descripción
-            </label>
-            <input
-              className={classNames(styleInput)}
-              type="text"
-              placeholder="Por favor ingrese la descripción"
-              {...register("description")}
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="self-center mt-6 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg focus:outline-none focus:shadow-outline"
-          >
-            Enviar
-          </button>
-        </form>
+      <div className="overflow-x-auto mx-4">
+        <Table
+          config={NewArticleField}
+          data={data}
+          totalItems={totalItems}
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+          actions={actions}
+        />
       </div>
     </div>
   );

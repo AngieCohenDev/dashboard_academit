@@ -7,14 +7,15 @@ const ItemFormPopup = ({
     closePopup,
     handleFormSubmit,
     fields,
-    handleFieldChange
+    handleFieldChange,
+    formAction
 }) => {
     return (
         <div className="fixed top-0 left-0 flex justify-center items-center w-full h-full bg-gray-800 bg-opacity-75">
             <div className="bg-white shadow-lg rounded-lg p-8 w-11/12 md:w-2/3 lg:w-1/2">
                 <div className="flex justify-between items-center mb-6">
                     <h1 className="text-2xl font-bold text-gray-800">
-                        {currentItem ? 'Editar Item' : 'Formulario de Items'}
+                        {formAction ? 'Formulario de Items' : 'Editar Item'}
                     </h1>
                     <button onClick={closePopup} className="text-gray-600 hover:text-gray-700 focus:outline-none">
                         X
