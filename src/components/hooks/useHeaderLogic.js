@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import { FaMinus } from "react-icons/fa6";
-import {callApiHeaders, createItemHeaders, deleteItemHeaders, updateItemHeaders} from '../../axios/peticionesHeaders'
+import {callApiHeaders, createItemHeaders, deleteItemHeaders, updateItemHeaders} from '../../services/peticionesHeaders'
 
 export const useHeaderLogic = () => {
     const [showPopup, setShowPopup] = useState(false);
