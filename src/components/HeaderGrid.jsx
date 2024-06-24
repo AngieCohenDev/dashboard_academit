@@ -18,11 +18,11 @@ const Createfields = [
   { id: 'item01', label: 'Item01', type: 'text', required: true },
   { id: 'NavegacionItem01', label: 'Navegacion Item 01', type: 'text', required: true },
   { id: 'item02', label: 'Item02', type: 'text', required: false },
-  { id: 'NavegacionIitem02', label: 'Navegacion Item 02', type: 'text', required: false },
+  { id: 'NavegacionItem02', label: 'Navegacion Item 02', type: 'text', required: false },
   { id: 'item03', label: 'Item03', type: 'text', required: false },
-  { id: 'NavegacionIitem03', label: 'Navegacion Item 03', type: 'text', required: false },
+  { id: 'NavegacionItem03', label: 'Navegacion Item 03', type: 'text', required: false },
   { id: 'item04', label: 'Item04', type: 'text', required: false },
-  { id: 'NavegacionIitem04', label: 'Navegacion Item 04', type: 'text', required: false },
+  { id: 'NavegacionItem04', label: 'Navegacion Item 04', type: 'text', required: false },
   { id: 'logo', label: 'Logo', type: 'file', required: false },
 ];
 
