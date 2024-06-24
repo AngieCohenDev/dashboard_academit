@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import { FaMinus } from "react-icons/fa6";
-import { callApiVideos, createItemVideos, updateItemVideos, deleteItemVideos } from '../../axios/peticionesVideo'
+import { callApiVideos, createItemVideos, updateItemVideos, deleteItemVideos } from '../../services/peticionesVideo'
 
 export const useVideoLocic = () => {
     const [showPopup, setShowPopup] = useState(false);

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import { FaMinus } from "react-icons/fa6";
-import { callApiMainArticle,createItemMainArticle, updateItemMainArticle, deleteItemMainArticle} from '../../axios/peticionesMainArticle'
+import { callApiMainArticle,createItemMainArticle, updateItemMainArticle, deleteItemMainArticle} from '../../services/peticionesMainArticle'
 
 
 export const useMainArticleLogic = () => {
