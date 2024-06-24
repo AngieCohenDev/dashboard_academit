@@ -21,8 +21,9 @@ const Createfields = [
 ];
 
 
-function MainArticleForm() {
 
+function MainArticleForm() {
+  console.log('hola mundo')
   const {
     extraButtons,
     actions,
