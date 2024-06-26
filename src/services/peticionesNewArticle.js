@@ -21,10 +21,11 @@ export const callApiNewArticle = async (page = 1, limit = 5, searchParams = {}) 
 
 export const updateItemNewArticle = async (id, data) => {
 
-  const { Título, Subtitulo, Descripción } = data;
+  const { Título,NavegacionArticleTitle, Subtitulo, Descripción } = data;
 
   const requestData = {
     sectiontitle: Título,
+    NavegacionArticleTitle:NavegacionArticleTitle, 
     articletitle: Subtitulo,
     description: Descripción
   };
@@ -55,12 +56,13 @@ export const createItemNewArticle = async (formValues) => {
 
   console.log(formValues);
 
-  const { Título, Subtitulo, Descripción } = formValues;
+  const { Título,NavegacionArticleTitle, Subtitulo, Descripción } = formValues;
 
   console.table(formValues);
 
   const requestData = {
     sectiontitle: Título,
+    NavegacionArticleTitle:NavegacionArticleTitle,
     articletitle: Subtitulo,
     description: Descripción
   };

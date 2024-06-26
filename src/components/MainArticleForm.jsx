@@ -4,8 +4,8 @@ import ItemFormPopup from '../components/shared/FormCreation/FormCreation';
 import { useMainArticleLogic } from './hooks/useMainArticleLogic';
 
 const MainarticleField = {
-  keys: ['id', 'title', 'description', 'textButton', 'image', 'createdAt', 'updatedAt'],
-  labels: ['Id', 'Título', 'Descripción', 'Botón', 'URL', 'Creado', 'Actualizado'],
+  keys: ['id', 'title', 'description', 'textButton', 'image', 'NavegacionBoton', 'createdAt', 'updatedAt'],
+  labels: ['Id', 'Título', 'Descripción', 'Botón', 'URL','navegacion', 'Creado', 'Actualizado'],
 };
 
 const fields = [
@@ -17,13 +17,14 @@ const Createfields = [
   { id: 'Título', label: 'Título', type: 'text', required: true },
   { id: 'Descripción', label: 'Descripción', type: 'text', required: true },
   { id: 'Botón', label: 'Botón', type: 'text', required: true },
+  { id: 'NavegacionBoton', label: 'Navegacion del botón', type: 'text', required: true },
   { id: 'Imagen', label: 'Imagen', type: 'file', required: true },
 ];
 
 
 
 function MainArticleForm() {
-  console.log('hola mundo')
+
   const {
     extraButtons,
     actions,
