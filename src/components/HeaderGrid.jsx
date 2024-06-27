@@ -2,6 +2,7 @@ import ItemFormPopup from '../components/shared/FormCreation/FormCreation';
 import { Table } from './shared/Table';
 import { DynamicForm } from './shared/DinamicForm/DynamicForm';
 import { useHeaderLogic } from './hooks/useHeaderLogic';
+import { Alert } from './shared/Alerts';
 
 
 const articlesField = {
@@ -30,6 +31,8 @@ const Createfields = [
 function HeaderGrid() {
   
   const {
+    alert,
+    setAlert,
     actions,
     data,
     extraButtons,
@@ -50,7 +53,7 @@ function HeaderGrid() {
   return (
     <div className="min-h-screen bg-white flex flex-col">
       <DynamicForm fields={fields} onSubmit={searchFormSubmit} extraButtons={extraButtons} resetForm={resetForm} />
-
+      {alert && <Alert alert={alert} setAlert={setAlert}/>}
       {showPopup && (
         <ItemFormPopup
           currentItem={currentItem}

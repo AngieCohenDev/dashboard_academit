@@ -2,10 +2,11 @@ import { Table } from './shared/Table';
 import { DynamicForm } from './shared/DinamicForm/DynamicForm';
 import ItemFormPopup from '../components/shared/FormCreation/FormCreation';
 import { useNewArticleLogic } from './hooks/useNewArticleLogic';
+import { Alert } from './shared/Alerts';
 
 const NewArticleField = {
-  keys: ['id', 'sectiontitle', 'articletitle', 'description', 'createdAt', 'updatedAt'],
-  labels: ['Id', 'Título', 'Subtitulo', 'Descripción', 'Creado', 'Actualizado'],
+  keys: ['id', 'sectiontitle', 'articletitle', 'description', 'NavegacionArticleTitle', 'createdAt', 'updatedAt'],
+  labels: ['Id', 'Título', 'Subtitulo', 'Descripción', 'navegación', 'Creado', 'Actualizado'],
 };
 
 const fields = [
@@ -15,7 +16,7 @@ const fields = [
 
 const Createfields = [
   { id: 'Título', label: 'Título', type: 'text', required: true },
-  { id: 'NavegacionArticleTitle', label: 'NavegacionArticleTitle', type: 'text', required: true },
+  { id: 'navegación', label: 'Navegación del Titulo', type: 'text', required: true },
   { id: 'Subtitulo', label: 'Subtitulo', type: 'text', required: true },
   { id: 'Descripción', label: 'Descripción', type: 'text', required: true },
 ];
@@ -23,6 +24,8 @@ const Createfields = [
 export default function NewArticleForm() {
 
   const {
+    alert,
+    setAlert,
     extraButtons,
     actions,
     handlePageChange,
@@ -43,7 +46,7 @@ export default function NewArticleForm() {
   return (
     <div className="min-h-screen bg-white flex flex-col">
       <DynamicForm fields={fields} onSubmit={searchFormSubmit} extraButtons={extraButtons} resetForm={resetForm} />
-
+      {alert && <Alert alert={alert} setAlert={setAlert}/>}
       {showPopup && (
         <ItemFormPopup
           currentItem={currentItem}
