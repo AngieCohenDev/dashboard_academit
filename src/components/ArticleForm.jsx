@@ -4,8 +4,8 @@ import ItemFormPopup from '../components/shared/FormCreation/FormCreation';
 import { useArticleLogic } from './hooks/useArticleLogic';
 
 const ArticleField = {
-  keys: ['id', 'title', 'description', 'image', 'createdAt', 'updatedAt'],
-  labels: ['Id', 'Título', 'Descripción', 'URL', 'Creado', 'Actualizado'],
+  keys: ['id', 'title','description', 'image', 'createdAt', 'updatedAt'],
+  labels: ['Id', 'Título','Descripción', 'URL', 'Creado', 'Actualizado'],
 };
 
 const fields = [
