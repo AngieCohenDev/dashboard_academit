@@ -7,7 +7,7 @@ import { Alert } from './shared/Alerts';
 
 const articlesField = {
   keys: ['id', 'item01', 'NavegacionItem01', 'item02', 'NavegacionItem02', 'item03', 'NavegacionItem03', 'item04', 'NavegacionItem04', 'logo', 'createdAt', 'updatedAt'],
-  labels: ['Id', 'item1', 'Nav1', 'item2', 'Nav2', 'item3', 'Nav3', 'item4', 'Nav4', 'Logo', 'Creado', 'Actualizado'],
+  labels: ['Id', 'item01', 'NavegacionItem01', 'item02', 'NavegacionItem02', 'item03', 'NavegacionItem03', 'item04', 'NavegacionItem04', 'Logo', 'Creado', 'Actualizado'],
 };
 
 const fields = [
