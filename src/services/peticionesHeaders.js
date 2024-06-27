@@ -21,13 +21,13 @@ export const callApiHeaders = async (page = 1, limit = 5, searchParams = {}) => 
 
 export const updateItemHeaders = async (id, data) => {
 
-    const { Item01, Item02, Item03, Item04, NavegacionItem01,NavegacionItem02,NavegacionItem03, NavegacionItem04,logo} = data;
+  const { item01, item02, item03, item04 ,logo, NavegacionItem01, NavegacionItem02, NavegacionItem03, NavegacionItem04} = data;
   
     const formdata = new FormData();
-    formdata.append("item01", Item01);
-    formdata.append("item02", Item02);
-    formdata.append("item03", Item03);
-    formdata.append("item04", Item04);
+    formdata.append("item01", item01);
+    formdata.append("item02", item02);
+    formdata.append("item03", item03);
+    formdata.append("item04", item04);
     formdata.append("NavegacionItem01", NavegacionItem01);
     formdata.append("NavegacionItem02", NavegacionItem02);
     formdata.append("NavegacionItem03", NavegacionItem03);

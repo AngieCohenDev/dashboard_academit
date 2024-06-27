@@ -63,6 +63,7 @@ export const createItemArticle = async (formValues) => {
     formdata.append("NavegacionTitle", NavegacionTitle);
     formdata.append("description", Descripción);
     formdata.append("image", Imagen);
+    formdata.append("NavegacionTitle", "/")
     
     const requestOptions = {
       method: "POST",

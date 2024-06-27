@@ -5,8 +5,8 @@ import { useHeaderLogic } from './hooks/useHeaderLogic';
 
 
 const articlesField = {
-  keys: ['id', 'item01', 'item02', 'item03', 'item04', 'logo', 'createdAt', 'updatedAt'],
-  labels: ['Id', 'Item01', 'Item02', 'Item03', 'Item04', 'Logo', 'Creado', 'Actualizado'],
+  keys: ['id', 'item01', 'NavegacionItem01', 'item02', 'NavegacionItem02', 'item03', 'NavegacionItem03', 'item04', 'NavegacionItem04', 'logo', 'createdAt', 'updatedAt'],
+  labels: ['Id', 'item01', 'NavegacionItem01', 'item02', 'NavegacionItem02', 'item03', 'NavegacionItem03', 'item04', 'NavegacionItem04', 'Logo', 'Creado', 'Actualizado'],
 };
 
 const fields = [
