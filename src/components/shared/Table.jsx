@@ -34,8 +34,7 @@ export const Table = ({ config, data, totalItems, totalPages, currentPage, onPag
 
   const handleMouseLeave = () => {
     setOpenActionsIndex(null);
-  };
-
+  };  
   return (
     <div className="overflow-x-auto" style={{ maxHeight: '100vh' }}>
       <table className="min-w-full bg-white border border-gray-300" style={{ minHeight: 'calc(100vh - 200px)' }}>
@@ -48,7 +47,8 @@ export const Table = ({ config, data, totalItems, totalPages, currentPage, onPag
           </tr>
         </thead>
         <tbody className="text-gray-600 text-sm font-light">
-          {mappedData?.length === 0 ? (
+          {
+          mappedData?.length === 0 || !mappedData ? (
             <tr>
               <td colSpan={config.labels.length + 1} className="text-center py-10">
                 <div className="flex flex-col items-center">

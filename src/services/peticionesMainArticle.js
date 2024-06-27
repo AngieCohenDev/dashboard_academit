@@ -15,6 +15,7 @@ export const callApiMainArticle = async (page = 1, limit = 5, searchParams = {})
       Accept: 'application/json',
     },
   };
+  
   try {
     const response = await axios.request(config);
     return response.data;

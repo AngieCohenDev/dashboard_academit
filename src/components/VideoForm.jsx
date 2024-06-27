@@ -2,6 +2,7 @@ import { Table } from './shared/Table';
 import { DynamicForm } from './shared/DinamicForm/DynamicForm';
 import ItemFormPopup from '../components/shared/FormCreation/FormCreation';
 import { useVideoLocic } from './hooks/useVideoLocic';
+import { Alert } from './shared/Alerts';
 
 const videoField = {
   keys: ['id', 'title', 'description', 'video', 'createdAt', 'updatedAt'],
@@ -22,6 +23,8 @@ const Createfields = [
 export default function VideoForm() {
 
   const {
+    alert,
+    setAlert,
     extraButtons,
     actions,
     handlePageChange,
@@ -42,6 +45,7 @@ export default function VideoForm() {
   return (
     <div className="min-h-screen bg-white flex flex-col">
       <DynamicForm fields={fields} onSubmit={searchFormSubmit} extraButtons={extraButtons} resetForm={resetForm} />
+      {alert && <Alert alert={alert} setAlert={setAlert}/>}
 
       {showPopup && (
         <ItemFormPopup

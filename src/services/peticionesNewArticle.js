@@ -15,8 +15,15 @@ export const callApiNewArticle = async (page = 1, limit = 5, searchParams = {}) 
       Accept: 'application/json',
     },
   };
-  const response = await axios.request(config);
-  return response.data;
+  try {
+    const response = await axios.request(config);
+    return response.data;
+  } catch (error) {
+    return {
+      type: 'unsucces',
+      message: error.response.data.message
+    }
+  }
 };
 
 export const updateItemNewArticle = async (id, data) => {
