@@ -2,10 +2,11 @@ import { Table } from './shared/Table';
 import { DynamicForm } from './shared/DinamicForm/DynamicForm';
 import ItemFormPopup from '../components/shared/FormCreation/FormCreation';
 import { useArticleLogic } from './hooks/useArticleLogic';
+import { Alert } from './shared/Alerts';
 
 const ArticleField = {
-  keys: ['id', 'title','description', 'image', 'createdAt', 'updatedAt'],
-  labels: ['Id', 'Título','Descripción', 'URL', 'Creado', 'Actualizado'],
+  keys: ['id', 'title', 'description', 'image', 'NavegacionTitle', 'createdAt', 'updatedAt'],
+  labels: ['Id', 'Título', 'Descripción', 'URL', 'Navegación', 'Creado', 'Actualizado'],
 };
 
 const fields = [
@@ -15,7 +16,7 @@ const fields = [
 
 const Createfields = [
   { id: 'Título', label: 'Título', type: 'text', required: true },
-  { id: 'NavegacionTitle ', label: 'Navegación', type: 'text', required: true },
+  { id: 'Navegación', label: 'Navegación', type: 'text', required: true },
   { id: 'Descripción', label: 'Descripción', type: 'text', required: true },
   { id: 'Imagen', label: 'Imagen', type: 'file', required: true },
 ];
@@ -23,6 +24,8 @@ const Createfields = [
 export default function ArticleForm() {
 
   const {
+    alert,
+    setAlert,
     actions,
     data,
     extraButtons,
@@ -43,7 +46,7 @@ export default function ArticleForm() {
   return (
     <div className="min-h-screen bg-white flex flex-col">
       <DynamicForm fields={fields} onSubmit={searchFormSubmit} extraButtons={extraButtons} resetForm={resetForm} />
-
+      {alert && <Alert alert={alert} setAlert={setAlert}/>}
       {showPopup && (
         <ItemFormPopup
           currentItem={currentItem}

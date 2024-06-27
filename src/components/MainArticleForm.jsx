@@ -2,6 +2,7 @@ import { Table } from './shared/Table';
 import { DynamicForm } from './shared/DinamicForm/DynamicForm';
 import ItemFormPopup from '../components/shared/FormCreation/FormCreation';
 import { useMainArticleLogic } from './hooks/useMainArticleLogic';
+import { Alert } from './shared/Alerts';
 
 const MainarticleField = {
   keys: ['id', 'title', 'description', 'textButton', 'image', 'NavegacionBoton', 'createdAt', 'updatedAt'],
@@ -17,7 +18,7 @@ const Createfields = [
   { id: 'Título', label: 'Título', type: 'text', required: true },
   { id: 'Descripción', label: 'Descripción', type: 'text', required: true },
   { id: 'Botón', label: 'Botón', type: 'text', required: true },
-  { id: 'NavegacionBoton', label: 'Navegacion del botón', type: 'text', required: true },
+  { id: 'navegacion', label: 'Navegacion del botón', type: 'text', required: true },
   { id: 'Imagen', label: 'Imagen', type: 'file', required: true },
 ];
 
@@ -26,6 +27,8 @@ const Createfields = [
 function MainArticleForm() {
 
   const {
+    alert,
+    setAlert,
     extraButtons,
     actions,
     handlePageChange,
@@ -45,7 +48,7 @@ function MainArticleForm() {
   return (
     <div className="min-h-screen bg-white flex flex-col">
       <DynamicForm fields={fields} onSubmit={searchFormSubmit} extraButtons={extraButtons} resetForm={resetForm} />
-
+      {alert && <Alert alert={alert} setAlert={setAlert}/>}
       {showPopup && (
         <ItemFormPopup
           currentItem={currentItem}
