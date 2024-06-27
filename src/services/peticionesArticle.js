@@ -15,17 +15,24 @@ export const callApiArticle = async (page = 1, limit = 5, searchParams = {}) => 
         Accept: 'application/json',
       },
     };
-    const response = await axios.request(config);
-    return response.data;
+    try {
+      const response = await axios.request(config);
+      return response.data;
+    } catch (error) {
+      return {
+        type: 'unsucces',
+        message: error.response.data.message
+      }
+    }
   };
   
 export const updateItemArticle = async (id, data) => {
   
-  const { Título,NavegacionTitle, Descripción, Imagen} = data;
+  const { Título,Navegación, Descripción, Imagen} = data;
   
     const formdata = new FormData();
     formdata.append("title", Título);
-    formdata.append("NavegacionTitle", NavegacionTitle);
+    formdata.append("NavegacionTitle", Navegación);
     formdata.append("description", Descripción);
     formdata.append("image", Imagen);
   
@@ -54,16 +61,17 @@ export const deleteItemArticle = async (id) => {
 export const createItemArticle = async (formValues) => {
   
     const myArticles = new Headers();
+
+    console.log(formValues)
   
-    const { Título, Descripción,NavegacionTitle, Imagen} = formValues;
+    const { Título, Descripción,Navegación, Imagen} = formValues;
   
     console.table(formValues )
     const formdata = new FormData();
     formdata.append("title", Título);
-    formdata.append("NavegacionTitle", NavegacionTitle);
+    formdata.append("NavegacionTitle", Navegación);
     formdata.append("description", Descripción);
     formdata.append("image", Imagen);
-    formdata.append("NavegacionTitle", "/")
     
     const requestOptions = {
       method: "POST",
