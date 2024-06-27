@@ -7,23 +7,23 @@ import { Alert } from './shared/Alerts';
 
 const articlesField = {
   keys: ['id', 'item01', 'NavegacionItem01', 'item02', 'NavegacionItem02', 'item03', 'NavegacionItem03', 'item04', 'NavegacionItem04', 'logo', 'createdAt', 'updatedAt'],
-  labels: ['Id', 'item01', 'NavegacionItem01', 'item02', 'NavegacionItem02', 'item03', 'NavegacionItem03', 'item04', 'NavegacionItem04', 'Logo', 'Creado', 'Actualizado'],
+  labels: ['Id', 'item1', 'Nav1', 'item2', 'Nav2', 'item3', 'Nav3', 'item4', 'Nav4', 'Logo', 'Creado', 'Actualizado'],
 };
 
 const fields = [
   { id: 'id', label: 'Id', type: 'text', required: false },
-  { id: 'item01', label: 'Item01', type: 'text', required: false },
+  { id: 'item1', label: 'Item01', type: 'text', required: false },
 ];
 
 const Createfields = [
-  { id: 'item01', label: 'Item01', type: 'text', required: true },
-  { id: 'NavegacionItem01', label: 'Navegacion Item 01', type: 'text', required: true },
-  { id: 'item02', label: 'Item02', type: 'text', required: false },
-  { id: 'NavegacionItem02', label: 'Navegacion Item 02', type: 'text', required: false },
-  { id: 'item03', label: 'Item03', type: 'text', required: false },
-  { id: 'NavegacionItem03', label: 'Navegacion Item 03', type: 'text', required: false },
-  { id: 'item04', label: 'Item04', type: 'text', required: false },
-  { id: 'NavegacionItem04', label: 'Navegacion Item 04', type: 'text', required: false },
+  { id: 'item1', label: 'Item01', type: 'text', required: true },
+  { id: 'Nav1', label: 'Navegacion Item 01', type: 'text', required: true },
+  { id: 'item2', label: 'Item02', type: 'text', required: false },
+  { id: 'Nav2', label: 'Navegacion Item 02', type: 'text', required: false },
+  { id: 'item3', label: 'Item03', type: 'text', required: false },
+  { id: 'Nav3', label: 'Navegacion Item 03', type: 'text', required: false },
+  { id: 'item4', label: 'Item04', type: 'text', required: false },
+  { id: 'Nav4', label: 'Navegacion Item 04', type: 'text', required: false },
   { id: 'logo', label: 'Logo', type: 'file', required: false },
 ];
 
