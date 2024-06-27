@@ -37,7 +37,7 @@ export const Table = ({ config, data, totalItems, totalPages, currentPage, onPag
   };  
   return (
     <div className="overflow-x-auto" style={{ maxHeight: '100vh' }}>
-      <table className="min-w-full bg-white border border-gray-300" style={{ minHeight: 'calc(100vh - 200px)' }}>
+      <table className="min-w-full bg-white border border-gray-300" style={{ minHeight: 'calc(100vh - 200px)'}}>
         <thead>
           <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
             {config.labels.map((label, key) => (
