@@ -15,6 +15,7 @@ const fields = [
 
 const Createfields = [
   { id: 'Título', label: 'Título', type: 'text', required: true },
+  { id: 'NavegacionTitle ', label: 'Navegación', type: 'text', required: true },
   { id: 'Descripción', label: 'Descripción', type: 'text', required: true },
   { id: 'Imagen', label: 'Imagen', type: 'file', required: true },
 ];
