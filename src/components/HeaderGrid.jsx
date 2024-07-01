@@ -1,77 +1,84 @@
-import classNames from "classnames";
-import { useForm } from "react-hook-form";
-import { postHeaders } from "../helpers/fetchHeaders";
+import ItemFormPopup from '../components/shared/FormCreation/FormCreation';
+import { Table } from './shared/Table';
+import { DynamicForm } from './shared/DinamicForm/DynamicForm';
+import { useHeaderLogic } from './hooks/useHeaderLogic';
+import { Alert } from './shared/Alerts';
 
-const styleLabel = "text-red-500 py-1";
-const styleInput =
-  "rounded-md w-[500px] h-[40px] px-5 text-slate-400 text-sm italic my-2";
+
+const articlesField = {
+  keys: ['id', 'item01', 'NavegacionItem01', 'item02', 'NavegacionItem02', 'item03', 'NavegacionItem03', 'item04', 'NavegacionItem04', 'logo', 'createdAt', 'updatedAt'],
+  labels: ['Id', 'item01', 'NavegacionItem01', 'item02', 'NavegacionItem02', 'item03', 'NavegacionItem03', 'item04', 'NavegacionItem04', 'Logo', 'Creado', 'Actualizado'],
+};
+
+const fields = [
+  { id: 'id', label: 'Id', type: 'text', required: false },
+  { id: 'item01', label: 'Item01', type: 'text', required: false },
+];
+
+const Createfields = [
+  { id: 'item01', label: 'Item01', type: 'text', required: true },
+  { id: 'NavegacionItem01', label: 'Navegacion Item 01', type: 'text', required: true },
+  { id: 'item02', label: 'Item02', type: 'text', required: false },
+  { id: 'NavegacionItem02', label: 'Navegacion Item 02', type: 'text', required: false },
+  { id: 'item03', label: 'Item03', type: 'text', required: false },
+  { id: 'NavegacionItem03', label: 'Navegacion Item 03', type: 'text', required: false },
+  { id: 'item04', label: 'Item04', type: 'text', required: false },
+  { id: 'NavegacionItem04', label: 'Navegacion Item 04', type: 'text', required: false },
+  { id: 'logo', label: 'Logo', type: 'file', required: false },
+];
+
 
 function HeaderGrid() {
-  const { register, handleSubmit, reset, watch } = useForm();
-
-  const onSubmit = handleSubmit((data) => {
-    postHeaders(data)
-    reset();
-  });
+  
+  const {
+    alert,
+    setAlert,
+    actions,
+    data,
+    extraButtons,
+    handleFormSubmit,
+    handlePageChange,
+    resetForm,
+    searchFormSubmit,
+    showPopup,
+    totalItems,
+    totalPages,
+    currentItem,
+    closePopup,
+    currentPage,
+    formAction,
+    setCurrentItem
+  } = useHeaderLogic()
 
   return (
-    <form onSubmit={onSubmit} className="flex flex-col font-sans">
-      {/* Primer Item */}
-      <label htmlFor="items01" className={classNames(styleLabel)}>
-        Items #1
-      </label>
-      <input
-        className={classNames(styleInput)}
-        type="text"
-        placeholder="Por favor ingrese el nuevo valor del items"
-        {...register("item1")}
-      />
+    <div className="min-h-screen bg-white flex flex-col">
+      <DynamicForm fields={fields} onSubmit={searchFormSubmit} extraButtons={extraButtons} resetForm={resetForm} />
+      {alert && <Alert alert={alert} setAlert={setAlert}/>}
+      {showPopup && (
+        <ItemFormPopup
+          currentItem={currentItem}
+          closePopup={closePopup}
+          handleFormSubmit={handleFormSubmit}
+          fields={Createfields}
+          formAction={formAction}
+          handleFieldChange={(fieldId, value) => {
+            setCurrentItem({ ...currentItem, [fieldId]: value });
+          }}
+        />
+      )}
 
-      {/* Segundo Item */}
-      <label htmlFor="items02" className={classNames(styleLabel)}>
-        Items #2
-      </label>
-      <input
-        className={classNames(styleInput)}
-        type="text"
-        placeholder="Por favor ingrese el nuevo valor del items"
-        {...register("item2")}
-      />
-
-      {/* Tercer Item */}
-      <label htmlFor="items03" className={classNames(styleLabel)}>
-        Items #3
-      </label>
-      <input
-        className={classNames(styleInput)}
-        type="text"
-        placeholder="Por favor ingrese el nuevo valor del items"
-        {...register("item3")}
-      />
-
-      {/* Cuarto Item */}
-      <label htmlFor="items04" className={classNames(styleLabel)}>
-        Items #4
-      </label>
-      <input
-        className={classNames(styleInput)}
-        type="text"
-        placeholder="Por favor ingrese el nuevo valor del items"
-        {...register("item4")}
-      />
-
-      {/* Logo */}
-      <label htmlFor="file" className={classNames(styleLabel)}>
-        Logo
-      </label>
-      <input type="file" className={classNames(styleInput)} />
-
-      <button type="submit">Enviar</button>
-
-      <pre>
-        {JSON.stringify(watch(), null, 2)}
-      </pre>
-    </form>
+      <div className="overflow-x-auto mx-4">
+        <Table
+          config={articlesField}
+          data={data}
+          totalItems={totalItems}
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+          actions={actions}
+        />
+      </div>
+    </div>
   );
 }
 

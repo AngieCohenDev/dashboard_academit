@@ -1,12 +1,11 @@
 import { Table } from './shared/Table';
 import { DynamicForm } from './shared/DinamicForm/DynamicForm';
 import ItemFormPopup from '../components/shared/FormCreation/FormCreation';
-import { useArticleLogic } from './hooks/useArticleLogic';
-import { Alert } from './shared/Alerts';
+import { useVideoLocic } from './hooks/useVideoLocic';
 
-const ArticleField = {
-  keys: ['id', 'title', 'description', 'image', 'NavegacionTitle', 'createdAt', 'updatedAt'],
-  labels: ['Id', 'Título', 'Descripción', 'URL', 'Navegación', 'Creado', 'Actualizado'],
+const videoField = {
+  keys: ['id', 'title', 'description', 'video', 'createdAt', 'updatedAt'],
+  labels: ['Id', 'Título', 'Descripción', 'URL', 'Creado', 'Actualizado'],
 };
 
 const fields = [
@@ -16,37 +15,34 @@ const fields = [
 
 const Createfields = [
   { id: 'Título', label: 'Título', type: 'text', required: true },
-  { id: 'Navegación', label: 'Navegación', type: 'text', required: true },
   { id: 'Descripción', label: 'Descripción', type: 'text', required: true },
-  { id: 'Imagen', label: 'Imagen', type: 'file', required: true },
+  { id: 'Video', label: 'Video', type: 'file', required: true },
 ];
 
-export default function ArticleForm() {
+export default function VideoForm() {
 
   const {
-    alert,
-    setAlert,
-    actions,
-    data,
     extraButtons,
-    handleFormSubmit,
+    actions,
     handlePageChange,
-    resetForm,
     searchFormSubmit,
+    handleFormSubmit,
     showPopup,
+    data,
     totalItems,
     totalPages,
+    resetForm,
     currentItem,
     closePopup,
-    currentPage,
     formAction,
-    setCurrentItem
-  } = useArticleLogic()
+    setCurrentItem,
+    currentPage
+  } = useVideoLocic();
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
       <DynamicForm fields={fields} onSubmit={searchFormSubmit} extraButtons={extraButtons} resetForm={resetForm} />
-      {alert && <Alert alert={alert} setAlert={setAlert}/>}
+
       {showPopup && (
         <ItemFormPopup
           currentItem={currentItem}
@@ -62,7 +58,7 @@ export default function ArticleForm() {
 
       <div className="overflow-x-auto mx-4">
         <Table
-          config={ArticleField}
+          config={videoField}
           data={data}
           totalItems={totalItems}
           totalPages={totalPages}
@@ -74,3 +70,4 @@ export default function ArticleForm() {
     </div>
   );
 }
+

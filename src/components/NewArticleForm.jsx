@@ -1,57 +1,76 @@
-import classNames from "classnames";
-import { useForm } from "react-hook-form";
-import { postNewArticle } from "../helpers/fetchNewArticle";
+import { Table } from './shared/Table';
+import { DynamicForm } from './shared/DinamicForm/DynamicForm';
+import ItemFormPopup from '../components/shared/FormCreation/FormCreation';
+import { useNewArticleLogic } from './hooks/useNewArticleLogic';
+import { Alert } from './shared/Alerts';
 
-const styleLabel = "text-red-500 py-1";
-const styleInput =
-  "rounded-md w-[500px] h-[40px] px-5 text-slate-400 text-sm italic my-1";
+const NewArticleField = {
+  keys: ['id', 'sectiontitle', 'articletitle', 'description', 'NavegacionArticleTitle', 'createdAt', 'updatedAt'],
+  labels: ['Id', 'Título', 'Subtitulo', 'Descripción', 'navegación', 'Creado', 'Actualizado'],
+};
+
+const fields = [
+  { id: 'id', label: 'Id', type: 'text', required: false },
+  { id: 'title', label: 'Título', type: 'text', required: false },
+];
+
+const Createfields = [
+  { id: 'Título', label: 'Título', type: 'text', required: true },
+  { id: 'navegación', label: 'Navegación del Titulo', type: 'text', required: true },
+  { id: 'Subtitulo', label: 'Subtitulo', type: 'text', required: true },
+  { id: 'Descripción', label: 'Descripción', type: 'text', required: true },
+];
 
 export default function NewArticleForm() {
-  const { register, handleSubmit, reset, watch } = useForm();
 
-  const onSubmit = handleSubmit((data) => {
-    postNewArticle(data);
-    reset();
-  });
+  const {
+    alert,
+    setAlert,
+    extraButtons,
+    actions,
+    handlePageChange,
+    searchFormSubmit,
+    handleFormSubmit,
+    showPopup,
+    data,
+    totalItems,
+    totalPages,
+    resetForm,
+    currentItem,
+    closePopup,
+    formAction,
+    setCurrentItem,
+    currentPage
+  } = useNewArticleLogic()
 
   return (
-    <form onSubmit={onSubmit} className="flex flex-col font-sans">
-      {/* Título de la sección */}
-      <label htmlFor="title_seccion" className={classNames(styleLabel)}>
-        Ingrese el título de la sección
-      </label>
-      <input
-        className={classNames(styleInput)}
-        type="text"
-        placeholder="Por favor ingrese el nuevo título de la sección"
-        {...register("sectiontitle")}
-      />
+    <div className="min-h-screen bg-white flex flex-col">
+      <DynamicForm fields={fields} onSubmit={searchFormSubmit} extraButtons={extraButtons} resetForm={resetForm} />
+      {alert && <Alert alert={alert} setAlert={setAlert}/>}
+      {showPopup && (
+        <ItemFormPopup
+          currentItem={currentItem}
+          closePopup={closePopup}
+          handleFormSubmit={handleFormSubmit}
+          fields={Createfields}
+          formAction={formAction}
+          handleFieldChange={(fieldId, value) => {
+            setCurrentItem({ ...currentItem, [fieldId]: value });
+          }}
+        />
+      )}
 
-       {/* Título del artículo */}
-       <label htmlFor="title_article" className={classNames(styleLabel)}>
-        Ingrese el título del artículo
-      </label>
-      <input
-        className={classNames(styleInput)}
-        type="text"
-        placeholder="Por favor ingrese el nuevo título del artículo"
-        {...register("articletitle")}
-      />
-
-      {/* Descripcion */}
-      <label htmlFor="descripcion" className={classNames(styleLabel)}>
-        Ingrese la descripción
-      </label>
-      <input
-        className={classNames(styleInput)}
-        type="text"
-        placeholder="Por favor ingrese la descripción del artículo"
-        {...register("description")}
-      />
-
-      <button type="submit">Enviar</button>
-
-      <pre>{JSON.stringify(watch(), null, 2)}</pre>
-    </form>
+      <div className="overflow-x-auto mx-4">
+        <Table
+          config={NewArticleField}
+          data={data}
+          totalItems={totalItems}
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+          actions={actions}
+        />
+      </div>
+    </div>
   );
 }

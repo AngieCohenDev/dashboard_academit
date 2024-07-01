@@ -1,75 +1,80 @@
-import classNames from "classnames";
-import { useForm } from "react-hook-form";
-import { postMainArticle } from "../helpers/fetchMainArticle";
+import { Table } from './shared/Table';
+import { DynamicForm } from './shared/DinamicForm/DynamicForm';
+import ItemFormPopup from '../components/shared/FormCreation/FormCreation';
+import { useMainArticleLogic } from './hooks/useMainArticleLogic';
+import { Alert } from './shared/Alerts';
 
-const styleLabel = "text-red-500 py-1";
-const styleInput =
-  "rounded-md w-[500px] h-[40px] px-5 text-slate-400 text-sm italic my-1";
+const MainarticleField = {
+  keys: ['id', 'title', 'description', 'textButton', 'image', 'NavegacionBoton', 'createdAt', 'updatedAt'],
+  labels: ['Id', 'Título', 'Descripción', 'Botón', 'URL','navegacion', 'Creado', 'Actualizado'],
+};
 
-export default function MainArticleForm() {
-  const { register, handleSubmit, reset, watch } = useForm();
+const fields = [
+  { id: 'id', label: 'Id', type: 'text', required: false },
+  { id: 'title', label: 'Título', type: 'text', required: false },
+];
 
-  const onSubmit = handleSubmit(async (data) => {
-    const formData = new FormData();
-    formData.append("title", data.title);
-    formData.append("description", data.description);
-    formData.append("textButton", data.textButton);
-    formData.append("image", data.image[0]); // Assuming the field name for file is "image"
+const Createfields = [
+  { id: 'Título', label: 'Título', type: 'text', required: true },
+  { id: 'Descripción', label: 'Descripción', type: 'text', required: true },
+  { id: 'Botón', label: 'Botón', type: 'text', required: true },
+  { id: 'navegacion', label: 'Navegacion del botón', type: 'text', required: true },
+  { id: 'Imagen', label: 'Imagen', type: 'file', required: true },
+];
 
-    try {
-      await postMainArticle(formData);
-      // Assuming postMainArticle returns the URL of the uploaded image
-      reset();
-    } catch (error) {
-      console.error("Error:", error);
-    }
-    reset();
-  });
 
+
+function MainArticleForm() {
+
+  const {
+    alert,
+    setAlert,
+    extraButtons,
+    actions,
+    handlePageChange,
+    searchFormSubmit,
+    handleFormSubmit,
+    showPopup,
+    data,
+    totalItems,
+    totalPages,
+    resetForm,
+    currentItem,
+    closePopup,
+    formAction,
+    setCurrentItem,
+    currentPage
+  } = useMainArticleLogic()
   return (
-    <form onSubmit={onSubmit} className="flex flex-col font-sans">
-      {/* Titulo */}
-      <label htmlFor="title" className={classNames(styleLabel)}>
-        Ingrese el titulo
-      </label>
-      <input
-        className={classNames(styleInput)}
-        type="text"
-        placeholder="Por favor ingrese el nuevo titulo"
-        {...register("title")}
-      />
+    <div className="min-h-screen bg-white flex flex-col">
+      <DynamicForm fields={fields} onSubmit={searchFormSubmit} extraButtons={extraButtons} resetForm={resetForm} />
+      {alert && <Alert alert={alert} setAlert={setAlert}/>}
+      {showPopup && (
+        <ItemFormPopup
+          currentItem={currentItem}
+          closePopup={closePopup}
+          handleFormSubmit={handleFormSubmit}
+          formAction={formAction}
+          fields={Createfields}
+          handleFieldChange={(fieldId, value) => {
+            setCurrentItem({ ...currentItem, [fieldId]: value });
+          }}
+        />
+      )}
 
-      {/* Descripcion */}
-      <label htmlFor="descripcion" className={classNames(styleLabel)}>
-        Ingrese la descripción
-      </label>
-      <input
-        className={classNames(styleInput)}
-        type="text"
-        placeholder="Por favor ingrese la Descripción"
-        {...register("description")}
-      />
-
-      {/* Texto del boton */}
-      <label htmlFor="text-btn" className={classNames(styleLabel)}>
-        Ingrese el texto para el botón
-      </label>
-      <input
-        className={classNames(styleInput)}
-        type="text"
-        placeholder="Por favor ingrese el nuevo texto del botón"
-        {...register("textButton")}
-      />
-
-      {/* Fondo */}
-      <label htmlFor="img" className={classNames(styleLabel)}>
-        Seleccione la nueva fondo a utilizar
-      </label>
-      <input type="file" className={classNames(styleInput)} {...register("image")} />
-
-      <button type="submit">Enviar</button>
-
-      <pre>{JSON.stringify(watch(), null, 2)}</pre>
-    </form>
+      <div className="overflow-x-auto mx-4">
+        <Table
+          config={MainarticleField}
+          data={data}
+          totalItems={totalItems}
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+          actions={actions}
+        />
+      </div>
+    </div>
   );
 }
+
+export default MainArticleForm;
