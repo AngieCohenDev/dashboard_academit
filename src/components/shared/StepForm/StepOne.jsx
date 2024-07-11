@@ -1,0 +1,87 @@
+import React from 'react';
+
+const StepOne = ({ nextStep, handleChange, handleFileChange, formData }) => {
+  return (
+    <div className="p-6 max-w-md mx-auto bg-white rounded-xl shadow-md space-y-4">
+      <h2 className="text-xl font-bold">Crear Curso</h2>
+      <div>
+        <label className="block text-sm font-medium">Nombre del Curso</label>
+        <input 
+          type="text" 
+          name="courseName" 
+          value={formData.courseName}
+          onChange={handleChange}
+          className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium">Descripción</label>
+        <input 
+          type="text" 
+          name="courseDescription" 
+          value={formData.courseDescription}
+          onChange={handleChange}
+          className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium">Categoría</label>
+        <select 
+          name="category" 
+          value={formData.category}
+          onChange={handleChange}
+          className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+        >
+          <option value="">Seleccionar</option>
+          <option value="programming">Programación</option>
+          <option value="design">Diseño</option>
+          <option value="marketing">Marketing</option>
+        </select>
+      </div>
+      <div>
+        <label className="block text-sm font-medium">Estatus</label>
+        <select 
+          name="status" 
+          value={formData.status}
+          onChange={handleChange}
+          className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+        >
+          <option value="">Seleccionar</option>
+          <option value="active">Activo</option>
+          <option value="inactive">Inactivo</option>
+        </select>
+      </div>
+      <div>
+        <label className="block text-sm font-medium">Nivel</label>
+        <select 
+          name="level" 
+          value={formData.level}
+          onChange={handleChange}
+          className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+        >
+          <option value="">Seleccionar</option>
+          <option value="beginner">Principiante</option>
+          <option value="intermediate">Intermedio</option>
+          <option value="advanced">Avanzado</option>
+        </select>
+      </div>
+      <div>
+        <label className="block text-sm font-medium">Portada del Curso</label>
+        <input 
+          type="file" 
+          name="coverImage" 
+          onChange={handleFileChange}
+          className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+        />
+      </div>
+      <button 
+        onClick={nextStep}
+        className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md"
+      >
+        Siguiente
+      </button>
+    </div>
+  );
+};
+
+export default StepOne;
