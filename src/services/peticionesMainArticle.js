@@ -30,16 +30,13 @@ export const updateItemMainArticle = async (id, data) => {
 
   console.log('esta es la data', data)
 
-  const { Título, Descripción, Botón, navegacion, Imagen } = data;
-
-
   const formdata = new FormData();
   console.log(FormData);
-  formdata.append("title", Título);
-  formdata.append("description", Descripción);
-  formdata.append("textButton", Botón);
-  formdata.append("NavegacionBoton", navegacion);
-  formdata.append("image", Imagen);
+  formdata.append("titulo", data['Título']);
+  formdata.append("descripcion", data['Descripción']);
+  formdata.append("textoBoton", data['Botón']);
+  formdata.append("navegacionBoton", data['navegacion']);
+  formdata.append("archivoImagen", data['Imagen']);
 
   const config = {
     method: 'patch',
@@ -67,15 +64,13 @@ export const createItemMainArticle = async (formValues) => {
 
   const myMainArticles = new Headers();
 
-  const { Título, Descripción, Botón, navegacion, Imagen } = formValues;
-
   console.table(formValues);
   const formdata = new FormData();
-  formdata.append("title", Título);
-  formdata.append("description", Descripción);
-  formdata.append("textButton", Botón);
-  formdata.append("NavegacionBoton", navegacion);
-  formdata.append("image", Imagen);
+  formdata.append("titulo", formValues['Título']);
+  formdata.append("descripcion", formValues['Descripción']);
+  formdata.append("textoBoton", formValues['Botón']);
+  formdata.append("navegacionBoton", formValues['navegacion']);
+  formdata.append("archivoImagen", formValues['Imagen']);
 
   const requestOptions = {
     method: "POST",

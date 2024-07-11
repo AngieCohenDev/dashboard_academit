@@ -17,6 +17,7 @@ export const callApiArticle = async (page = 1, limit = 5, searchParams = {}) => 
     };
     try {
       const response = await axios.request(config);
+      console.log(response.data);
       return response.data;
     } catch (error) {
       return {
@@ -28,14 +29,12 @@ export const callApiArticle = async (page = 1, limit = 5, searchParams = {}) => 
   
 export const updateItemArticle = async (id, data) => {
   
-  const { Título,Navegación, Descripción, Imagen} = data;
-  
     const formdata = new FormData();
-    formdata.append("title", Título);
-    formdata.append("NavegacionTitle", Navegación);
-    formdata.append("description", Descripción);
-    formdata.append("image", Imagen);
-  
+    formdata.append("titulo", data['Título']);
+    formdata.append("navegacionTitulo", data['Navegación']);
+    formdata.append("descripcion", data['Descripción']);
+    formdata.append("archivoImagen", data['Imagen']);
+    
     const config = {
       method: 'patch',
       url: `http://localhost:8080/articulos/${id}`,
@@ -64,14 +63,12 @@ export const createItemArticle = async (formValues) => {
 
     console.log(formValues)
   
-    const { Título, Descripción,Navegación, Imagen} = formValues;
-  
     console.table(formValues )
     const formdata = new FormData();
-    formdata.append("title", Título);
-    formdata.append("NavegacionTitle", Navegación);
-    formdata.append("description", Descripción);
-    formdata.append("image", Imagen);
+    formdata.append("titulo", formValues['Título']);
+    formdata.append("navegacionTitulo", formValues['Navegación']);
+    formdata.append("descripcion", formValues['Descripción']);
+    formdata.append("archivoImagen", formValues['Imagen']);
     
     const requestOptions = {
       method: "POST",

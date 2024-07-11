@@ -30,19 +30,16 @@ export const callApiHeaders = async (page = 1, limit = 5, searchParams = {}) => 
 
 export const updateItemHeaders = async (id, data) => {
 
-  const { item1, item2, item3, item4, logo, Nav1, Nav2, Nav3, Nav4 } = data;
-
   const formdata = new FormData();
-  formdata.append("item01", item1);
-  formdata.append("item02", item2);
-  formdata.append("item03", item3);
-  formdata.append("item04", item4);
-  formdata.append("NavegacionItem01", Nav1);
-  formdata.append("NavegacionItem02", Nav2);
-  formdata.append("NavegacionItem03", Nav3);
-  formdata.append("NavegacionItem04", Nav4);
-  formdata.append("logo", logo);
-
+  formdata.append("item01", data['item1']);
+  formdata.append("item02", data['item2']);
+  formdata.append("item03", data['item3']);
+  formdata.append("item04", data['item4']);
+  formdata.append("navegacionItem01", data['Nav1']);
+  formdata.append("navegacionItem02", data['Nav2']);
+  formdata.append("navegacionItem03", data['Nav3']);
+  formdata.append("navegacionItem04", data['Nav4']);
+  formdata.append("archivoLogo", data['logo']);
   const config = {
     method: 'patch',
     url: `http://localhost:8080/headers/${id}`,
@@ -71,20 +68,17 @@ export const createItemHeaders = async (formValues) => {
 
   console.log(formValues);
 
-  const { item1, item2, item3, item4, logo, Nav1, Nav2, Nav3, Nav4 } = formValues;
-
-
   console.table(formValues);
   const formdata = new FormData();
-  formdata.append("item01", item1);
-  formdata.append("item02", item2);
-  formdata.append("item03", item3);
-  formdata.append("item04", item4);
-  formdata.append("NavegacionItem01", Nav1);
-  formdata.append("NavegacionItem02", Nav2);
-  formdata.append("NavegacionItem03", Nav3);
-  formdata.append("NavegacionItem04", Nav4);
-  formdata.append("logo", logo);
+  formdata.append("item01", formValues['item1']);
+  formdata.append("item02", formValues['item2']);
+  formdata.append("item03", formValues['item3']);
+  formdata.append("item04", formValues['item4']);
+  formdata.append("navegacionItem01", formValues['Nav1']);
+  formdata.append("navegacionItem02", formValues['Nav2']);
+  formdata.append("navegacionItem03", formValues['Nav3']);
+  formdata.append("navegacionItem04", formValues['Nav4']);
+  formdata.append("archivoLogo", formValues['logo']);
 
   const requestOptions = {
     method: "POST",

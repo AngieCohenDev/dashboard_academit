@@ -5,7 +5,7 @@ import { useNewArticleLogic } from './hooks/useNewArticleLogic';
 import { Alert } from './shared/Alerts';
 
 const NewArticleField = {
-  keys: ['id', 'sectiontitle', 'articletitle', 'description', 'NavegacionArticleTitle', 'createdAt', 'updatedAt'],
+  keys: ['id', 'tituloSeccion', 'tituloArticulo', 'descripcion', 'navegacionArticleTitle', 'createdAt', 'updatedAt'],
   labels: ['Id', 'Título', 'Subtitulo', 'Descripción', 'navegación', 'Creado', 'Actualizado'],
 };
 

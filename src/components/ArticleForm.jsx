@@ -5,7 +5,7 @@ import { useArticleLogic } from './hooks/useArticleLogic';
 import { Alert } from './shared/Alerts';
 
 const ArticleField = {
-  keys: ['id', 'title', 'description', 'image', 'NavegacionTitle', 'createdAt', 'updatedAt'],
+  keys: ['id', 'titulo', 'descripcion', 'rutaImagen', 'navegacionTitulo', 'createdAt', 'updatedAt'],
   labels: ['Id', 'Título', 'Descripción', 'URL', 'Navegación', 'Creado', 'Actualizado'],
 };
 

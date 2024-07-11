@@ -5,7 +5,7 @@ import { useMainArticleLogic } from './hooks/useMainArticleLogic';
 import { Alert } from './shared/Alerts';
 
 const MainarticleField = {
-  keys: ['id', 'title', 'description', 'textButton', 'image', 'NavegacionBoton', 'createdAt', 'updatedAt'],
+  keys: ['id', 'titulo', 'descripcion', 'textoBoton', 'rutaImagen', 'navegacionBoton', 'createdAt', 'updatedAt'],
   labels: ['Id', 'Título', 'Descripción', 'Botón', 'URL','navegacion', 'Creado', 'Actualizado'],
 };
 
