@@ -28,13 +28,14 @@ export const callApiVideos = async (page = 1, limit = 5, searchParams = {}) => {
 
 export const updateItemVideos = async (id, data) => {
 
-  const { Título, Descripción, Video } = data;
-
   const formdata = new FormData();
-  formdata.append("title", Título);
-  formdata.append("description", Descripción);
-  formdata.append("video", Video);
-
+  formdata.append("tituloVideo", data['Título']);
+  formdata.append("descripcion", data['Descripción']);
+  formdata.append("estatus", data['Estatus']);
+  formdata.append("clase", data['Clase']);
+  formdata.append("archivoMiniatura", data['Miniatura']);
+  formdata.append("materiales", data['Materiales']);
+  formdata.append("archivoVideo", data['Video']);
   const config = {
     method: 'patch',
     url: `http://localhost:8080/cursos/${id}`,
@@ -63,13 +64,15 @@ export const createItemVideos = async (formValues) => {
 
   const myVideos = new Headers();
 
-  const { Título, Descripción, Video } = formValues;
-
   console.table(formValues);
   const formdata = new FormData();
-  formdata.append("title", Título);
-  formdata.append("description", Descripción);
-  formdata.append("video", Video);
+  formdata.append("tituloVideo", formValues['Título']);
+  formdata.append("descripcion", formValues['Descripción']);
+  formdata.append("estatus", formValues['Estatus']);
+  formdata.append("clase", formValues['Clase']);
+  formdata.append("archivoMiniatura", formValues['Miniatura']);
+  formdata.append("materiales", formValues['Materiales']);
+  formdata.append("archivoVideo", formValues['Video']);
 
   const requestOptions = {
     method: "POST",
