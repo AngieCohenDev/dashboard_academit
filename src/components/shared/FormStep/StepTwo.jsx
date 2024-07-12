@@ -2,37 +2,39 @@ import React, { useState } from 'react';
 
 const StepTwo = ({ nextStep, prevStep, handleAddVideo }) => {
   const [videoData, setVideoData] = useState({
-    videoName: '',
+    tituloVideo: '',
     videoDescription: '',
+    clase: '',
     material: '',
     thumbnail: null,
-    videoFile: null,
-    status: ''
+    archivoVideo: null,
+    estatus: '',
   });
 
   const handleChange = (e) => {
     setVideoData({
       ...videoData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleFileChange = (e) => {
     setVideoData({
       ...videoData,
-      [e.target.name]: e.target.files[0]
+      [e.target.name]: e.target.files[0],
     });
   };
 
   const addVideo = () => {
     handleAddVideo(videoData);
     setVideoData({
-      videoName: '',
+      tituloVideo: '',
       videoDescription: '',
+      clase: '',
       material: '',
       thumbnail: null,
-      videoFile: null,
-      status: ''
+      archivoVideo: null,
+      estatus: '',
     });
   };
 
@@ -41,27 +43,37 @@ const StepTwo = ({ nextStep, prevStep, handleAddVideo }) => {
       <h2 className="text-xl font-bold">Agregar Video</h2>
       <div>
         <label className="block text-sm font-medium">Nombre del Video</label>
-        <input 
-          type="text" 
-          name="videoName" 
-          value={videoData.videoName}
+        <input
+          type="text"
+          name="tituloVideo"
+          value={videoData.tituloVideo}
           onChange={handleChange}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
         />
       </div>
       <div>
         <label className="block text-sm font-medium">Descripción</label>
-        <input 
-          type="text" 
-          name="videoDescription" 
+        <input
+          type="text"
+          name="videoDescription"
           value={videoData.videoDescription}
           onChange={handleChange}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
         />
       </div>
       <div>
+        <label className="block text-sm font-medium">Clase</label>
+        <input
+          type="text"
+          name="clase"
+          value={videoData.clase}
+          onChange={handleChange}
+          className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+        />
+      </div>
+      <div>
         <label className="block text-sm font-medium">Material</label>
-        <button 
+        <button
           type="button"
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md bg-gray-200"
           onClick={() => alert('Subir Material')}
@@ -71,27 +83,27 @@ const StepTwo = ({ nextStep, prevStep, handleAddVideo }) => {
       </div>
       <div>
         <label className="block text-sm font-medium">Miniatura del Video</label>
-        <input 
-          type="file" 
-          name="thumbnail" 
+        <input
+          type="file"
+          name="thumbnail"
           onChange={handleFileChange}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
         />
       </div>
       <div>
         <label className="block text-sm font-medium">Subir Video</label>
-        <input 
-          type="file" 
-          name="videoFile" 
+        <input
+          type="file"
+          name="archivoVideo"
           onChange={handleFileChange}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
         />
       </div>
       <div>
         <label className="block text-sm font-medium">Estatus</label>
-        <select 
-          name="status" 
-          value={videoData.status}
+        <select
+          name="estatus"
+          value={videoData.estatus}
           onChange={handleChange}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
         >
@@ -101,19 +113,19 @@ const StepTwo = ({ nextStep, prevStep, handleAddVideo }) => {
         </select>
       </div>
       <div className="flex justify-between">
-        <button 
+        <button
           onClick={prevStep}
           className="mt-4 px-4 py-2 bg-gray-600 text-white rounded-md"
         >
           Anterior
         </button>
-        <button 
+        <button
           onClick={addVideo}
           className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md"
         >
           Agregar Video
         </button>
-        <button 
+        <button
           onClick={nextStep}
           className="mt-4 px-4 py-2 bg-green-600 text-white rounded-md"
         >

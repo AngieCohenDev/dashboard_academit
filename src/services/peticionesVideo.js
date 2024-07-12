@@ -26,16 +26,34 @@ export const callApiVideos = async (page = 1, limit = 5, searchParams = {}) => {
   }
 };
 
-export const updateItemVideos = async (id, data) => {
-
+export const updateCurso = async (id, cursoData) => {
   const formdata = new FormData();
-  formdata.append("tituloVideo", data['Título']);
-  formdata.append("descripcion", data['Descripción']);
-  formdata.append("estatus", data['Estatus']);
-  formdata.append("clase", data['Clase']);
-  formdata.append("archivoMiniatura", data['Miniatura']);
-  formdata.append("materiales", data['Materiales']);
-  formdata.append("archivoVideo", data['Video']);
+  formdata.append('nombreCurso', cursoData.nombreCurso);
+  formdata.append('estatus', cursoData.estatus);
+  formdata.append('categoria', cursoData.categoria);
+  formdata.append('nivel', cursoData.nivel);
+  formdata.append('descripcionCurso', cursoData.descripcionCurso);
+  formdata.append('fotografiaDelCurso', cursoData.fotografiaDelCurso);
+
+  if (cursoData.videos) {
+    cursoData.videos.forEach((video, index) => {
+      formdata.append(`videos[${index}].tituloVideo`, video.tituloVideo);
+      formdata.append(`videos[${index}].archivoVideo`, video.archivoVideo);
+      formdata.append(`videos[${index}].estatus`, video.estatus);
+      formdata.append(`videos[${index}].clase`, video.clase);
+      formdata.append(`videos[${index}].descripcion`, video.descripcion);
+      formdata.append(`videos[${index}].archivoMiniatura`, video.archivoMiniatura);
+      if (video.materiales) {
+        video.materiales.forEach((material, mIndex) => {
+          formdata.append(`videos[${index}].materiales[${mIndex}].nombre`, material.nombre);
+          formdata.append(`videos[${index}].materiales[${mIndex}].descripcionMaterial`, material.descripcionMaterial);
+          formdata.append(`videos[${index}].materiales[${mIndex}].estatus`, material.estatus);
+          formdata.append(`videos[${index}].materiales[${mIndex}].archivoMaterial`, material.archivoMaterial);
+        });
+      }
+    });
+  }
+
   const config = {
     method: 'patch',
     url: `http://localhost:8080/cursos/${id}`,
@@ -44,45 +62,80 @@ export const updateItemVideos = async (id, data) => {
     },
     data: formdata,
   };
-  const response = await axios.request(config);
-  return response.data;
+
+  try {
+    const response = await axios.request(config);
+    return response.data;
+  } catch (error) {
+    return {
+      type: 'unsuccess',
+      message: error.response.data.message,
+    };
+  }
 };
 
-export const deleteItemVideos = async (id) => {
-  console.log(id);
+// Función para crear un curso
+export const createCurso = async (cursoData) => {
+  const formdata = new FormData();
+  formdata.append('nombreCurso', cursoData.nombreCurso);
+  formdata.append('estatus', cursoData.estatus);
+  formdata.append('categoria', cursoData.categoria);
+  formdata.append('nivel', cursoData.nivel);
+  formdata.append('descripcionCurso', cursoData.descripcionCurso);
+  formdata.append('fotografiaDelCurso', cursoData.fotografiaDelCurso);
+
+  if (cursoData.videos) {
+    cursoData.videos.forEach((video, index) => {
+      formdata.append(`videos[${index}].tituloVideo`, video.tituloVideo);
+      formdata.append(`videos[${index}].archivoVideo`, video.archivoVideo);
+      formdata.append(`videos[${index}].estatus`, video.estatus);
+      formdata.append(`videos[${index}].clase`, video.clase);
+      formdata.append(`videos[${index}].descripcion`, video.descripcion);
+      formdata.append(`videos[${index}].archivoMiniatura`, video.archivoMiniatura);
+      if (video.materiales) {
+        video.materiales.forEach((material, mIndex) => {
+          formdata.append(`videos[${index}].materiales[${mIndex}].nombre`, material.nombre);
+          formdata.append(`videos[${index}].materiales[${mIndex}].descripcionMaterial`, material.descripcionMaterial);
+          formdata.append(`videos[${index}].materiales[${mIndex}].estatus`, material.estatus);
+          formdata.append(`videos[${index}].materiales[${mIndex}].archivoMaterial`, material.archivoMaterial);
+        });
+      }
+    });
+  }
+
+  const config = {
+    method: 'post',
+    url: 'http://localhost:8080/cursos',
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    data: formdata,
+  };
+
+  try {
+    const response = await axios.request(config);
+    return response.data;
+  } catch (error) {
+    return {
+      type: 'unsuccess',
+      message: error.response.data.message,
+    };
+  }
+};
+
+export const deleteCurso = async (id) => {
   const config = {
     method: 'delete',
     url: `http://localhost:8080/cursos/${id}`,
   };
-  const response = await axios.request(config);
-  return response.data;
-};
 
-export const createItemVideos = async (formValues) => {
-
-  console.log(formValues);
-
-  const myVideos = new Headers();
-
-  console.table(formValues);
-  const formdata = new FormData();
-  formdata.append("tituloVideo", formValues['Título']);
-  formdata.append("descripcion", formValues['Descripción']);
-  formdata.append("estatus", formValues['Estatus']);
-  formdata.append("clase", formValues['Clase']);
-  formdata.append("archivoMiniatura", formValues['Miniatura']);
-  formdata.append("materiales", formValues['Materiales']);
-  formdata.append("archivoVideo", formValues['Video']);
-
-  const requestOptions = {
-    method: "POST",
-    headers: myVideos,
-    body: formdata,
-    redirect: "follow"
-  };
-
-  const datos = await fetch("http://localhost:8080/cursos", requestOptions);
-
-  console.log(datos);
-  return datos
+  try {
+    const response = await axios.request(config);
+    return response.data;
+  } catch (error) {
+    return {
+      type: 'unsuccess',
+      message: error.response.data.message,
+    };
+  }
 };

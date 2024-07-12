@@ -1,77 +1,64 @@
-import { Table } from './shared/Table';
-import { DynamicForm } from './shared/DinamicForm/DynamicForm';
-import ItemFormPopup from '../components/shared/FormCreation/FormCreation';
-import { useVideoLocic } from './hooks/useVideoLocic';
-import { Alert } from './shared/Alerts';
+import React from 'react';
+import MultiStepForm from './shared/MultiStepForm';
 
-const videoField = {
-  keys: ['id', 'title', 'description', 'video', 'createdAt', 'updatedAt'],
-  labels: ['Id', 'Título', 'Descripción', 'URL', 'Creado', 'Actualizado'],
-};
-
-const fields = [
-  { id: 'id', label: 'Id', type: 'text', required: false },
-  { id: 'title', label: 'Título', type: 'text', required: false },
-];
-
-const Createfields = [
-  { id: 'Título', label: 'Título', type: 'text', required: true },
-  { id: 'Descripción', label: 'Descripción', type: 'text', required: true },
-  { id: 'Video', label: 'Video', type: 'file', required: true },
-];
-
-export default function VideoForm() {
-
-  const {
-    alert,
-    setAlert,
-    extraButtons,
-    actions,
-    handlePageChange,
-    searchFormSubmit,
-    handleFormSubmit,
-    showPopup,
-    data,
-    totalItems,
-    totalPages,
-    resetForm,
-    currentItem,
-    closePopup,
-    formAction,
-    setCurrentItem,
-    currentPage
-  } = useVideoLocic();
+export const VideoForm = () => {
+  const steps = [
+    {
+      title: "Crear Curso",
+      fields: [
+        { name: 'courseName', label: 'Nombre del Curso', type: 'text' },
+        { name: 'courseDescription', label: 'Descripción', type: 'text' },
+        { name: 'category', label: 'Categoría', type: 'select', options: [
+          { value: '', label: 'Seleccionar' },
+          { value: 'programming', label: 'Programación' },
+          { value: 'design', label: 'Diseño' },
+          { value: 'marketing', label: 'Marketing' }
+        ]},
+        { name: 'status', label: 'Estatus', type: 'select', options: [
+          { value: '', label: 'Seleccionar' },
+          { value: 'active', label: 'Activo' },
+          { value: 'inactive', label: 'Inactivo' }
+        ]},
+        { name: 'level', label: 'Nivel', type: 'select', options: [
+          { value: '', label: 'Seleccionar' },
+          { value: 'beginner', label: 'Principiante' },
+          { value: 'intermediate', label: 'Intermedio' },
+          { value: 'advanced', label: 'Avanzado' }
+        ]},
+        { name: 'coverImage', label: 'Portada del Curso', type: 'file' }
+      ]
+    },
+    {
+      title: "Agregar Video",
+      fields: [
+        { name: 'videoName', label: 'Nombre del Video', type: 'text' },
+        { name: 'videoDescription', label: 'Descripción', type: 'text' },
+        { name: 'material', label: 'Material', type: 'button', onClick: () => alert('Subir Material') },
+        { name: 'thumbnail', label: 'Miniatura del Video', type: 'file' },
+        { name: 'videoFile', label: 'Subir Video', type: 'file' },
+        { name: 'videoStatus', label: 'Estatus', type: 'select', options: [
+          { value: '', label: 'Seleccionar' },
+          { value: 'active', label: 'Activo' },
+          { value: 'inactive', label: 'Inactivo' }
+        ]}
+      ]
+    },
+    {
+     title: "Revisión del Curso",
+      fields: [
+        // No fields here, just review of the collected data
+      ]
+    } 
+  ];
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
-      <DynamicForm fields={fields} onSubmit={searchFormSubmit} extraButtons={extraButtons} resetForm={resetForm} />
-      {alert && <Alert alert={alert} setAlert={setAlert}/>}
-
-      {showPopup && (
-        <ItemFormPopup
-          currentItem={currentItem}
-          closePopup={closePopup}
-          handleFormSubmit={handleFormSubmit}
-          formAction={formAction}
-          fields={Createfields}
-          handleFieldChange={(fieldId, value) => {
-            setCurrentItem({ ...currentItem, [fieldId]: value });
-          }}
-        />
-      )}
-
-      <div className="overflow-x-auto mx-4">
-        <Table
-          config={videoField}
-          data={data}
-          totalItems={totalItems}
-          totalPages={totalPages}
-          currentPage={currentPage}
-          onPageChange={handlePageChange}
-          actions={actions}
-        />
-      </div>
+    <div className="App">
+      <h1 className="text-2xl font-bold text-center my-4">Formulario de Creación de Curso</h1>
+      <MultiStepForm steps={steps} />
     </div>
   );
-}
+};
+
+
+
 

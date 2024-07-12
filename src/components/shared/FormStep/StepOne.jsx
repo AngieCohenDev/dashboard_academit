@@ -8,9 +8,9 @@ const StepOne = ({ nextStep, handleChange, handleFileChange, formData }) => {
         <label className="block text-sm font-medium">Nombre del Curso</label>
         <input 
           type="text" 
-          name="courseName" 
-          value={formData.courseName}
-          onChange={handleChange}
+          name="nombreCurso" 
+          value={formData.nombreCurso}
+          onChange={(e) => handleChange(e, 'nombreCurso')}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
         />
       </div>
@@ -18,58 +18,47 @@ const StepOne = ({ nextStep, handleChange, handleFileChange, formData }) => {
         <label className="block text-sm font-medium">Descripción</label>
         <input 
           type="text" 
-          name="courseDescription" 
-          value={formData.courseDescription}
-          onChange={handleChange}
+          name="descripcionCurso" 
+          value={formData.descripcionCurso}
+          onChange={(e) => handleChange(e, 'descripcionCurso')}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
         />
       </div>
       <div>
         <label className="block text-sm font-medium">Categoría</label>
-        <select 
-          name="category" 
-          value={formData.category}
-          onChange={handleChange}
+        <input
+          type="text"
+          name="categoria" 
+          value={formData.categoria}
+          onChange={(e) => handleChange(e, 'categoria')}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-        >
-          <option value="">Seleccionar</option>
-          <option value="programming">Programación</option>
-          <option value="design">Diseño</option>
-          <option value="marketing">Marketing</option>
-        </select>
+        />
       </div>
       <div>
         <label className="block text-sm font-medium">Estatus</label>
-        <select 
-          name="status" 
-          value={formData.status}
-          onChange={handleChange}
+        <input
+          type="text"
+          name="estatus" 
+          value={formData.estatus}
+          onChange={(e) => handleChange(e, 'estatus')}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-        >
-          <option value="">Seleccionar</option>
-          <option value="active">Activo</option>
-          <option value="inactive">Inactivo</option>
-        </select>
+        />
       </div>
       <div>
         <label className="block text-sm font-medium">Nivel</label>
-        <select 
-          name="level" 
-          value={formData.level}
-          onChange={handleChange}
+        <input
+          type="text"
+          name="nivel" 
+          value={formData.nivel}
+          onChange={(e) => handleChange(e, 'nivel')}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-        >
-          <option value="">Seleccionar</option>
-          <option value="beginner">Principiante</option>
-          <option value="intermediate">Intermedio</option>
-          <option value="advanced">Avanzado</option>
-        </select>
+        />
       </div>
       <div>
         <label className="block text-sm font-medium">Portada del Curso</label>
         <input 
           type="file" 
-          name="coverImage" 
+          name="fotografiaDelCurso" 
           onChange={handleFileChange}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
         />

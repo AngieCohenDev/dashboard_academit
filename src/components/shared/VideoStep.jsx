@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
-import StepOne from './StepForm/StepOne';
-import StepTwo from './StepForm/StepTwo';
-import StepThree from './StepForm/StepThree';
+import StepOne from './FormStep/StepOne';
+import StepTwo from './FormStep/StepTwo';
+import StepThree from './FormStep/StepThree';
+import { useFormCurso } from '../../components/hooks/useVideoLocic';
 
 export const VideoStep = () => {
   const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState({
-    courseName: '',
-    courseDescription: '',
-    category: '',
-    status: '',
-    level: '',
-    coverImage: null,
-    videos: []
-  });
+  const [errors, setErrors] = useState({});
+  const {
+    formData,
+    updateFormData,
+    addVideoData,
+    submitFormData,
+    isSubmitting,
+    error,
+  } = useFormCurso();
 
   const nextStep = () => {
     setStep(step + 1);
@@ -23,37 +24,59 @@ export const VideoStep = () => {
     setStep(step - 1);
   };
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+  const handleChange = (e, id) => {
+    updateFormData({ [id]: e.target.value });
+    if (errors[id]) {
+      setErrors({ ...errors, [id]: '' });
+    }
   };
 
   const handleFileChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.files[0]
-    });
+    updateFormData({ [e.target.name]: e.target.files[0] });
   };
 
   const handleAddVideo = (video) => {
-    setFormData({
-      ...formData,
-      videos: [...formData.videos, video]
-    });
+    addVideoData(video);
   };
 
-  switch(step) {
-    case 1:
-      return <StepOne nextStep={nextStep} handleChange={handleChange} handleFileChange={handleFileChange} formData={formData} />;
-    case 2:
-      return <StepTwo nextStep={nextStep} prevStep={prevStep} handleAddVideo={handleAddVideo} />;
-    case 3:
-      return <StepThree prevStep={prevStep} formData={formData} />;
-    default:
-      return <div>Error</div>;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await submitFormData();
+    if (response.type !== 'unsuccess') {
+      alert('Curso creado exitosamente');
+    } else {
+      alert('Ocurrió un error: ' + response.message);
+    }
+  };
+
+  if (isSubmitting) {
+    return <div>Enviando...</div>;
   }
+
+  return (
+    <>
+      {error && <div>{error}</div>}
+      {step === 1 && (
+        <StepOne
+          nextStep={nextStep}
+          handleChange={handleChange}
+          handleFileChange={handleFileChange}
+          formData={formData}
+        />
+      )}
+      {step === 2 && (
+        <StepTwo
+          nextStep={nextStep}
+          prevStep={prevStep}
+          handleAddVideo={handleAddVideo}
+        />
+      )}
+      {step === 3 && (
+        <form onSubmit={handleSubmit}>
+          <StepThree prevStep={prevStep} formData={formData} />
+          <button type="submit">Submit</button>
+        </form>
+      )}
+    </>
+  );
 };
-
-
