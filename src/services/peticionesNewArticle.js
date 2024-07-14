@@ -16,8 +16,9 @@ export const callApiNewArticle = async (page = 1, limit = 5, searchParams = {}) 
     },
   };
   try {
-    const response = await axios.request(config);
-    return response.data;
+    const {data} = await axios.request(config);
+    console.log(data)
+    return data;
   } catch (error) {
     return {
       type: 'unsucces',
@@ -82,22 +83,13 @@ export const createItemNewArticle = async (formValues) => {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(requestData),  // Convertir requestData a JSON string
+    body: requestData,  // Convertir requestData a JSON string
     redirect: "follow"
   };
 
-  try {
     const response = await fetch("http://localhost:8080/new-article", requestOptions);
-
-    if (!response.ok) {
-      throw new Error(`Error: ${response.status} ${response.statusText}`);
-    }
 
     const data = await response.json();
     console.log(data);
     return data;
-  } catch (error) {
-    console.error('Error:', error);
-    throw error;
-  }
 };
