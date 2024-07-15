@@ -8,8 +8,8 @@ const StepOne = ({ nextStep, handleChange, handleFileChange, formData }) => {
         <label className="block text-sm font-medium">Nombre del Curso</label>
         <input 
           type="text" 
-          name="courseName" 
-          value={formData.courseName}
+          name="nombreCurso" 
+          value={formData.nombreCurso}
           onChange={handleChange}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
         />
@@ -18,8 +18,8 @@ const StepOne = ({ nextStep, handleChange, handleFileChange, formData }) => {
         <label className="block text-sm font-medium">Descripción</label>
         <input 
           type="text" 
-          name="courseDescription" 
-          value={formData.courseDescription}
+          name="descripcionCurso" 
+          value={formData.descripcionCurso}
           onChange={handleChange}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
         />
@@ -27,8 +27,8 @@ const StepOne = ({ nextStep, handleChange, handleFileChange, formData }) => {
       <div>
         <label className="block text-sm font-medium">Categoría</label>
         <select 
-          name="category" 
-          value={formData.category}
+          name="categoria" 
+          value={formData.categoria}
           onChange={handleChange}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
         >
@@ -41,8 +41,8 @@ const StepOne = ({ nextStep, handleChange, handleFileChange, formData }) => {
       <div>
         <label className="block text-sm font-medium">Estatus</label>
         <select 
-          name="status" 
-          value={formData.status}
+          name="estatus" 
+          value={formData.estatus}
           onChange={handleChange}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
         >
@@ -54,22 +54,22 @@ const StepOne = ({ nextStep, handleChange, handleFileChange, formData }) => {
       <div>
         <label className="block text-sm font-medium">Nivel</label>
         <select 
-          name="level" 
-          value={formData.level}
+          name="nivel" 
+          value={formData.nivel}
           onChange={handleChange}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
         >
           <option value="">Seleccionar</option>
-          <option value="beginner">Principiante</option>
-          <option value="intermediate">Intermedio</option>
-          <option value="advanced">Avanzado</option>
+          <option value="principiante">Principiante</option>
+          <option value="medio">Intermedio</option>
+          <option value="avanzado">Avanzado</option>
         </select>
       </div>
       <div>
         <label className="block text-sm font-medium">Portada del Curso</label>
         <input 
           type="file" 
-          name="coverImage" 
+          name="fotografiaDelCurso" 
           onChange={handleFileChange}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
         />

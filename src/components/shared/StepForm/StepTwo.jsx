@@ -2,12 +2,7 @@ import React, { useState } from 'react';
 
 const StepTwo = ({ nextStep, prevStep, handleAddVideo }) => {
   const [videoData, setVideoData] = useState({
-    videoName: '',
-    videoDescription: '',
-    material: '',
-    thumbnail: null,
-    videoFile: null,
-    status: ''
+    materiales: []
   });
 
   const handleChange = (e) => {
@@ -27,12 +22,12 @@ const StepTwo = ({ nextStep, prevStep, handleAddVideo }) => {
   const addVideo = () => {
     handleAddVideo(videoData);
     setVideoData({
-      videoName: '',
-      videoDescription: '',
-      material: '',
-      thumbnail: null,
-      videoFile: null,
-      status: ''
+      tituloVideo: '',
+      descripcion: '',
+      clase: '',
+      archivoMiniatura: null,
+      archivoVideo: null,
+      estatus: ''
     });
   };
 
@@ -43,8 +38,8 @@ const StepTwo = ({ nextStep, prevStep, handleAddVideo }) => {
         <label className="block text-sm font-medium">Nombre del Video</label>
         <input 
           type="text" 
-          name="videoName" 
-          value={videoData.videoName}
+          name="tituloVideo" 
+          value={videoData.tituloVideo}
           onChange={handleChange}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
         />
@@ -53,8 +48,18 @@ const StepTwo = ({ nextStep, prevStep, handleAddVideo }) => {
         <label className="block text-sm font-medium">Descripción</label>
         <input 
           type="text" 
-          name="videoDescription" 
-          value={videoData.videoDescription}
+          name="descripcion" 
+          value={videoData.descripcion}
+          onChange={handleChange}
+          className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium">Clase</label>
+        <input 
+          type="number" 
+          name="clase" 
+          value={videoData.clase}
           onChange={handleChange}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
         />
@@ -73,7 +78,7 @@ const StepTwo = ({ nextStep, prevStep, handleAddVideo }) => {
         <label className="block text-sm font-medium">Miniatura del Video</label>
         <input 
           type="file" 
-          name="thumbnail" 
+          name="archivoMiniatura" 
           onChange={handleFileChange}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
         />
@@ -82,16 +87,17 @@ const StepTwo = ({ nextStep, prevStep, handleAddVideo }) => {
         <label className="block text-sm font-medium">Subir Video</label>
         <input 
           type="file" 
-          name="videoFile" 
+          name="archivoVideo" 
           onChange={handleFileChange}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
         />
       </div>
+      
       <div>
         <label className="block text-sm font-medium">Estatus</label>
         <select 
-          name="status" 
-          value={videoData.status}
+          name="estatus" 
+          value={videoData.estatus}
           onChange={handleChange}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
         >

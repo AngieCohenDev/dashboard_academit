@@ -6,12 +6,6 @@ import StepThree from './StepForm/StepThree';
 export const VideoStep = () => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
-    courseName: '',
-    courseDescription: '',
-    category: '',
-    status: '',
-    level: '',
-    coverImage: null,
     videos: []
   });
 
