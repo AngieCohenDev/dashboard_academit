@@ -13,6 +13,7 @@ export const useVideoLocic = () => {
     const [searchParams, setSearchParams] = useState({});
     const [resetForm, setResetForm] = useState(false);
     const [formAction, setFormAction] = useState(true)
+    const [alert, setAlert] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -62,7 +63,15 @@ export const useVideoLocic = () => {
         setSearchParams(form);
 
         const response = await callApiVideos(currentPage, 5, form);
-        setData(response.data);
+        if (response.data) {
+            setData(response.data);
+            setAlert({
+                type: 'success',
+                message: 'New Article Encontrado.'
+            })
+        } else {
+            setAlert(response)
+        }
 
         //resetAllForms();
     };
@@ -125,6 +134,8 @@ export const useVideoLocic = () => {
     ];
 
     return {
+        alert,
+        setAlert,
         extraButtons,
         actions,
         handlePageChange,

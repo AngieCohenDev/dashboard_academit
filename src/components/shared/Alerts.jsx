@@ -1,6 +1,4 @@
-import React from 'react';
-
-const Alert = ({ alert, setAlert }) => {
+export const Alert = ({ alert, setAlert }) => {
     if (!alert) return null;
 
     return (
@@ -15,5 +13,3 @@ const Alert = ({ alert, setAlert }) => {
         </div>
     );
 };
-
-export default Alert;

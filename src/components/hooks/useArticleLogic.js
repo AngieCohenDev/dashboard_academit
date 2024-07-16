@@ -13,6 +13,8 @@ export const useArticleLogic = () => {
     const [searchParams, setSearchParams] = useState({});
     const [resetForm, setResetForm] = useState(false);
     const [formAction, setFormAction] = useState(true)
+    const [alert, setAlert] = useState(null)
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -62,7 +64,15 @@ export const useArticleLogic = () => {
         setSearchParams(form);
 
         const response = await callApiArticle(currentPage, 5, form);
-        setData(response.data);
+        if (response.data) {
+            setData(response.data);
+            setAlert({
+              type: 'success',
+              message: 'Articulo Encontrado.'
+            })
+          } else {
+            setAlert(response)
+          }
 
         //resetAllForms();
     };
@@ -125,6 +135,8 @@ export const useArticleLogic = () => {
     ];
 
     return {
+        alert,
+        setAlert,
         actions,
         data,
         extraButtons,

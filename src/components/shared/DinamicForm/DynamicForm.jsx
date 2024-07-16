@@ -38,7 +38,7 @@ export const DynamicForm = ({ fields, onSubmit, extraButtons, resetForm }) => {
 
     return (
         <div className="flex flex-col items-center mx-4 my-8 p-6 border border-gray-300 rounded-lg ">
-            <div className="flex flex-wrap w-full items-center">
+            <div className="flex flex-wrap w-full items-center ">
                 <form id="dynamicForm" className="flex flex-wrap gap-4 w-auto flex-grow" onSubmit={handleSubmit}>
                     {fields.map(field => (
                         <div key={field.id} className="flex flex-col w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-2">

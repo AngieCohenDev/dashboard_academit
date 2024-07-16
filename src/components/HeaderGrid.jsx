@@ -2,27 +2,28 @@ import ItemFormPopup from '../components/shared/FormCreation/FormCreation';
 import { Table } from './shared/Table';
 import { DynamicForm } from './shared/DinamicForm/DynamicForm';
 import { useHeaderLogic } from './hooks/useHeaderLogic';
+import { Alert } from './shared/Alerts';
 
 
 const articlesField = {
-  keys: ['id', 'item01', 'item02', 'item03', 'item04', 'logo', 'createdAt', 'updatedAt'],
-  labels: ['Id', 'Item01', 'Item02', 'Item03', 'Item04', 'Logo', 'Creado', 'Actualizado'],
+  keys: ['id', 'item01', 'navegacionItem01', 'item02', 'navegacionItem02', 'item03', 'navegacionItem03', 'item04', 'navegacionItem04', 'rutaLogo', 'createdAt', 'updatedAt'],
+  labels: ['Id', 'item1', 'Nav1', 'item2', 'Nav2', 'item3', 'Nav3', 'item4', 'Nav4', 'Logo', 'Creado', 'Actualizado'],
 };
 
 const fields = [
   { id: 'id', label: 'Id', type: 'text', required: false },
-  { id: 'item01', label: 'Item01', type: 'text', required: false },
+  { id: 'item1', label: 'Item01', type: 'text', required: false },
 ];
 
 const Createfields = [
-  { id: 'item01', label: 'Item01', type: 'text', required: true },
-  { id: 'NavegacionItem01', label: 'Navegacion Item 01', type: 'text', required: true },
-  { id: 'item02', label: 'Item02', type: 'text', required: false },
-  { id: 'NavegacionIitem02', label: 'Navegacion Item 02', type: 'text', required: false },
-  { id: 'item03', label: 'Item03', type: 'text', required: false },
-  { id: 'NavegacionIitem03', label: 'Navegacion Item 03', type: 'text', required: false },
-  { id: 'item04', label: 'Item04', type: 'text', required: false },
-  { id: 'NavegacionIitem04', label: 'Navegacion Item 04', type: 'text', required: false },
+  { id: 'item1', label: 'Item01', type: 'text', required: true },
+  { id: 'Nav1', label: 'Navegacion Item 01', type: 'text', required: true },
+  { id: 'item2', label: 'Item02', type: 'text', required: false },
+  { id: 'Nav2', label: 'Navegacion Item 02', type: 'text', required: false },
+  { id: 'item3', label: 'Item03', type: 'text', required: false },
+  { id: 'Nav3', label: 'Navegacion Item 03', type: 'text', required: false },
+  { id: 'item4', label: 'Item04', type: 'text', required: false },
+  { id: 'Nav4', label: 'Navegacion Item 04', type: 'text', required: false },
   { id: 'logo', label: 'Logo', type: 'file', required: false },
 ];
 
@@ -30,6 +31,8 @@ const Createfields = [
 function HeaderGrid() {
   
   const {
+    alert,
+    setAlert,
     actions,
     data,
     extraButtons,
@@ -48,9 +51,9 @@ function HeaderGrid() {
   } = useHeaderLogic()
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="min-h-screen bg-white flex flex-col" >
       <DynamicForm fields={fields} onSubmit={searchFormSubmit} extraButtons={extraButtons} resetForm={resetForm} />
-
+      {alert && <Alert alert={alert} setAlert={setAlert}/>}
       {showPopup && (
         <ItemFormPopup
           currentItem={currentItem}

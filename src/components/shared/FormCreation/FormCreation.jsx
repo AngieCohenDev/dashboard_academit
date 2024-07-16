@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 
 const ItemFormPopup = ({
     currentItem,
@@ -11,8 +10,8 @@ const ItemFormPopup = ({
     formAction
 }) => {
     return (
-        <div className="fixed top-0 left-0 flex justify-center items-center w-full h-full bg-gray-800 bg-opacity-75">
-            <div className="bg-white shadow-lg rounded-lg p-8 w-11/12 md:w-2/3 lg:w-1/2">
+        <div className="fixed top-0 left-0 flex justify-center  w-full h-full bg-gray-800 bg-opacity-75 ">
+            <div className="bg-white shadow-lg rounded-lg p-8 w-11/12 md:w-2/3 lg:w-1/2  overflow-y-scroll">
                 <div className="flex justify-between items-center mb-6">
                     <h1 className="text-2xl font-bold text-gray-800">
                         {formAction ? 'Formulario de Items' : 'Editar Item'}

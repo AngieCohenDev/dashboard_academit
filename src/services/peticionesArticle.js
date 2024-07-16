@@ -15,19 +15,26 @@ export const callApiArticle = async (page = 1, limit = 5, searchParams = {}) => 
         Accept: 'application/json',
       },
     };
-    const response = await axios.request(config);
-    return response.data;
+    try {
+      const response = await axios.request(config);
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      return {
+        type: 'unsucces',
+        message: error.response.data.message
+      }
+    }
   };
   
 export const updateItemArticle = async (id, data) => {
   
-  const { Título, Descripción, Imagen} = data;
-  
     const formdata = new FormData();
-    formdata.append("title", Título);
-    formdata.append("description", Descripción);
-    formdata.append("image", Imagen);
-  
+    formdata.append("titulo", data['Título']);
+    formdata.append("navegacionTitulo", data['Navegación']);
+    formdata.append("descripcion", data['Descripción']);
+    formdata.append("archivoImagen", data['Imagen']);
+    
     const config = {
       method: 'patch',
       url: `http://localhost:8080/articulos/${id}`,
@@ -53,14 +60,15 @@ export const deleteItemArticle = async (id) => {
 export const createItemArticle = async (formValues) => {
   
     const myArticles = new Headers();
-  
-    const { Título, Descripción, Imagen} = formValues;
+
+    console.log(formValues)
   
     console.table(formValues )
     const formdata = new FormData();
-    formdata.append("title", Título);
-    formdata.append("description", Descripción);
-    formdata.append("image", Imagen);
+    formdata.append("titulo", formValues['Título']);
+    formdata.append("navegacionTitulo", formValues['Navegación']);
+    formdata.append("descripcion", formValues['Descripción']);
+    formdata.append("archivoImagen", formValues['Imagen']);
     
     const requestOptions = {
       method: "POST",

@@ -15,18 +15,25 @@ export const callApiNewArticle = async (page = 1, limit = 5, searchParams = {}) 
       Accept: 'application/json',
     },
   };
-  const response = await axios.request(config);
-  return response.data;
+  try {
+    const {data} = await axios.request(config);
+    console.log(data)
+    return data;
+  } catch (error) {
+    return {
+      type: 'unsucces',
+      message: error.response.data.message
+    }
+  }
 };
 
 export const updateItemNewArticle = async (id, data) => {
 
-  const { Título, Subtitulo, Descripción } = data;
-
   const requestData = {
-    sectiontitle: Título,
-    articletitle: Subtitulo,
-    description: Descripción
+    tituloSeccion: data['Título'],
+    navegacionArticleTitle: data['navegación'],
+    tituloArticulo: data['Subtitulo'],
+    descripcion: data['Descripción']
   };
 
   const config = {
@@ -47,45 +54,44 @@ export const deleteItemNewArticle = async (id) => {
     method: 'delete',
     url: `http://localhost:8080/new-article/${id}`,
   };
-  const response = await axios.request(config);
-  return response.data;
+  try {
+    const response = await axios.request(config);
+    return response.data;
+  } catch (error) {
+    return {
+      type: 'unsucces',
+      message: error.response.data.message
+    }
+  }
 };
 
 export const createItemNewArticle = async (formValues) => {
 
-  console.log(formValues);
-
-  const { Título, Subtitulo, Descripción } = formValues;
 
   console.table(formValues);
 
   const requestData = {
-    sectiontitle: Título,
-    articletitle: Subtitulo,
-    description: Descripción
+    tituloSeccion: formValues['Título'],
+    navegacionArticleTitle: formValues['navegación'],
+    tituloArticulo: formValues['Subtitulo'],
+    descripcion: formValues['Descripción']
   };
+
+  console.log(requestData);
+
 
   const requestOptions = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(requestData),  // Convertir requestData a JSON string
+    body: JSON.stringify(requestData),
     redirect: "follow"
   };
 
-  try {
     const response = await fetch("http://localhost:8080/new-article", requestOptions);
 
-    if (!response.ok) {
-      throw new Error(`Error: ${response.status} ${response.statusText}`);
-    }
-
-    const data = await response.json();
+    const data = await response.text();
     console.log(data);
     return data;
-  } catch (error) {
-    console.error('Error:', error);
-    throw error;
-  }
 };

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import { FaMinus } from "react-icons/fa6";
-import { callApiMainArticle,createItemMainArticle, updateItemMainArticle, deleteItemMainArticle} from '../../services/peticionesMainArticle'
+import { callApiMainArticle, createItemMainArticle, updateItemMainArticle, deleteItemMainArticle } from '../../services/peticionesMainArticle'
 
 
 export const useMainArticleLogic = () => {
@@ -14,6 +14,7 @@ export const useMainArticleLogic = () => {
     const [searchParams, setSearchParams] = useState({});
     const [resetForm, setResetForm] = useState(false);
     const [formAction, setFormAction] = useState(true)
+    const [alert, setAlert] = useState(null)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -63,7 +64,15 @@ export const useMainArticleLogic = () => {
         setSearchParams(form);
 
         const response = await callApiMainArticle(currentPage, 5, form);
-        setData(response.data);
+        if (response.data) {
+            setData(response.data);
+            setAlert({
+                type: 'success',
+                message: 'Main Article Encontrado.'
+            })
+        } else {
+            setAlert(response)
+        }
 
         //resetAllForms();
     };
@@ -126,6 +135,8 @@ export const useMainArticleLogic = () => {
     ];
 
     return {
+        alert,
+        setAlert,
         extraButtons,
         actions,
         handlePageChange,
