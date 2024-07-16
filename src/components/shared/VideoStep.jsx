@@ -6,15 +6,9 @@ import { useFormCurso } from '../../components/hooks/useVideoLocic';
 
 export const VideoStep = () => {
   const [step, setStep] = useState(1);
-  const [errors, setErrors] = useState({});
-  const {
-    formData,
-    updateFormData,
-    addVideoData,
-    submitFormData,
-    isSubmitting,
-    error,
-  } = useFormCurso();
+  const [formData, setFormData] = useState({
+    videos: []
+  });
 
   const nextStep = () => {
     setStep(step + 1);

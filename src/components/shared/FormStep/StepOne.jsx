@@ -10,7 +10,7 @@ const StepOne = ({ nextStep, handleChange, handleFileChange, formData }) => {
           type="text" 
           name="nombreCurso" 
           value={formData.nombreCurso}
-          onChange={(e) => handleChange(e, 'nombreCurso')}
+          onChange={handleChange}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
         />
       </div>
@@ -20,39 +20,41 @@ const StepOne = ({ nextStep, handleChange, handleFileChange, formData }) => {
           type="text" 
           name="descripcionCurso" 
           value={formData.descripcionCurso}
-          onChange={(e) => handleChange(e, 'descripcionCurso')}
+          onChange={handleChange}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
         />
       </div>
       <div>
         <label className="block text-sm font-medium">Categoría</label>
-        <input
-          type="text"
+        <select 
           name="categoria" 
           value={formData.categoria}
-          onChange={(e) => handleChange(e, 'categoria')}
+          onChange={handleChange}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
         />
       </div>
       <div>
         <label className="block text-sm font-medium">Estatus</label>
-        <input
-          type="text"
+        <select 
           name="estatus" 
           value={formData.estatus}
-          onChange={(e) => handleChange(e, 'estatus')}
+          onChange={handleChange}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
         />
       </div>
       <div>
         <label className="block text-sm font-medium">Nivel</label>
-        <input
-          type="text"
+        <select 
           name="nivel" 
           value={formData.nivel}
-          onChange={(e) => handleChange(e, 'nivel')}
+          onChange={handleChange}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-        />
+        >
+          <option value="">Seleccionar</option>
+          <option value="principiante">Principiante</option>
+          <option value="medio">Intermedio</option>
+          <option value="avanzado">Avanzado</option>
+        </select>
       </div>
       <div>
         <label className="block text-sm font-medium">Portada del Curso</label>
