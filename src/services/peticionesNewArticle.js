@@ -67,7 +67,6 @@ export const deleteItemNewArticle = async (id) => {
 
 export const createItemNewArticle = async (formValues) => {
 
-  console.log(formValues);
 
   console.table(formValues);
 
@@ -78,18 +77,21 @@ export const createItemNewArticle = async (formValues) => {
     descripcion: formValues['Descripción']
   };
 
+  console.log(requestData);
+
+
   const requestOptions = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: requestData,  // Convertir requestData a JSON string
+    body: JSON.stringify(requestData),
     redirect: "follow"
   };
 
     const response = await fetch("http://localhost:8080/new-article", requestOptions);
 
-    const data = await response.json();
+    const data = await response.text();
     console.log(data);
     return data;
 };
