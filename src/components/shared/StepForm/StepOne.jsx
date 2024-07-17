@@ -1,85 +1,64 @@
 import React from 'react';
 
-const StepOne = ({ nextStep, handleChange, handleFileChange, formData }) => {
+const StepOne = ({
+  title,
+  fields,
+  nextStep,
+  handleChange,
+  handleFileChange,
+  formData,
+  buttonText = "Siguiente",
+  showButton = true // Prop para mostrar u ocultar el botón
+}) => {
   return (
-    <div className="p-6 max-w-md mx-auto bg-white rounded-xl shadow-md space-y-4">
-      <h2 className="text-xl font-bold">Crear Curso</h2>
-      <div>
-        <label className="block text-sm font-medium">Nombre del Curso</label>
-        <input 
-          type="text" 
-          name="nombreCurso" 
-          value={formData.nombreCurso}
-          onChange={handleChange}
-          className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-        />
+    <div className="py-8 px-8 w-full mx-auto h-3/5 bg-white space-y-4">
+      <h2 className="text-xl font-bold mb-5">{title}</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {fields.map((field, index) => (
+          <div key={index}>
+            <label className="block text-sm font-medium">{field.label}</label>
+            {field.type === 'text' && (
+              <input 
+                type="text" 
+                name={field.name} 
+                value={formData[field.name]}
+                onChange={handleChange}
+                className="mt-1 mb-3 block w-full p-2 border border-gray-300 rounded-md"
+              />
+            )}
+            {field.type === 'select' && (
+              <select 
+                name={field.name} 
+                value={formData[field.name]}
+                onChange={handleChange}
+                className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              >
+                {field.options.map(option => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            )}
+            {field.type === 'file' && (
+              <input 
+                type="file" 
+                name={field.name} 
+                onChange={handleFileChange}
+                className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+              />
+            )}
+          </div>
+        ))}
       </div>
-      <div>
-        <label className="block text-sm font-medium">Descripción</label>
-        <input 
-          type="text" 
-          name="descripcionCurso" 
-          value={formData.descripcionCurso}
-          onChange={handleChange}
-          className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium">Categoría</label>
-        <select 
-          name="categoria" 
-          value={formData.categoria}
-          onChange={handleChange}
-          className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+      {showButton && (
+        <button 
+          onClick={nextStep}
+          className="px-4 py-2 bg-blue-600 text-white rounded-md"
         >
-          <option value="">Seleccionar</option>
-          <option value="programming">Programación</option>
-          <option value="design">Diseño</option>
-          <option value="marketing">Marketing</option>
-        </select>
-      </div>
-      <div>
-        <label className="block text-sm font-medium">Estatus</label>
-        <select 
-          name="estatus" 
-          value={formData.estatus}
-          onChange={handleChange}
-          className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-        >
-          <option value="">Seleccionar</option>
-          <option value="active">Activo</option>
-          <option value="inactive">Inactivo</option>
-        </select>
-      </div>
-      <div>
-        <label className="block text-sm font-medium">Nivel</label>
-        <select 
-          name="nivel" 
-          value={formData.nivel}
-          onChange={handleChange}
-          className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-        >
-          <option value="">Seleccionar</option>
-          <option value="principiante">Principiante</option>
-          <option value="medio">Intermedio</option>
-          <option value="avanzado">Avanzado</option>
-        </select>
-      </div>
-      <div>
-        <label className="block text-sm font-medium">Portada del Curso</label>
-        <input 
-          type="file" 
-          name="fotografiaDelCurso" 
-          onChange={handleFileChange}
-          className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-        />
-      </div>
-      <button 
-        onClick={nextStep}
-        className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md"
-      >
-        Siguiente
-      </button>
+          {buttonText}
+        </button>
+      )}
     </div>
   );
 };

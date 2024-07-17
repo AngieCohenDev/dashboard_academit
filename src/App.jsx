@@ -6,6 +6,7 @@ import MainArticle from "./pages/MainArticle";
 import NewArticle from "./pages/NewArticle";
 import Article from "./pages/Article";
 import Video from "./pages/Video";
+import Editar from "./pages/Editar";
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path="newarticle" element={< NewArticle/>} />
           <Route path="articles" element={< Article/>} />
           <Route path="cursos" element={< Video/>} />
+          <Route path="editar" element={< Editar/>} />
         </Route>
         <Route path="login" element={<div>Este es el login</div>} />
       </Routes>
