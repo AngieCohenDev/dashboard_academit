@@ -24,6 +24,7 @@ const StepOne = ({
                 name={field.name}
                 value={formData[field.name]}
                 onChange={handleChange}
+                required={field.required}
                 className="mt-1 mb-3 block w-full p-2 border border-gray-300 rounded-md"
               />
             )}

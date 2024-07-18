@@ -4,9 +4,9 @@ import StepTwo from './StepForm/StepTwo';
 import StepThree from './StepForm/StepThree';
 
 const fields = [
-  { type: 'text', name: 'nombreCurso', label: 'Nombre del Curso' },
-  { type: 'text', name: 'descripcionCurso', label: 'Descripción' },
-  { type: 'select', name: 'categoria', label: 'Categoría', options: [
+  { type: 'text', name: 'nombreCurso', label: 'Nombre del Curso', required: true },
+  { type: 'text', name: 'descripcionCurso', label: 'Descripción', required: true },
+  { type: 'select', name: 'categoria', label: 'Categoría',required: true, options: [
     { value: '', label: 'Seleccionar' },
     { value: 'programming', label: 'Programación' },
     { value: 'design', label: 'Diseño' },
