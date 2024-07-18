@@ -10,6 +10,7 @@ const StepOne = ({
   buttonText = "Siguiente",
   showButton = true // Prop para mostrar u ocultar el botón
 }) => {
+
   return (
     <div className="py-8 px-8 w-full mx-auto h-3/5 bg-white space-y-4">
       <h2 className="text-xl font-bold mb-5">{title}</h2>
