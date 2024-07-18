@@ -19,17 +19,17 @@ const StepOne = ({
           <div key={index}>
             <label className="block text-sm font-medium">{field.label}</label>
             {field.type === 'text' && (
-              <input 
-                type="text" 
-                name={field.name} 
+              <input
+                type="text"
+                name={field.name}
                 value={formData[field.name]}
                 onChange={handleChange}
                 className="mt-1 mb-3 block w-full p-2 border border-gray-300 rounded-md"
               />
             )}
             {field.type === 'select' && (
-              <select 
-                name={field.name} 
+              <select
+                name={field.name}
                 value={formData[field.name]}
                 onChange={handleChange}
                 className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
@@ -42,9 +42,9 @@ const StepOne = ({
               </select>
             )}
             {field.type === 'file' && (
-              <input 
-                type="file" 
-                name={field.name} 
+              <input
+                type="file"
+                name={field.name}
                 onChange={handleFileChange}
                 className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
               />
@@ -53,9 +53,9 @@ const StepOne = ({
         ))}
       </div>
       {showButton && (
-        <button 
+        <button
           onClick={nextStep}
-          className="px-4 py-2 bg-blue-600 text-white rounded-md"
+          className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:shadow-outline"
         >
           {buttonText}
         </button>

@@ -61,13 +61,18 @@ export const VideoStep = () => {
     });
   };
 
+  const goToStepOne = () => {
+    setStep(1);
+    window.location.reload();
+  };
+
   switch(step) {
     case 1:
       return <StepOne title='Crear Cursos' fields={fields} nextStep={nextStep} handleChange={handleChange} handleFileChange={handleFileChange} formData={formData}  />;
     case 2:
       return <StepTwo nextStep={nextStep} prevStep={prevStep} handleAddVideo={handleAddVideo} />;
     case 3:
-      return <StepThree prevStep={prevStep} formData={formData} />;
+      return <StepThree prevStep={prevStep} formData={formData} goToStepOne={goToStepOne} />;
     default:
       return <div>Error</div>;
   }
