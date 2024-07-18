@@ -10,7 +10,6 @@ const fields = [
   { type: 'text', name: 'descripcionCurso', label: 'Descripción' },
   {
     type: 'select', name: 'categoria', label: 'Categoría', options: [
-      { value: '', label: 'Seleccionar' },
       { value: 'programming', label: 'Programación' },
       { value: 'design', label: 'Diseño' },
       { value: 'marketing', label: 'Marketing' }
@@ -18,9 +17,8 @@ const fields = [
   },
   {
     type: 'select', name: 'estatus', label: 'Estatus', options: [
-      { value: '', label: 'Seleccionar' },
-      { value: 'active', label: 'Activo' },
-      { value: 'inactive', label: 'Inactivo' }
+      { value: true, label: 'Activo' },
+      { value: false, label: 'Inactivo' }
     ]
   },
   {
@@ -55,7 +53,7 @@ const fields = [
 export const CursosEdit = () => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
-    videos : []
+    videos: []
   });
 
   const callApiCursos = async (id = 1) => {
@@ -76,6 +74,43 @@ export const CursosEdit = () => {
         message: error.response.data.message
       }
     }
+  };
+
+  const updateCurso = async (idCurso, formValues) => {
+
+    console.log(idCurso, formValues);
+
+    const myCursos = new Headers();
+
+    const formData = new FormData()
+    formData.append("nombreCurso", formValues['nombreCurso']);
+    formData.append("descripcionCurso", formValues['descripcionCurso']);
+    formData.append("estatus", formValues['estatus']);
+    formData.append("nivel", formValues['nivel']);
+    formData.append("fotografiaDelCurso", formValues['rutaFotografiaCurso']);
+    formData.append("categoria", formValues['categoria']);
+    formValues.videos.forEach((video, idx) => {
+      for (let key in video) {
+        if (typeof video[key] === 'object' && video[key] !== null && !(video[key] instanceof File)) {
+          for (let subKey in video[key]) {
+            formData.append(`videos[${idx}][${subKey}]`, video[key][subKey]);
+          }
+        } else {
+          formData.append(`videos[${idx}][${key}]`, video[key]);
+        }
+      }
+    })
+
+    const requestOptions = {
+      method: "PATCH",
+      headers: myCursos,
+      body: formData,
+      redirect: "follow"
+    };
+
+    const datos = await fetch(`http://localhost:8080/cursos/${idCurso}`, requestOptions);
+
+    console.log(datos);
   };
 
   useEffect(() => {
@@ -105,12 +140,10 @@ export const CursosEdit = () => {
       ],
       tituloVideo: video.tituloVideo,
       descripcion: video.descripcion,
-      clase : video.clase,
-      estatus : video.estatus
+      clase: video.clase,
+      estatus: video.estatus
     })
   );
-
-
 
   const nextStep = () => {
     setStep(step + 1);
@@ -142,8 +175,25 @@ export const CursosEdit = () => {
   };
 
   const handleUpdateVideo = (videoId, updatedVideo) => {
-    console.log('Video actualizado')
-  };
+    setFormData({
+      ...formData,
+      videos: formData.videos.map(video => {
+        if (video.idVideo === videoId) {
+          // Solo actualizar los campos que ya existen en el video original
+          const updatedFields = Object.keys(video).reduce((acc, key) => {
+            if (key in updatedVideo) {
+              acc[key] = updatedVideo[key];
+            }
+            return acc;
+          }, {});
+          return { ...video, ...updatedFields };
+        }
+        return video;
+      })
+    });
+  }
+
+
   return (
     <>
       <div className='bg-white shadow-md rounded-lg  '>
@@ -156,7 +206,7 @@ export const CursosEdit = () => {
 
         <div className='flex justify-end p-4'>
           <button
-            onClick={() => console.log('Creado')}
+            onClick={() => updateCurso(formData.idCurso, formData)}
             className="px-4 py-2 bg-green-600 text-white rounded-md "
           >
             Confirmar y Crear Curso
