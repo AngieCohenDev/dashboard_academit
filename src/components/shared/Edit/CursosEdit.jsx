@@ -31,7 +31,7 @@ const fields = [
       { value: 'avanzado', label: 'Avanzado' }
     ]
   },
-  { type: 'file', name: 'fotografiaDelCurso', label: 'Portada del Curso' }
+  { type: 'file', name: 'rutaFotografiaCurso', label: 'Portada del Curso' }
 ];
 
 
@@ -67,13 +67,17 @@ export const CursosEdit = () => {
 
     const myCursos = new Headers();
 
-    const formData = new FormData()
+    const formData = new FormData();
+
+    // Añadir los valores del formulario directamente
     formData.append("nombreCurso", formValues['nombreCurso']);
     formData.append("descripcionCurso", formValues['descripcionCurso']);
     formData.append("estatus", formValues['estatus']);
     formData.append("nivel", formValues['nivel']);
     formData.append("fotografiaDelCurso", formValues['rutaFotografiaCurso']);
     formData.append("categoria", formValues['categoria']);
+
+    // Procesar los videos
     formValues.videos.forEach((video, idx) => {
       for (let key in video) {
         if (typeof video[key] === 'object' && video[key] !== null && !(video[key] instanceof File)) {
@@ -81,10 +85,23 @@ export const CursosEdit = () => {
             formData.append(`videos[${idx}][${subKey}]`, video[key][subKey]);
           }
         } else {
-          formData.append(`videos[${idx}][${key}]`, video[key]);
+          if (key === 'rutaMiniatura') {
+            formData.append(`videos[${idx}][archivoMiniatura]`, video[key]);
+          } else if (key === 'rutaVideo') {
+            formData.append(`videos[${idx}][archivoVideo]`, video[key]);
+          } else {
+            formData.append(`videos[${idx}][${key}]`, video[key]);
+          }
         }
       }
-    })
+    });
+
+
+
+
+    formData.forEach((value, key) => {
+      console.log(`${key}: ${value}`);
+    });
 
     const requestOptions = {
       method: "PATCH",
@@ -119,8 +136,8 @@ export const CursosEdit = () => {
         { label: 'Descripcion', name: 'descripcion', type: 'text' },
         { label: 'Clase', name: 'clase', type: 'number' },
         { label: 'Estatus', name: 'estatus', type: 'select', options: [{ value: true, label: 'Activo' }, { value: false, label: 'Inactivo' }] },
-        { label: 'Video', name: 'archivoVideo', type: 'file' },
-        { label: 'Miniatura', name: 'archivoMiniatura', type: 'file' },
+        { label: 'Video', name: 'rutaVideo', type: 'file' },
+        { label: 'Miniatura', name: 'rutaMiniatura', type: 'file' },
         { label: 'Material', name: 'button', type: 'button' }
       ],
       tituloVideo: video.tituloVideo,
@@ -160,6 +177,7 @@ export const CursosEdit = () => {
   };
 
   const handleUpdateVideo = (videoId, updatedVideo) => {
+    console.log(updatedVideo)
     setFormData({
       ...formData,
       videos: formData.videos.map(video => {
