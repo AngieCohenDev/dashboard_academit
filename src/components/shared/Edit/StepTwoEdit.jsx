@@ -68,7 +68,7 @@ const StepTwoPrueba = ({
                     {field.type === 'select' && (
                       <select
                         name={field.name}
-                        value={video[field.name] || ''}
+                        value={video[field.name]}
                         onChange={(e) => handleChange(video.id, e)}
                         className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                       >
