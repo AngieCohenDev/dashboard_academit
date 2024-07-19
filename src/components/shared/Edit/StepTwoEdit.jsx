@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const StepTwoPrueba = ({
+export const StepTwoEdit = ({
   videos,
   handleUpdateVideo,
   prevStep,
@@ -124,5 +124,3 @@ const StepTwoPrueba = ({
     </div>
   );
 };
-
-export default StepTwoPrueba;

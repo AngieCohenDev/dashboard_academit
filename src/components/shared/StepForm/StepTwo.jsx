@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 
-const StepTwo = ({ nextStep, prevStep, handleAddVideo }) => {
+export const StepTwo = ({ handleAddVideo, showPrevButton, showNextButton, prevStep, nextStep }) => {
   const [videoData, setVideoData] = useState({
-    materiales: []
+    tituloVideo: '',
+    descripcion: '',
+    clase: '',
+    archivoMiniatura: null,
+    archivoVideo: null,
+    estatus: ''
   });
 
   const handleChange = (e) => {
@@ -107,28 +112,32 @@ const StepTwo = ({ nextStep, prevStep, handleAddVideo }) => {
           </select>
         </div>
       </div>
-      <div className="flex justify-between ">
-        <button 
-          onClick={prevStep}
-          className="px-4 py-2 w-[150px] bg-gray-600 hover:bg-gray-800 text-white rounded-md mt-10"
-        >
-          Anterior
-        </button>
+      <div className="flex justify-end space-x-4">
+        {showPrevButton && (
+          <button 
+            onClick={prevStep}
+            className="px-4 py-2 w-[150px] bg-gray-600 hover:bg-gray-800 text-white rounded-md"
+          >
+            Anterior
+          </button>
+        )}
         <button 
           onClick={addVideo}
-          className="px-4 py-2 w-[170px] bg-blue-600 hover:bg-blue-800 text-white rounded-md mt-10"
+          className="px-4 py-2 w-[170px] bg-blue-600 hover:bg-blue-800 text-white rounded-md"
         >
           Agregar Video
         </button>
-        <button 
-          onClick={nextStep}
-          className="px-4 py-2 w-[150px] bg-indigo-500 hover:bg-indigo-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:shadow-outline mt-10"
-        >
-          Siguiente
-        </button>
+        {showNextButton && (
+          <button 
+            onClick={nextStep}
+            className="px-4 py-2 w-[150px] bg-indigo-500 hover:bg-indigo-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:shadow-outline"
+          >
+            Siguiente
+          </button>
+        )}
       </div>
     </div>
   );
 };
 
-export default StepTwo;
+

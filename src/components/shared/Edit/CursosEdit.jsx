@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import StepOne from '../StepForm/StepOne'
-import StepTwoPrueba from './StepTwoEdit';
 import axios from 'axios';
+import { StepOne } from '../StepForm/StepOne'
+import { StepTwo } from '../StepForm/StepTwo'
+import { StepTwoEdit } from './StepTwoEdit';
+import { DropdownButton } from './DropdownButton';
 
 
 
@@ -31,23 +33,6 @@ const fields = [
   },
   { type: 'file', name: 'fotografiaDelCurso', label: 'Portada del Curso' }
 ];
-
-// const videos = [
-//   {
-//     id: 1,
-//     title: 'video 1',
-//     fields: [
-//       { label: 'Titulo', name: 'tituloVideo', type: 'text' },
-//       { label: 'Descripcion', name: 'descripcion', type: 'text' },
-//       { label: 'Clase', name: 'clase', type: 'number' },
-//       { label: 'Estatus', name: 'estatus', type: 'select', options: [{ value: true, label: 'Activo' }, { value: false, label: 'Inactivo' }] },
-//       { label: 'Video', name: 'archivoVideo', type: 'file' },
-//       { label: 'Miniatura', name: 'archivoMiniatura', type: 'file' },
-//       { label: 'Material', name: 'button', type: 'button' }
-//     ],
-//   }
-// ]
-
 
 
 export const CursosEdit = () => {
@@ -116,7 +101,7 @@ export const CursosEdit = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await callApiCursos(2);
+        const response = await callApiCursos();
         setFormData(response);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -192,13 +177,34 @@ export const CursosEdit = () => {
       })
     });
   }
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
+  const openPopup = () => {
+    setIsPopupOpen(true);
+  };
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
+  };
 
   return (
+
     <>
       <div className='bg-white shadow-md rounded-lg  '>
         <StepOne title='Editar curso' fields={fields} nextStep={nextStep} handleChange={handleChange} handleFileChange={handleFileChange} formData={formData} showButton={false} />
-        <StepTwoPrueba
+
+        <div className='flex justify-end px-8'>
+          <button
+            onClick={openPopup}
+            className=" px-4 py-2 bg-blue-500 text-white font-medium text-sm rounded-md hover:bg-blue-600"
+          >
+            Agregar Video
+          </button>
+          <DropdownButton isOpen={isPopupOpen} onClose={closePopup} showCloseButton={true}>
+            <StepTwo handleAddVideo={handleAddVideo} showPrevButton={false} showNextButton={false} />
+          </DropdownButton>
+        </div>
+        <StepTwoEdit
           videos={videos}
           handleUpdateVideo={handleUpdateVideo}
           prevStep={() => console.log('Anterior')}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import StepOne from './StepForm/StepOne';
-import StepTwo from './StepForm/StepTwo';
+import {StepOne} from './StepForm/StepOne';
+import {StepTwo} from './StepForm/StepTwo';
 import StepThree from './StepForm/StepThree';
 
 const fields = [
@@ -70,7 +70,7 @@ export const VideoStep = () => {
     case 1:
       return <StepOne title='Crear Cursos' fields={fields} nextStep={nextStep} handleChange={handleChange} handleFileChange={handleFileChange} formData={formData}  />;
     case 2:
-      return <StepTwo nextStep={nextStep} prevStep={prevStep} handleAddVideo={handleAddVideo} />;
+      return <StepTwo nextStep={nextStep} prevStep={prevStep} handleAddVideo={handleAddVideo} showNextButton={true} showPrevButton={true} />;
     case 3:
       return <StepThree prevStep={prevStep} formData={formData} goToStepOne={goToStepOne} />;
     default:

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const StepOne = ({
+export const StepOne = ({
   title,
   fields,
   nextStep,
@@ -65,4 +65,4 @@ const StepOne = ({
   );
 };
 
-export default StepOne;
+
