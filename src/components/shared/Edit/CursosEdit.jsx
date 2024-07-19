@@ -116,7 +116,7 @@ export const CursosEdit = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await callApiCursos(1);
+        const response = await callApiCursos(2);
         setFormData(response);
       } catch (error) {
         console.error('Error fetching data:', error);
