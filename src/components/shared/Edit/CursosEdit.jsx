@@ -36,10 +36,19 @@ const fields = [
 
 
 export const CursosEdit = () => {
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     videos: []
   });
+
+  const openPopup = () => {
+    setIsPopupOpen(true);
+  };
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
+  };
 
   const callApiCursos = async (id = 1) => {
     const config = {
@@ -96,9 +105,6 @@ export const CursosEdit = () => {
       }
     });
 
-
-
-
     formData.forEach((value, key) => {
       console.log(`${key}: ${value}`);
     });
@@ -125,7 +131,7 @@ export const CursosEdit = () => {
       }
     };
     fetchData();
-  }, [])
+  }, [isPopupOpen])
 
   const videos = formData.videos.map((video) => (
     {
@@ -169,11 +175,50 @@ export const CursosEdit = () => {
     });
   };
 
-  const handleAddVideo = (video) => {
-    setFormData({
-      ...formData,
-      videos: [...formData.videos, video]
+  const addVideoToCurso = async (formValues) => {
+
+    const myCursos = new Headers();
+
+    const formData = new FormData();
+    // Añadir los valores del formulario directamente
+    formData.append("tituloVideo", formValues['tituloVideo']);
+    formData.append("clase", formValues['clase']);
+    formData.append("archivoVideo", formValues['archivoVideo']);
+    formData.append("estatus", formValues['estatus']);
+    formData.append("descripcion", formValues['descripcion']);
+    formData.append("archivoMiniatura", formValues['archivoMiniatura']);
+    formData.append("idCurso", formValues['idCurso']);
+
+    // Procesar los videos
+    formValues.materiales?.forEach((material, idx) => {
+      for (let key in material) {
+        formData.append(`materiales[${idx}][${key}]`, material[key]);
+      }
     });
+
+    formData.forEach((value, key) => {
+      console.log(`${key}: ${value}`);
+    });
+
+    const requestOptions = {
+      method: "POST",
+      headers: myCursos,
+      body: formData,
+      redirect: "follow"
+    };
+
+    const datos = await fetch(`http://localhost:8080/videos`, requestOptions);
+
+    console.log(datos);
+  };
+
+  const handleAddVideo = (video) => {
+    const videoToSave = {
+      ...video,
+      idCurso: formData.idCurso
+    }
+    addVideoToCurso(videoToSave);
+    closePopup();
   };
 
   const handleUpdateVideo = (videoId, updatedVideo) => {
@@ -195,15 +240,6 @@ export const CursosEdit = () => {
       })
     });
   }
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-
-  const openPopup = () => {
-    setIsPopupOpen(true);
-  };
-
-  const closePopup = () => {
-    setIsPopupOpen(false);
-  };
 
   return (
 
