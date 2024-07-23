@@ -1,28 +1,17 @@
 import { Table } from './shared/Table';
-import { DynamicForm } from './shared/DinamicForm/DynamicForm';
-import ItemFormPopup from '../components/shared/FormCreation/FormCreation';
+import {VideoStep} from './shared/VideoStep'
 import { useVideoLocic } from './hooks/useVideoLocic';
 import { Alert } from './shared/Alerts';
 
 const videoField = {
-  keys: ['id', 'title', 'description', 'video', 'createdAt', 'updatedAt'],
-  labels: ['Id', 'Título', 'Descripción', 'URL', 'Creado', 'Actualizado'],
+  keys: ['idCurso', 'nombreCurso', 'descripcionCurso','estatus','nivel','fotografiaDelCurso','categoria', 'createdAt', 'updatedAt'],
+  labels: ['ID','Nombre','Descripción','Estatus','Nivel','Miniatura','Categoria','Creado', 'Actualizado'],
 };
 
-const fields = [
-  { id: 'id', label: 'Id', type: 'text', required: false },
-  { id: 'title', label: 'Título', type: 'text', required: false },
-];
-
-const Createfields = [
-  { id: 'Título', label: 'Título', type: 'text', required: true },
-  { id: 'Descripción', label: 'Descripción', type: 'text', required: true },
-  { id: 'Video', label: 'Video', type: 'file', required: true },
-];
 
 export default function VideoForm() {
 
-  const {
+ const {
     alert,
     setAlert,
     extraButtons,
@@ -44,21 +33,8 @@ export default function VideoForm() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      <DynamicForm fields={fields} onSubmit={searchFormSubmit} extraButtons={extraButtons} resetForm={resetForm} />
+      <VideoStep/>
       {alert && <Alert alert={alert} setAlert={setAlert}/>}
-
-      {showPopup && (
-        <ItemFormPopup
-          currentItem={currentItem}
-          closePopup={closePopup}
-          handleFormSubmit={handleFormSubmit}
-          formAction={formAction}
-          fields={Createfields}
-          handleFieldChange={(fieldId, value) => {
-            setCurrentItem({ ...currentItem, [fieldId]: value });
-          }}
-        />
-      )}
 
       <div className="overflow-x-auto mx-4">
         <Table

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {ConfirmationDialog} from '../../shared/ConfirmationDialog'
+import {createItemVideos} from '../../../services/peticionesVideo'
 
 const StepThree = ({ prevStep, formData, goToStepOne }) => {
 
@@ -8,50 +9,12 @@ const StepThree = ({ prevStep, formData, goToStepOne }) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const handleConfirm = () => {
-    createItemVideos(formValues)
-    setOpen(false);
-  };
-
   const [formValues, setFormValues] = useState(formData);
 
-  const createItemVideos = async (formValues) => {
-    console.log(formValues);
-
-    const myCursos = new Headers();
-    const formData = new FormData();
-    formData.append("nombreCurso", formValues['nombreCurso']);
-    formData.append("descripcionCurso", formValues['descripcionCurso']);
-    formData.append("estatus", formValues['estatus']);
-    formData.append("nivel", formValues['nivel']);
-    formData.append("fotografiaDelCurso", formValues['fotografiaDelCurso']);
-    formData.append("categoria", formValues['categoria']);
-    formValues.videos.forEach((video, idx) => {
-      for (let key in video) {
-        if (typeof video[key] === 'object' && video[key] !== null && !(video[key] instanceof File)) {
-          for (let subKey in video[key]) {
-            formData.append(`videos[${idx}][${subKey}]`, video[key][subKey]);
-          }
-        } else {
-          formData.append(`videos[${idx}][${key}]`, video[key]);
-        }
-      }
-    });
-
-    formData.forEach((value, key) => {
-      console.log(key, value);
-    });
-
-    const requestOptions = {
-      method: "POST",
-      headers: myCursos,
-      body: formData,
-      redirect: "follow"
-    };
-
-    const datos = await fetch("http://localhost:8080/cursos", requestOptions);
-    console.log(datos);
-
+    const handleConfirm = () => {
+      createItemVideos(formValues)
+      setOpen(false);
+      
     // Limpiar formulario
     setFormValues({
       nombreCurso: '',
@@ -63,8 +26,8 @@ const StepThree = ({ prevStep, formData, goToStepOne }) => {
       videos: []
     });
     goToStepOne();
-  };
-
+    };
+    
   return (
     <div className="p-6 w-full mx-auto bg-white rounded-xl shadow-md space-y-4">
       <h2 className="text-xl font-bold">Revisión del Curso</h2>

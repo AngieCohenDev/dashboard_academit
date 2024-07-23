@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { PlusIcon } from '@heroicons/react/24/solid';
 import { FaMinus } from "react-icons/fa6";
-import { callApiVideos, createItemVideos, updateItemVideos, deleteItemVideos } from '../../services/peticionesVideo'
+import { callApiCursos, updateCurso, deleteCursos,createItemVideos} from '../../services/peticionesVideo'
 
 export const useVideoLocic = () => {
     const [showPopup, setShowPopup] = useState(false);
@@ -18,7 +18,7 @@ export const useVideoLocic = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await callApiVideos(currentPage, 5, searchParams);
+                const response = await callApiCursos(currentPage, 5, searchParams);
                 setData(response.data);
                 setTotalItems(response.pagination.totalItems);
                 setTotalPages(response.pagination.pageCount);
@@ -45,10 +45,10 @@ export const useVideoLocic = () => {
             event.preventDefault();
             const formData = new FormData(event.target);
             const formValues = Object.fromEntries(formData.entries());
-            (formAction ? await createItemVideos({ ...formValues }) : await updateItemVideos(currentItem.Id, { ...formValues }))
+            (formAction ? await createItemVideos({ ...formValues }) : await updateCurso(currentItem.Id, { ...formValues }))
             closePopup()
             setCurrentPage(1);
-            const response = await callApiVideos(currentPage, 5, searchParams);
+            const response = await callApiCursos(currentPage, 5, searchParams);
             setData(response.data);
         } catch (error) {
             console.log('Ocurrio un error en el servidor', error);
@@ -62,7 +62,7 @@ export const useVideoLocic = () => {
 
         setSearchParams(form);
 
-        const response = await callApiVideos(currentPage, 5, form);
+        const response = await callApiCursos(currentPage, 5, form);
         if (response.data) {
             setData(response.data);
             setAlert({
@@ -91,8 +91,8 @@ export const useVideoLocic = () => {
     const handleDelete = async (item) => {
         console.log('Delete item:', item);
         try {
-            await deleteItemVideos(item.Id);
-            const response = await callApiVideos(currentPage, 5, searchParams);
+            await deleteCursos(item.Id);
+            const response = await callApiCursos(currentPage, 5, searchParams);
             setData(response.data);
             setTotalItems(response.pagination.totalItems);
             setTotalPages(response.pagination.pageCount);
