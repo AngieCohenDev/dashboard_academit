@@ -1,6 +1,18 @@
 import React, { useState } from 'react';
+import {ConfirmationDialog} from '../../shared/ConfirmationDialog'
 
 const StepThree = ({ prevStep, formData, goToStepOne }) => {
+
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const handleConfirm = () => {
+    createItemVideos(formValues)
+    setOpen(false);
+  };
+
   const [formValues, setFormValues] = useState(formData);
 
   const createItemVideos = async (formValues) => {
@@ -102,11 +114,17 @@ const StepThree = ({ prevStep, formData, goToStepOne }) => {
           Anterior
         </button>
         <button
-          onClick={() => createItemVideos(formValues)}
+          onClick={handleOpen}
           className="px-4 py-2 bg-green-600 hover:bg-green-800 text-white rounded-md"
         >
-          Confirmar y Crear Curso
+         Crear Curso
         </button>
+        <ConfirmationDialog
+            open={open}
+            onClose={handleClose}
+            title="Crear curso"
+            message="¿Estás seguro de que deseas crear este curso?"
+            onConfirm={handleConfirm} />
       </div>
     </div>
   );
