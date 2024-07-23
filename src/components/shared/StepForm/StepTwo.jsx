@@ -38,10 +38,10 @@ export const StepTwo = ({ handleAddVideo, showPrevButton, showNextButton, prevSt
 
   return (
     <div className="p-7 w-full mx-auto h-3/4 bg-white rounded-xl shadow-md space-y-4">
-      <h2 className="text-xl font-bold">Agregar Video</h2>
+      <h2 className="text-xl font-bold">Agregar video</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <div>
-          <label className="block text-sm font-medium">Nombre del Video</label>
+          <label className="block text-sm font-medium mt-3">Nombre del Video</label>
           <input 
             type="text" 
             name="tituloVideo" 
@@ -51,7 +51,7 @@ export const StepTwo = ({ handleAddVideo, showPrevButton, showNextButton, prevSt
           />
         </div>
         <div>
-          <label className="block text-sm font-medium">Descripción</label>
+          <label className="block text-sm font-medium mt-3">Descripción</label>
           <input 
             type="text" 
             name="descripcion" 
@@ -61,7 +61,7 @@ export const StepTwo = ({ handleAddVideo, showPrevButton, showNextButton, prevSt
           />
         </div>
         <div>
-          <label className="block text-sm font-medium">Clase</label>
+          <label className="block text-sm font-medium mt-3">Clase</label>
           <input 
             type="number" 
             name="clase" 
@@ -81,7 +81,7 @@ export const StepTwo = ({ handleAddVideo, showPrevButton, showNextButton, prevSt
           </button>
         </div>
         <div>
-          <label className="block text-sm font-medium">Miniatura del Video</label>
+          <label className="block text-sm font-medium">Miniatura del video</label>
           <input 
             type="file" 
             name="archivoMiniatura" 
@@ -90,7 +90,7 @@ export const StepTwo = ({ handleAddVideo, showPrevButton, showNextButton, prevSt
           />
         </div>
         <div>
-          <label className="block text-sm font-medium">Subir Video</label>
+          <label className="block text-sm font-medium">Subir video</label>
           <input 
             type="file" 
             name="archivoVideo" 
@@ -112,7 +112,7 @@ export const StepTwo = ({ handleAddVideo, showPrevButton, showNextButton, prevSt
           </select>
         </div>
       </div>
-      <div className="flex justify-end space-x-4">
+      <div className="flex justify-between space-x-4 pt-7">
         {showPrevButton && (
           <button 
             onClick={prevStep}
@@ -125,7 +125,7 @@ export const StepTwo = ({ handleAddVideo, showPrevButton, showNextButton, prevSt
           onClick={addVideo}
           className="px-4 py-2 w-[170px] bg-blue-600 hover:bg-blue-800 text-white rounded-md"
         >
-          Agregar Video
+          Agregar video
         </button>
         {showNextButton && (
           <button 
