@@ -4,6 +4,7 @@ import { StepOne } from '../StepForm/StepOne'
 import { StepTwo } from '../StepForm/StepTwo'
 import { StepTwoEdit } from './StepTwoEdit';
 import { DropdownButton } from './DropdownButton';
+import { ConfirmationDialog } from '../ConfirmationDialog'
 
 
 
@@ -50,7 +51,7 @@ export const CursosEdit = () => {
     setIsPopupOpen(false);
   };
 
-  const callApiCursos = async (id = 1) => {
+  const callApiCursos = async (id = 4) => {
     const config = {
       method: 'get',
       maxBodyLength: Infinity,
@@ -241,6 +242,16 @@ export const CursosEdit = () => {
     });
   }
 
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const handleConfirm = () => {
+    updateCurso(formData.idCurso, formData);
+    setOpen(false);
+  };
+
   return (
 
     <>
@@ -266,11 +277,18 @@ export const CursosEdit = () => {
 
         <div className='flex justify-end p-4'>
           <button
-            onClick={() => updateCurso(formData.idCurso, formData)}
-            className="px-4 py-2 bg-green-600 text-white rounded-md "
+            onClick={handleOpen}
+            className="px-4 py-2 bg-green-600 text-white rounded-md"
           >
-            Confirmar y Crear Curso
+            Actualizar
           </button>
+          <ConfirmationDialog
+            open={open}
+            onClose={handleClose}
+            title="Actualizar"
+            message="¿Estás seguro de que deseas actualizar este curso?"
+            onConfirm={handleConfirm} />
+
         </div>
       </div>
 
