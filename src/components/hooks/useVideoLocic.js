@@ -67,7 +67,7 @@ export const useVideoLocic = () => {
             setData(response.data);
             setAlert({
                 type: 'success',
-                message: 'New Article Encontrado.'
+                message: 'Curso Encontrado.'
             })
         } else {
             setAlert(response)
