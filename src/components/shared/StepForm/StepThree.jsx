@@ -1,33 +1,31 @@
 import React, { useState } from 'react';
-import {ConfirmationDialog} from '../../shared/ConfirmationDialog'
-import {createItemVideos} from '../../../services/peticionesVideo'
+import { ConfirmationDialog } from '../../shared/ConfirmationDialog';
+import { createItemVideos } from '../../../services/peticionesVideo';
 
 const StepThree = ({ prevStep, formData, goToStepOne }) => {
-
   const [open, setOpen] = useState(false);
 
-  const handleOpen = () => setOpen(true);
+  const handleOpen = (event) => {
+    event.preventDefault(); // Previene el comportamiento predeterminado de recargar la página
+    setOpen(true);
+  };
+  
   const handleClose = () => setOpen(false);
 
   const [formValues, setFormValues] = useState(formData);
 
-    const handleConfirm = () => {
-      createItemVideos(formValues)
+  const handleConfirm = async (event) => {
+    event.preventDefault(); // Previene el comportamiento predeterminado de recargar la página
+    console.log('formValues:', formValues); // Log para ver los valores del formulario
+    try {
+      await createItemVideos(formValues);
       setOpen(false);
-      
-    // Limpiar formulario
-    setFormValues({
-      nombreCurso: '',
-      descripcionCurso: '',
-      categoria: '',
-      estatus: '',
-      nivel: '',
-      fotografiaDelCurso: null,
-      videos: []
-    });
-    goToStepOne();
-    };
-    
+      goToStepOne();
+    } catch (error) {
+      console.error('Error al crear el curso:', error);
+    }
+  };
+
   return (
     <div className="p-6 w-full mx-auto bg-white rounded-xl shadow-md space-y-4">
       <h2 className="text-xl font-bold">Revisión del Curso</h2>
@@ -80,14 +78,15 @@ const StepThree = ({ prevStep, formData, goToStepOne }) => {
           onClick={handleOpen}
           className="px-4 py-2 bg-green-600 hover:bg-green-800 text-white rounded-md"
         >
-         Crear Curso
+          Crear Curso
         </button>
         <ConfirmationDialog
-            open={open}
-            onClose={handleClose}
-            title="Crear curso"
-            message="¿Estás seguro de que deseas crear este curso?"
-            onConfirm={handleConfirm} />
+          open={open}
+          onClose={handleClose}
+          title="Crear curso"
+          message="¿Estás seguro de que deseas crear este curso?"
+          onConfirm={handleConfirm}
+        />
       </div>
     </div>
   );
