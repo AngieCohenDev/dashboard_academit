@@ -25,6 +25,28 @@ export const callApiCursos = async(page = 1, limit = 5, searchParams = {}) => {
     }
   }
 };
+
+export const callApiOneCurso = async(idCurso = 1) => {
+
+  const config = {
+    method: 'get',
+    maxBodyLength: Infinity,
+    url: `http://localhost:8080/cursos/${idCurso}`,
+    headers: {
+      Accept: 'application/json',
+    },
+  };
+  try {
+    const response = await axios.request(config);
+    return response.data;
+  } catch (error) {
+    return {
+      type: 'unsucces',
+      message: error.response.data.message
+    }
+  }
+};
+
 export const updateCurso = async (idCurso, formValues) => {
 
   console.log(idCurso, formValues);

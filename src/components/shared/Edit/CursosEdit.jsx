@@ -4,7 +4,7 @@ import { StepTwo } from '../StepForm/StepTwo'
 import { StepTwoEdit } from './StepTwoEdit';
 import { DropdownButton } from './DropdownButton';
 import { ConfirmationDialog } from '../ConfirmationDialog'
-import {callApiCursos, updateCurso, addVideoToCurso} from '../../../services/peticionesVideo'
+import {callApiOneCurso, updateCurso, addVideoToCurso} from '../../../services/peticionesVideo'
 
 const fields = [
   { type: 'text', name: 'nombreCurso', label: 'Nombre del Curso' },
@@ -52,7 +52,7 @@ export const CursosEdit = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await callApiCursos();
+        const response = await callApiOneCurso();
         setFormData(response);
       } catch (error) {
         console.error('Error fetching data:', error);
