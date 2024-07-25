@@ -5,15 +5,14 @@ import { DynamicForm } from './shared/DinamicForm/DynamicForm'
 import { Alert } from './shared/Alerts';
 
 const videoField = {
-  keys: ['idCurso', 'nombreCurso', 'descripcionCurso', 'estatus', 'nivel', 'fotografiaDelCurso', 'categoria', 'createdAt', 'updatedAt'],
+  keys: ['idCurso', 'nombreCurso', 'descripcionCurso', 'estatus', 'nivel', 'rutaFotografiaCurso', 'categoria', 'createdAt', 'updatedAt'],
   labels: ['ID', 'Nombre', 'Descripción', 'Estatus', 'Nivel', 'Miniatura', 'Categoria', 'Creado', 'Actualizado'],
 };
 
 const fields = [
-  { id: 'id', label: 'Id', type: 'text', required: false },
-  { id: 'title', label: 'Título', type: 'text', required: false },
+  { id: 'idCurso', label: 'Id', type: 'text', required: false },
+  { id: 'nombreCurso', label: 'Título', type: 'text', required: false },
 ];
-
 
 export default function VideoForm() {
 
@@ -46,6 +45,7 @@ export default function VideoForm() {
         {showPopup && (<VideoStep closePopup={closePopup}  isOpen={showPopup}/>)}
 
         <div className="overflow-x-auto mx-4">
+          {console.log(data)}
           <Table
             config={videoField}
             data={data}
