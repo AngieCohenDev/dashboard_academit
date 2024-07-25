@@ -12,7 +12,7 @@ const articlesField = {
 
 const fields = [
   { id: 'id', label: 'Id', type: 'text', required: false },
-  { id: 'item1', label: 'Item01', type: 'text', required: false },
+  { id: 'item01', label: 'Item01', type: 'text', required: false },
 ];
 
 const Createfields = [
