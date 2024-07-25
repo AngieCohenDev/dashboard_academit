@@ -59,7 +59,6 @@ export const useVideoLocic = () => {
     const searchFormSubmit = async (form) => {
 
         console.log(form)
-
         setSearchParams(form);
 
         const response = await callApiCursos(currentPage, 5, form);
