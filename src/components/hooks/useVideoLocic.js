@@ -92,7 +92,7 @@ export const useVideoLocic = () => {
     const handleDelete = async (item) => {
         console.log('Delete item:', item);
         try {
-            await deleteCursos(item.Id);
+            await deleteCursos(item.idCurso);
             const response = await callApiCursos(currentPage, 5, searchParams);
             setData(response.data);
             setTotalItems(response.pagination.totalItems);
