@@ -26,7 +26,7 @@ export const callApiCursos = async(page = 1, limit = 5, searchParams = {}) => {
   }
 };
 
-export const callApiOneCurso = async(idCurso = 1) => {
+export const callApiOneCurso = async(idCurso) => {
 
   const config = {
     method: 'get',

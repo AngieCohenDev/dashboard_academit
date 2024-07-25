@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'
 import { PlusIcon } from '@heroicons/react/24/solid';
 import { FaMinus } from "react-icons/fa6";
-import { callApiCursos, updateCurso, deleteCursos,createItemVideos} from '../../services/peticionesVideo'
+import { callApiCursos, updateCurso, deleteCursos, createItemVideos, callApiOneCurso } from '../../services/peticionesVideo'
 
 export const useVideoLocic = () => {
     const [showPopup, setShowPopup] = useState(false);
@@ -80,12 +81,13 @@ export const useVideoLocic = () => {
         openPopup();
     };
 
-    const handleEdit = (item) => {
-        console.log('Edit item:', item);
-        setCurrentItem(item);
-        setFormAction(false)
-        openPopup();
-    };
+    const navigate = useNavigate();
+
+    const handleEdit = async (id) => {
+        const dataToSend = { id};
+        navigate('/editar', { state: dataToSend });
+    }
+
 
     const handleDelete = async (item) => {
         console.log('Delete item:', item);

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
+import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 import { StepOne } from './StepForm/StepOne';
 import { StepTwo } from './StepForm/StepTwo';
 import StepThree from './StepForm/StepThree';
-import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 
 const fields = [
   { type: 'text', name: 'nombreCurso', label: 'Nombre del Curso', required: true },

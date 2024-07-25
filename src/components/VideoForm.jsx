@@ -42,7 +42,7 @@ export default function VideoForm() {
 
         <DynamicForm fields={fields} extraButtons={extraButtons} onSubmit={searchFormSubmit} resetForm={resetForm} />
         {alert && <Alert alert={alert} setAlert={setAlert} />}
-        {showPopup && (<VideoStep closePopup={closePopup}  isOpen={showPopup}/>)}
+        {showPopup && (<VideoStep closePopup={closePopup}  isOpen={showPopup} />)}
 
         <div className="overflow-x-auto mx-4">
           {console.log(data)}
