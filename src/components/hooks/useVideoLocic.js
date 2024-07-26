@@ -83,16 +83,17 @@ export const useVideoLocic = () => {
 
     const navigate = useNavigate();
 
-    const handleEdit = async (id) => {
-        const dataToSend = { id};
+    const handleEdit = async (item) => {
+        const id = item.ID
+        const dataToSend = {idCurso : id};
         navigate('/editar', { state: dataToSend });
     }
 
 
     const handleDelete = async (item) => {
-        console.log('Delete item:', item);
+        const idCurso = item.ID;
         try {
-            await deleteCursos(item.idCurso);
+            await deleteCursos(idCurso);
             const response = await callApiCursos(currentPage, 5, searchParams);
             setData(response.data);
             setTotalItems(response.pagination.totalItems);

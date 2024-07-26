@@ -5,6 +5,7 @@ import { StepTwoEdit } from './StepTwoEdit';
 import { DropdownButton } from './DropdownButton';
 import { ConfirmationDialog } from '../ConfirmationDialog'
 import {callApiOneCurso, updateCurso, addVideoToCurso} from '../../../services/peticionesVideo'
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const fields = [
   { type: 'text', name: 'nombreCurso', label: 'Nombre del Curso' },
@@ -41,6 +42,10 @@ export const CursosEdit = () => {
     videos: []
   });
 
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { state } = location;
+
   const openPopup = () => {
     setIsPopupOpen(true);
   };
@@ -49,17 +54,21 @@ export const CursosEdit = () => {
     setIsPopupOpen(false);
   };
 
+  const fetchData = async (idCurso) => {
+    try {
+      const response = await callApiOneCurso(idCurso);
+      setFormData(response);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await callApiOneCurso();
-        setFormData(response);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchData();
-  }, [isPopupOpen])
+    if (!state) {
+      return navigate('/cursos');
+    }
+    fetchData(state.idCurso);
+  }, [state, isPopupOpen])
 
   const videos = formData.videos.map((video) => (
     {
