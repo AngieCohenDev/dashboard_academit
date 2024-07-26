@@ -1,6 +1,21 @@
 import React, { useState } from 'react';
+import ItemFormPopup from '../FormCreation/FormCreation';
+
+const Createfields = [
+  { id: 'nombre', label: 'Título', type: 'text', required: true },
+  { id: 'descripcionMaterial', label: 'Descripción', type: 'text', required: true },
+  {
+    type: 'select', name: 'estatus', label: 'Estatus', options: [
+      { value: true, label: 'Activo' },
+      { value: false, label: 'Inactivo' }
+    ]
+  },
+  { id: 'archivoMaterial', label: 'Archivo', type: 'file', required: true },
+];
 
 export const StepTwo = ({ handleAddVideo, showPrevButton, showNextButton, prevStep, nextStep }) => {
+
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [videoData, setVideoData] = useState({
     tituloVideo: '',
     descripcion: '',
@@ -34,6 +49,14 @@ export const StepTwo = ({ handleAddVideo, showPrevButton, showNextButton, prevSt
       archivoVideo: null,
       estatus: ''
     });
+  };
+  
+  const openPopup = () => {
+    setIsPopupOpen(true);
+  };
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
   };
 
   return (
@@ -72,13 +95,15 @@ export const StepTwo = ({ handleAddVideo, showPrevButton, showNextButton, prevSt
         </div>
         <div>
           <label className="block text-sm font-medium">Material</label>
-          <button 
-            type="button"
+          <button
+            onClick={openPopup}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md bg-gray-200"
-            onClick={() => alert('Subir Material')}
           >
             Subir Material
           </button>
+          {isPopupOpen && (
+            <ItemFormPopup fields={Createfields} closePopup={closePopup} />
+          )}
         </div>
         <div>
           <label className="block text-sm font-medium">Miniatura del video</label>
@@ -139,5 +164,3 @@ export const StepTwo = ({ handleAddVideo, showPrevButton, showNextButton, prevSt
     </div>
   );
 };
-
-
