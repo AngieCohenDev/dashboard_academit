@@ -134,25 +134,6 @@ export const StepTwo = ({ handleAddVideo, showPrevButton, showNextButton, prevSt
           />
         </div>
         <div>
-          <label className="block text-sm font-medium">Material</label>
-          <button
-            onClick={openPopup}
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md bg-gray-200"
-          >
-            Subir Material
-          </button>
-          {isPopupOpen && (
-            <ItemFormPopup
-              formAction={true}
-              currentItem={materialData}
-              handleFileChange={handleFileMaterialChange}
-              handleChange={handleMaterialChange}
-              handleFormSubmit={addMaterial}
-              fields={Createfields}
-              closePopup={closePopup} />
-          )}
-        </div>
-        <div>
           <label className="block text-sm font-medium">Miniatura del video</label>
           <input
             type="file"
@@ -182,6 +163,27 @@ export const StepTwo = ({ handleAddVideo, showPrevButton, showNextButton, prevSt
             <option value="active">Activo</option>
             <option value="inactive">Inactivo</option>
           </select>
+        </div>
+        <div>
+          <label className="block text-sm font-medium">Material</label>
+          <button
+            onClick={openPopup}
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-md bg-gray-200"
+          >
+            Subir Material
+          </button>
+          {isPopupOpen && (
+            <ItemFormPopup
+              formAction={true}
+              currentItem={materialData}
+              handleFieldChange={(fieldId, value) => {
+                console.log(fieldId, value);
+                setMaterialData({ ...materialData, [fieldId]: value });
+              }}
+              handleFormSubmit={addMaterial}
+              fields={Createfields}
+              closePopup={closePopup} />
+          )}
         </div>
       </div>
       <div className="flex justify-between space-x-4 pt-7">
