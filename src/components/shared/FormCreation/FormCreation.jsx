@@ -1,12 +1,13 @@
-import React from 'react';
+
 import PropTypes from 'prop-types';
 
 const ItemFormPopup = ({
     currentItem,
     closePopup,
     handleFormSubmit,
+    handleChange,
+    handleFileChange,
     fields,
-    handleFieldChange,
     formAction
 }) => {
     // Agrupar los campos de a 3
@@ -20,7 +21,7 @@ const ItemFormPopup = ({
             <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-4xl">
                 <div className="flex justify-between items-center mb-6">
                     <h1 className="text-2xl font-bold text-gray-800">
-                        {formAction ? 'Formulario de Items' : 'Editar Item'}
+                        {formAction ? 'Formulario de Material' : 'Editar Material'}
                     </h1>
                     <button onClick={closePopup} className="text-gray-600 hover:text-gray-700 focus:outline-none">
                         X
@@ -34,31 +35,40 @@ const ItemFormPopup = ({
                                     <label htmlFor={field.id} className="font-medium text-gray-700">
                                         {field.label}
                                     </label>
-                                    {field.type === 'select' ? (
-                                        <select
-                                            id={field.id}
-                                            name={field.id}
-                                            value={currentItem ? currentItem[field.id] : ''}
-                                            onChange={(e) => handleFieldChange(field.id, e.target.value)}
-                                            className="mt-1 mb-3 block w-full p-2 border border-gray-300 rounded-md"
-                                        >
-                                            {field.options.map(option => (
-                                                <option key={option.value} value={option.value}>
-                                                    {option.label}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    ) : (
-                                        <input
-                                            id={field.id}
-                                            name={field.id}
-                                            type={field.type}
-                                            required={field.required}
-                                            value={currentItem ? currentItem[field.id] : ''}
-                                            onChange={(e) => handleFieldChange(field.id, e.target.value)}
-                                            className="mt-1 mb-3 block w-full p-2 border border-gray-300 rounded-md"
-                                        />
-                                    )}
+                                    {
+                                        field.type === 'select' ? (
+                                            <select
+                                                id={field.id}
+                                                name={field.name}
+                                                value={currentItem ? currentItem[field.id] : ''}
+                                                onChange={handleChange}
+                                                className="mt-1 mb-3 block w-full p-2 border border-gray-300 rounded-md"
+                                            >
+                                                {field.options.map(option => (
+                                                    <option key={option.value} value={option.value}>
+                                                        {option.label}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        ) : field.type === 'file' ? (
+                                            <input
+                                                id={field.id}
+                                                name={field.id}
+                                                type={field.type}
+                                                required={field.required}
+                                                onChange={handleFileChange}
+                                                className="mt-1 mb-3 block w-full p-2 border border-gray-300 rounded-md"
+                                            />
+                                        ) : (
+                                            <input
+                                                id={field.id}
+                                                name={field.id}
+                                                type={field.type}
+                                                required={field.required}
+                                                value={currentItem ? currentItem[field.id] : ''}
+                                                onChange={handleChange}
+                                                className="mt-1 mb-3 block w-full p-2 border border-gray-300 rounded-md"
+                                            />)}
                                 </div>
                             ))}
                         </div>

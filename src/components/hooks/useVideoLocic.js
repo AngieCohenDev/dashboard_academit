@@ -117,7 +117,7 @@ export const useVideoLocic = () => {
 
     const extraButtons = [
         {
-            label: 'Crear Video',
+            label: 'Crear Curso',
             onClick: handleCreate,
             className: 'bg-indigo-500 hover:bg-indigo-700 crear',
             icon: PlusIcon,
