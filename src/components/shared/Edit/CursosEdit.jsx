@@ -79,8 +79,8 @@ export const CursosEdit = () => {
         { label: 'Descripcion', name: 'descripcion', type: 'text' },
         { label: 'Clase', name: 'clase', type: 'number' },
         { label: 'Estatus', name: 'estatus', type: 'select', options: [{ value: true, label: 'Activo' }, { value: false, label: 'Inactivo' }] },
-        { label: 'Video', name: 'rutaVideo', type: 'file' },
         { label: 'Miniatura', name: 'rutaMiniatura', type: 'file' },
+        { label: 'Video', name: 'rutaVideo', type: 'file' },
         { label: 'Material', name: 'button', type: 'button' }
       ],
       tituloVideo: video.tituloVideo,

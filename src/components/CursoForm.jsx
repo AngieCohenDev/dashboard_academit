@@ -14,7 +14,7 @@ const fields = [
   { id: 'nombreCurso', label: 'Título', type: 'text', required: false },
 ];
 
-export default function VideoForm() {
+export default function CursoForm() {
 
   const {
     alert,

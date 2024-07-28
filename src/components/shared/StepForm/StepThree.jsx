@@ -16,7 +16,7 @@ const StepThree = ({ prevStep, formData, goToStepOne }) => {
 
   const handleConfirm = async (event) => {
     event.preventDefault(); // Previene el comportamiento predeterminado de recargar la página
-    console.log('formValues:', formValues); // Log para ver los valores del formulario
+    // console.log('formValues:', formValues); // Log para ver los valores del formulario
     try {
       await createItemVideos(formValues);
       setOpen(false);

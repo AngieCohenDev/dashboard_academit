@@ -30,11 +30,13 @@ const ItemFormPopup = ({
                     {groupedFields.map((group, index) => (
                         <div key={index} className="flex flex-wrap -mx-2">
                             {group.map(field => (
+                                console.log(field.type),
                                 <div key={field.id} className="w-full md:w-1/3 px-2 mb-4">
                                     <label htmlFor={field.id} className="font-medium text-gray-700">
                                         {field.label}
                                     </label>
-                                    {field.type === 'select' ? (
+                                    {
+                                    field.type === 'select' ? (
                                         <select
                                             id={field.id}
                                             name={field.id}
@@ -48,6 +50,15 @@ const ItemFormPopup = ({
                                                 </option>
                                             ))}
                                         </select>
+                                    ) : field.type === 'file' ? (
+                                        <input
+                                            id={field.id}
+                                            name={field.id}
+                                            type={field.type}
+                                            required={field.required}
+                                            onChange={(e) => handleFieldChange(field.id, e.target.files[0])}
+                                            className="mt-1 mb-3 block w-full p-2 border border-gray-300 rounded-md"
+                                        />
                                     ) : (
                                         <input
                                             id={field.id}
@@ -58,7 +69,9 @@ const ItemFormPopup = ({
                                             onChange={(e) => handleFieldChange(field.id, e.target.value)}
                                             className="mt-1 mb-3 block w-full p-2 border border-gray-300 rounded-md"
                                         />
-                                    )}
+                                    )
+                                
+                                }
                                 </div>
                             ))}
                         </div>

@@ -1,9 +1,9 @@
 import React from 'react'
 //import { VideoStep } from '../components/shared/VideoStep'
-import VideoForm from '../components/VideoForm'
+import CursoForm from '../components/CursoForm'
 
-export default function Video() {
+export default function Curso() {
   return (
-   <VideoForm />
+   <CursoForm />
   )
 }

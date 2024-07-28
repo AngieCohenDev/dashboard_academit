@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const callApiCursos = async(page = 1, limit = 5, searchParams = {}) => {
+export const callApiCursos = async (page = 1, limit = 5, searchParams = {}) => {
   const paramsSearch = Object.keys(searchParams)?.reduce((acc, key) => {
     const label = key;
     const value = searchParams[key];
@@ -26,7 +26,7 @@ export const callApiCursos = async(page = 1, limit = 5, searchParams = {}) => {
   }
 };
 
-export const callApiOneCurso = async(idCurso) => {
+export const callApiOneCurso = async (idCurso) => {
 
   const config = {
     method: 'get',
@@ -159,9 +159,11 @@ export const createItemVideos = async (formValues) => {
   formValues.videos.forEach((video, idx) => {
     for (let key in video) {
       if (typeof video[key] === 'object' && video[key] !== null && !(video[key] instanceof File)) {
-        for (let subKey in video[key]) {
-          formData.append(`videos[${idx}][${subKey}]`, video[key][subKey]);
-        }
+        video.materiales.map((material, midx) => {
+          for (let subKey in material) {
+            formData.append(`videos[${idx}][materiales][${midx}][${subKey}]`, material[subKey]);
+          }
+        })
       } else {
         formData.append(`videos[${idx}][${key}]`, video[key]);
       }
