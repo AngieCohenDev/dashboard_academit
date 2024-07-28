@@ -5,7 +5,8 @@ import Header from "./pages/Header";
 import MainArticle from "./pages/MainArticle";
 import NewArticle from "./pages/NewArticle";
 import Article from "./pages/Article";
-import Video from "./pages/Video";
+import Curso from "./pages/Curso";
+import Editar from "./pages/Editar";
 
 
 function App() {
@@ -18,7 +19,8 @@ function App() {
           <Route path="article" element={< MainArticle/>} />
           <Route path="newarticle" element={< NewArticle/>} />
           <Route path="articles" element={< Article/>} />
-          <Route path="cursos" element={< Video/>} />
+          <Route path="cursos" element={< Curso/>} />
+          <Route path="editar" element={< Editar/>} />
         </Route>
         <Route path="login" element={<div>Este es el login</div>} />
       </Routes>

@@ -48,6 +48,12 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 		icon: <HiAcademicCap />
 	},
 	// {
+	// 	key: 'editar',
+	// 	label: 'Editar',
+	// 	path: '/editar',
+	// 	icon: <HiAcademicCap />
+	// },
+	// {
 	// 	key: 'footer',
 	// 	label: 'Footer',
 	// 	path: '/footer',

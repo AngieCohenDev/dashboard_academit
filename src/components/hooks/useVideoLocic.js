@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'
 import { PlusIcon } from '@heroicons/react/24/solid';
 import { FaMinus } from "react-icons/fa6";
-import { callApiVideos, createItemVideos, updateItemVideos, deleteItemVideos } from '../../services/peticionesVideo'
+import { callApiCursos, updateCurso, deleteCursos, createItemVideos, callApiOneCurso } from '../../services/peticionesVideo'
 
 export const useVideoLocic = () => {
     const [showPopup, setShowPopup] = useState(false);
@@ -18,7 +19,7 @@ export const useVideoLocic = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await callApiVideos(currentPage, 5, searchParams);
+                const response = await callApiCursos(currentPage, 5, searchParams);
                 setData(response.data);
                 setTotalItems(response.pagination.totalItems);
                 setTotalPages(response.pagination.pageCount);
@@ -45,10 +46,10 @@ export const useVideoLocic = () => {
             event.preventDefault();
             const formData = new FormData(event.target);
             const formValues = Object.fromEntries(formData.entries());
-            (formAction ? await createItemVideos({ ...formValues }) : await updateItemVideos(currentItem.Id, { ...formValues }))
+            (formAction ? await createItemVideos({ ...formValues }) : await updateCurso(currentItem.Id, { ...formValues }))
             closePopup()
             setCurrentPage(1);
-            const response = await callApiVideos(currentPage, 5, searchParams);
+            const response = await callApiCursos(currentPage, 5, searchParams);
             setData(response.data);
         } catch (error) {
             console.log('Ocurrio un error en el servidor', error);
@@ -59,15 +60,14 @@ export const useVideoLocic = () => {
     const searchFormSubmit = async (form) => {
 
         console.log(form)
-
         setSearchParams(form);
 
-        const response = await callApiVideos(currentPage, 5, form);
+        const response = await callApiCursos(currentPage, 5, form);
         if (response.data) {
             setData(response.data);
             setAlert({
                 type: 'success',
-                message: 'New Article Encontrado.'
+                message: 'Curso Encontrado.'
             })
         } else {
             setAlert(response)
@@ -81,18 +81,20 @@ export const useVideoLocic = () => {
         openPopup();
     };
 
-    const handleEdit = (item) => {
-        console.log('Edit item:', item);
-        setCurrentItem(item);
-        setFormAction(false)
-        openPopup();
-    };
+    const navigate = useNavigate();
+
+    const handleEdit = async (item) => {
+        const id = item.ID
+        const dataToSend = {idCurso : id};
+        navigate('/editar', { state: dataToSend });
+    }
+
 
     const handleDelete = async (item) => {
-        console.log('Delete item:', item);
+        const idCurso = item.ID;
         try {
-            await deleteItemVideos(item.Id);
-            const response = await callApiVideos(currentPage, 5, searchParams);
+            await deleteCursos(idCurso);
+            const response = await callApiCursos(currentPage, 5, searchParams);
             setData(response.data);
             setTotalItems(response.pagination.totalItems);
             setTotalPages(response.pagination.pageCount);
@@ -115,7 +117,7 @@ export const useVideoLocic = () => {
 
     const extraButtons = [
         {
-            label: 'Crear Video',
+            label: 'Crear Curso',
             onClick: handleCreate,
             className: 'bg-indigo-500 hover:bg-indigo-700 crear',
             icon: PlusIcon,

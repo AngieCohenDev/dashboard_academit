@@ -11,7 +11,7 @@ const MainarticleField = {
 
 const fields = [
   { id: 'id', label: 'Id', type: 'text', required: false },
-  { id: 'title', label: 'Título', type: 'text', required: false },
+  { id: 'titulo', label: 'Título', type: 'text', required: false },
 ];
 
 const Createfields = [

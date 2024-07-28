@@ -11,7 +11,7 @@ const NewArticleField = {
 
 const fields = [
   { id: 'id', label: 'Id', type: 'text', required: false },
-  { id: 'title', label: 'Título', type: 'text', required: false },
+  { id: 'tituloArticulo', label: 'Subtítulo', type: 'text', required: false },
 ];
 
 const Createfields = [
